@@ -1,10 +1,14 @@
 cmake_minimum_required(VERSION 3.10)
-project(CPlusPlusWalletProject)
+project(user_registration)
+
 set(CMAKE_CXX_STANDARD 17)
-add_subdirectory(controller)
-add_subdirectory(model)
-add_subdirectory(view)
-add_subdirectory(db)
-add_subdirectory(utils)
-add_executable(CPlusPlusWalletProject main.cpp)
-target_link_libraries(CPlusPlusWalletProject controller model view db utils)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+add_executable(main 
+    main.cpp
+    model/user.cpp
+    db/user_repository.cpp
+    utils/password_hasher.cpp
+    controller/user_controller.cpp
+    view/menu_view.cpp
+)
