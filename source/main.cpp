@@ -594,10 +594,27 @@ void handleAdminActions(AdminService& adminService, UserService& userService, Au
             std::cout << "--- Admin Tao Tai Khoan Moi ---" << std::endl;
             std::string username, fullName, email, phone, tempPass;
             // Input và validate tương tự handleRegistration
-            while(true){ username = getStringInput("Ten dang nhap nguoi dung moi: "); if(InputValidator::isValidUsername(username)) break; std::cout << "Ten dang nhap khong hop le.\n"; }
+            while(true){ 
+                username = getStringInput("Ten dang nhap nguoi dung moi (hoac 'back' de quay lai): "); 
+                if(username == "back") {
+                    std::cout << "Quay lai menu truoc..." << std::endl;
+                    pauseScreen();
+                    return;
+                }
+                if(InputValidator::isValidUsername(username)) break; 
+                std::cout << "Ten dang nhap khong hop le.\n"; 
+            }
             fullName = getStringInput("Ho ten nguoi dung moi: ");
-            while(true){ email = getStringInput("Email nguoi dung moi: "); if(InputValidator::isValidEmail(email)) break; std::cout << "Email khong hop le.\n"; }
-            while(true){ phone = getStringInput("So dien thoai nguoi dung moi: "); if(InputValidator::isValidPhoneNumber(phone)) break; std::cout << "So dien thoai khong hop le.\n"; }
+            while(true){ 
+                email = getStringInput("Email nguoi dung moi: "); 
+                if(InputValidator::isValidEmail(email)) break; 
+                std::cout << "Email khong hop le.\n"; 
+            }
+            while(true){ 
+                phone = getStringInput("So dien thoai nguoi dung moi: "); 
+                if(InputValidator::isValidPhoneNumber(phone)) break; 
+                std::cout << "So dien thoai khong hop le.\n"; 
+            }
             // Admin chỉ nên tạo RegularUser qua giao diện này, ví dụ
             if(adminService.adminCreateUserAccount(username, fullName, email, phone, UserRole::RegularUser, tempPass, msg)){
                 std::cout << "Thanh cong: " << msg << std::endl;
@@ -651,7 +668,7 @@ void handleAdminActions(AdminService& adminService, UserService& userService, Au
             if (newFullName.empty()) newFullName = targetUser.fullName;
             if (newEmail.empty()) newEmail = targetUser.email;
             if (newPhone.empty()) newPhone = targetUser.phoneNumber;
-            
+
             otpCode = "";
             if (!targetUser.otpSecretKey.empty()) { // Nếu người dùng CÓ OTP
                 otpCode = getStringInput("Nhap ma OTP cua nguoi dung '" + targetUser.username + "' (do ho cung cap): ", true);
