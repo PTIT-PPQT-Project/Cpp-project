@@ -339,3 +339,99 @@
 2025-05-21 01:51:40 [INFO] Registration successful! Account created for phuong_admin. Please wait for activation.
 2025-05-21 01:51:40 [INFO] Saved 6 wallets to data/wallets.json
 2025-05-21 01:51:40 [INFO] New wallet created successfully for user phuong_admin. Wallet ID: WLT-86e284a7-3fe
+2025-05-21 01:53:14 [WARNING] Login attempt failed for username 'phuong_admin': Account is not activated yet. Please check your email or contact support.
+2025-05-21 01:53:15 [WARNING] Login attempt failed for username 'phuong_admin': Account is not activated yet. Please check your email or contact support.
+2025-05-21 01:53:24 [WARNING] Login attempt failed for username 'phuong_admin': Account is not activated yet. Please check your email or contact support.
+2025-05-21 01:54:56 [WARNING] Login attempt failed for username 'phuong_admin': Account is not activated yet. Please check your email or contact support.
+2025-05-21 01:55:12 [WARNING] Login attempt failed for username 'phuong_admin': Account is not activated yet. Please check your email or contact support.
+2025-05-21 01:56:47 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 01:56:47 [INFO] ===================================
+2025-05-21 01:56:47 [INFO] Application Starting...
+2025-05-21 01:56:47 [INFO] Version: 1.0.0
+2025-05-21 01:56:47 [INFO] Data Directory: data/
+2025-05-21 01:56:47 [INFO] ===================================
+2025-05-21 01:56:47 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 01:56:47 [INFO] Loading data...
+2025-05-21 01:56:47 [ERROR] Generic error loading users from (data/users.json): Invalid status string provided for conversion: Activate
+2025-05-21 01:56:47 [ERROR] Failed to load user data. Application might behave unexpectedly.
+2025-05-21 01:56:47 [INFO] Loaded 6 wallets from data/wallets.json
+2025-05-21 01:56:47 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:56:47 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 01:56:47 [INFO] Data loading complete. Users: 0, Wallets: 6, Transactions: 0
+2025-05-21 01:56:47 [INFO] No users found. Creating default Admin account...
+2025-05-21 01:56:47 [WARNING] Admin attempt to create another Admin account for 'admin' was blocked by policy.
+2025-05-21 01:56:47 [ERROR] Failed to create default Admin account: Creating Admin accounts via this interface is restricted for security.
+2025-05-21 01:56:54 [WARNING] Login attempt failed for username 'phuong_admin': Username not found.
+2025-05-21 01:57:10 [WARNING] Login attempt failed for username 'phuong_admin': Username not found.
+2025-05-21 01:58:01 [WARNING] Login attempt failed for username 'phuong_admin': Username not found.
+2025-05-21 01:59:12 [WARNING] Login attempt failed for username 'phuong_admin': Username not found.
+2025-05-21 01:59:30 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 01:59:30 [INFO] ===================================
+2025-05-21 01:59:30 [INFO] Application Starting...
+2025-05-21 01:59:30 [INFO] Version: 1.0.0
+2025-05-21 01:59:30 [INFO] Data Directory: data/
+2025-05-21 01:59:30 [INFO] ===================================
+2025-05-21 01:59:30 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 01:59:30 [INFO] Loading data...
+2025-05-21 01:59:30 [INFO] Loaded 1 users from data/users.json
+2025-05-21 01:59:30 [INFO] Loaded 6 wallets from data/wallets.json
+2025-05-21 01:59:30 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:59:30 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 01:59:30 [INFO] Data loading complete. Users: 1, Wallets: 6, Transactions: 0
+2025-05-21 01:59:37 [INFO] User 'phuong_admin' logged in successfully.
+2025-05-21 01:59:37 [INFO] User 'phuong_admin' logged in.
+2025-05-21 01:59:37 [INFO] User 'phuong_admin' logged in.
+2025-05-21 02:01:12 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 02:01:12 [INFO] ===================================
+2025-05-21 02:01:12 [INFO] Application Starting...
+2025-05-21 02:01:12 [INFO] Version: 1.0.0
+2025-05-21 02:01:12 [INFO] Data Directory: data/
+2025-05-21 02:01:12 [INFO] ===================================
+2025-05-21 02:01:12 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 02:01:12 [INFO] Loading data...
+2025-05-21 02:01:12 [INFO] Loaded 1 users from data/users.json
+2025-05-21 02:01:12 [INFO] Loaded 6 wallets from data/wallets.json
+2025-05-21 02:01:12 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 02:01:12 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 02:01:12 [INFO] Data loading complete. Users: 1, Wallets: 6, Transactions: 0
+2025-05-21 02:01:21 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 02:01:21 [INFO] ===================================
+2025-05-21 02:01:21 [INFO] Application Starting...
+2025-05-21 02:01:21 [INFO] Version: 1.0.0
+2025-05-21 02:01:21 [INFO] Data Directory: data/
+2025-05-21 02:01:21 [INFO] ===================================
+2025-05-21 02:01:21 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 02:01:21 [INFO] Loading data...
+2025-05-21 02:01:21 [INFO] Loaded 1 users from data/users.json
+2025-05-21 02:01:21 [INFO] Loaded 6 wallets from data/wallets.json
+2025-05-21 02:01:21 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 02:01:21 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 02:01:21 [INFO] Data loading complete. Users: 1, Wallets: 6, Transactions: 0
+2025-05-21 02:01:28 [INFO] User 'phuong_admin' logged in successfully.
+2025-05-21 02:03:32 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 02:03:32 [INFO] ===================================
+2025-05-21 02:03:32 [INFO] Application Starting...
+2025-05-21 02:03:32 [INFO] Version: 1.0.0
+2025-05-21 02:03:32 [INFO] Data Directory: data/
+2025-05-21 02:03:32 [INFO] ===================================
+2025-05-21 02:03:32 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 02:03:32 [INFO] Loading data...
+2025-05-21 02:03:32 [INFO] Loaded 1 users from data/users.json
+2025-05-21 02:03:32 [INFO] Loaded 6 wallets from data/wallets.json
+2025-05-21 02:03:32 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 02:03:32 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 02:03:32 [INFO] Data loading complete. Users: 1, Wallets: 6, Transactions: 0
+2025-05-21 02:03:44 [INFO] User 'phuong_admin' logged in successfully.
+2025-05-21 02:05:49 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 02:05:49 [INFO] ===================================
+2025-05-21 02:05:49 [INFO] Application Starting...
+2025-05-21 02:05:49 [INFO] Version: 1.0.0
+2025-05-21 02:05:49 [INFO] Data Directory: data/
+2025-05-21 02:05:49 [INFO] ===================================
+2025-05-21 02:05:49 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 02:05:49 [INFO] Loading data...
+2025-05-21 02:05:49 [INFO] Loaded 1 users from data/users.json
+2025-05-21 02:05:49 [INFO] Loaded 6 wallets from data/wallets.json
+2025-05-21 02:05:49 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 02:05:49 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 02:05:49 [INFO] Data loading complete. Users: 1, Wallets: 6, Transactions: 0

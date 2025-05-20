@@ -259,3 +259,36 @@ bool WalletService::depositPoints(const std::string& targetWalletId, double amou
     tx.status = TransactionStatus::Successful;
 
     double originalTargetBalance = pTargetWallet->balance; // For potential rollback
+
+    // Perform deposit (in-memory first)
+    pTargetWallet->balance += amount;
+    pTargetWallet->lastUpdateTimestamp = TimeUtils::getCurrentTimestamp();
+
+    // Attempt to save
+    if (fileHandler.saveWallets(wallets)) {
+        transactions.push_back(tx);
+        if (fileHandler.saveTransactions(transactions)) {
+            outMessage = "Points deposited successfully!";
+            LOG_INFO(outMessage + " TxID: " + tx.transactionId + ", Amount: " + std::to_string(amount) +
+                     " to " + targetWalletId);
+            return true;
+        } else {
+            // Wallets saved but transaction log failed
+            outMessage = "Deposit processed and wallet balance updated, but failed to record transaction log. Please contact support with TxID: " + tx.transactionId;
+            LOG_ERROR("CRITICAL INCONSISTENCY: Wallet updated for TxID " + tx.transactionId +
+                      " but transaction log FAILED to save. New balance: " + std::to_string(pTargetWallet->balance));
+            return true; // Indicate balance change happened but log failed
+        }
+    }
+
+    // Failed to save wallet. Rollback in-memory changes
+    pTargetWallet->balance = originalTargetBalance;
+    outMessage = "Failed to save wallet updates. Deposit has been rolled back.";
+    tx.status = TransactionStatus::FailedSystemError;
+    transactions.push_back(tx);
+    if(!fileHandler.saveTransactions(transactions)) {
+        LOG_ERROR("Failed to save transaction log for system error rollback (TxID: " + tx.transactionId + ")");
+    }
+    LOG_ERROR("Deposit failed: " + outMessage);
+    return false;
+}

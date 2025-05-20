@@ -111,7 +111,6 @@ std::optional<User> AuthService::loginUser(const std::string& username, const st
     }
 
     LOG_INFO("User '" + username + "' logged in successfully.");
-    LOG_INFO("User '" + username + "' logged in.");
     return *it_user; // Return the User object
 }
 
