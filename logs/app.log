@@ -319,3 +319,23 @@
 2025-05-21 01:50:37 [WARNING] Login attempt failed for username 'phuongnd31_admin': Incorrect password.
 2025-05-21 01:50:38 [WARNING] Login attempt failed for username 'phuongnd31_admin': Incorrect password.
 2025-05-21 01:51:07 [WARNING] Registration failed for 'phuong_admin': Email already exists.
+2025-05-21 01:51:23 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 01:51:23 [INFO] ===================================
+2025-05-21 01:51:23 [INFO] Application Starting...
+2025-05-21 01:51:23 [INFO] Version: 1.0.0
+2025-05-21 01:51:23 [INFO] Data Directory: data/
+2025-05-21 01:51:23 [INFO] ===================================
+2025-05-21 01:51:23 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 01:51:23 [INFO] Loading data...
+2025-05-21 01:51:23 [ERROR] JSON parse error in users file (data/users.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:51:23 [ERROR] Failed to load user data. Application might behave unexpectedly.
+2025-05-21 01:51:23 [INFO] Loaded 5 wallets from data/wallets.json
+2025-05-21 01:51:23 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:51:23 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 01:51:23 [INFO] Data loading complete. Users: 0, Wallets: 5, Transactions: 0
+2025-05-21 01:51:23 [INFO] No users found. Creating default Admin account...
+2025-05-21 01:51:23 [WARNING] Admin attempt to create another Admin account for 'admin' was blocked by policy.
+2025-05-21 01:51:23 [ERROR] Failed to create default Admin account: Creating Admin accounts via this interface is restricted for security.
+2025-05-21 01:51:40 [INFO] Registration successful! Account created for phuong_admin. Please wait for activation.
+2025-05-21 01:51:40 [INFO] Saved 6 wallets to data/wallets.json
+2025-05-21 01:51:40 [INFO] New wallet created successfully for user phuong_admin. Wallet ID: WLT-86e284a7-3fe
