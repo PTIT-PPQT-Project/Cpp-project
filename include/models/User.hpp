@@ -59,7 +59,7 @@ inline void from_json(const json& j, UserRole& ur) {
     } else {
         // Handle error or default: for now, throw or assign a default.
         // For robustness, you might want to log an error and assign a default.
-        throw json::type_error::create(302, "UserRole must be a string in JSON", &j);
+        throw json::type_error::create(302, "UserRole must be a string in JSON", j);
     }
 }
 
@@ -71,7 +71,7 @@ inline void from_json(const json& j, AccountStatus& as) {
     if (j.is_string()) {
         as = User::stringToStatus(j.get<std::string>());
     } else {
-        throw json::type_error::create(302, "AccountStatus must be a string in JSON", &j);
+        throw json::type_error::create(302, "AccountStatus must be a string in JSON", j);
     }
 }
 

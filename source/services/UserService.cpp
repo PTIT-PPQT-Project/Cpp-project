@@ -141,19 +141,3 @@ bool UserService::deactivateUserAccount(const std::string& userId, std::string& 
     it->status = AccountStatus::Active; // Rollback in-memory (assuming previous state was Active)
     return false;
 }
-
-bool UserService::verifyUserOtp(const std::string& userId, const std::string& otpCode) const {
-    auto it = std::find_if(users.cbegin(), users.cend(), [&](const User& u) {
-        return u.userId == userId;
-    });
-
-    if (it == users.cend() || it->otpSecretKey.empty()) {
-        return false;
-    }
-
-    return otpService.verifyOtp(it->otpSecretKey, otpCode);
-}
-
-bool UserService::saveUserChanges() {
-    return fileHandler.saveUsers(users);
-}

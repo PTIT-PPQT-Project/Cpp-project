@@ -3,10 +3,9 @@
 
 #include <string>
 #include <fstream>
-#include <mutex>
-#include <iostream>
+#include <mutex>     // For thread-safe logging (if needed in the future)
+#include <iostream>  // For std::cout, std::cerr
 
-// LogLevel enum is defined here, and Config.h includes this file to use it.
 enum class LogLevel {
     DEBUG,
     INFO,
@@ -16,21 +15,22 @@ enum class LogLevel {
 
 class Logger {
 public:
-    // Constructor now doesn't rely on AppConfig for defaults in its declaration here.
-    // Defaults can be applied in the .cpp or when called from main.
-    Logger(const std::string& logFilePath,
-           LogLevel consoleLogLevel,
-           LogLevel fileLogLevel,
-           bool enableConsoleLogging);
+    // Constructor: allows specifying a log file and minimum log level for file/console
+    Logger(const std::string& logFilePath = "",
+           LogLevel consoleLogLevel = LogLevel::INFO,
+           LogLevel fileLogLevel = LogLevel::DEBUG,
+           bool enableConsoleLogging = true);
     ~Logger();
 
-    // getInstance declaration: Defaults here are basic.
-    // The actual configured defaults from AppConfig will be used
-    // by the static instance initialization within Logger.cpp.
-    static Logger& getInstance(const std::string& logFilePath = "", // Empty means Logger.cpp will use AppConfig
-                               LogLevel consoleLevel = LogLevel::INFO, // Basic default
-                               LogLevel fileLevel = LogLevel::DEBUG,   // Basic default
+    // Static method to get a shared instance (simple singleton-like access)
+    // For more robust singleton, consider Meyer's Singleton or other patterns.
+    // This simple static instance is often enough for basic needs.
+    // If you prefer DI, then don't use this and pass Logger instances around.
+    static Logger& getInstance(const std::string& logFilePath = "app.log", 
+                               LogLevel consoleLevel = LogLevel::INFO, 
+                               LogLevel fileLevel = LogLevel::DEBUG,
                                bool consoleLogging = true);
+
 
     void log(LogLevel level, const std::string& message);
     void debug(const std::string& message);
@@ -43,20 +43,22 @@ public:
     void enableConsoleOutput(bool enable);
 
 private:
-    std::ofstream logFileStream;
-    std::string logFilePathStr;
+    std::ofstream logFile;
+    std::string logFilePath;
     LogLevel currentConsoleLogLevel;
     LogLevel currentFileLogLevel;
     bool consoleOutputEnabled;
-    std::mutex logMutex;
+    std::mutex logMutex; // To make logging thread-safe
 
     std::string logLevelToString(LogLevel level) const;
+    std::string getCurrentTimestampString() const;
 
+    // Delete copy constructor and assignment operator for singleton-like behavior via getInstance
     Logger(const Logger&) = delete;
     Logger& operator=(const Logger&) = delete;
 };
 
-// Helper macros (không thay đổi)
+// Helper macro for easy logging (optional)
 #define LOG_DEBUG(message) Logger::getInstance().debug(message)
 #define LOG_INFO(message) Logger::getInstance().info(message)
 #define LOG_WARNING(message) Logger::getInstance().warning(message)

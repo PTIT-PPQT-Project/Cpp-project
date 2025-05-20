@@ -3,8 +3,12 @@
 #include "utils/FileHandler.hpp"
 #include "utils/HashUtils.hpp"
 #include "utils/Logger.hpp"
+<<<<<<< HEAD
 #include "utils/TimeUtils.hpp"     // For TimeUtils::getCurrentTimestamp
 #include "Config.h"                // For AppConfig constants
+=======
+#include "Config.h" // For AppConfig::DEFAULT_INITIAL_WALLET_BALANCE, MASTER_WALLET_ID etc.
+>>>>>>> parent of ffeed75 (updated alot of thing)
 #include <algorithm>
 #include <ctime>
 #include <iomanip>                 // For std::fixed, std::setprecision in logging

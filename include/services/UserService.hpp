@@ -30,8 +30,4 @@ public:
     
     bool activateUserAccount(const std::string& userId, std::string& outMessage);
     bool deactivateUserAccount(const std::string& userId, std::string& outMessage);
-
-    // New methods
-    bool verifyUserOtp(const std::string& userId, const std::string& otpCode) const;
-    bool saveUserChanges();
 };
