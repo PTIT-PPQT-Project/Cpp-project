@@ -1,10 +1,23 @@
 cmake_minimum_required(VERSION 3.10)
-project(CPlusPlusWalletProject)
+project(WalletSystem)
+
+# Set vcpkg toolchain file
+set(CMAKE_TOOLCHAIN_FILE "C:/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
+
 set(CMAKE_CXX_STANDARD 17)
-add_subdirectory(controller)
-add_subdirectory(model)
-add_subdirectory(view)
-add_subdirectory(db)
-add_subdirectory(utils)
-add_executable(CPlusPlusWalletProject main.cpp)
-target_link_libraries(CPlusPlusWalletProject controller model view db utils)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Find OpenSSL package
+find_package(OpenSSL REQUIRED)
+
+# Add executable
+add_executable(wallet_system
+    main.cpp
+    User.cpp
+    UserManager.cpp
+    OTPManager.cpp
+    Wallet.cpp
+)
+
+# Link OpenSSL
+target_link_libraries(wallet_system PRIVATE OpenSSL::SSL OpenSSL::Crypto) 
