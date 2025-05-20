@@ -87,7 +87,13 @@
         "filesystem": "cpp",
         "ranges": "cpp",
         "span": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "*.tcc": "cpp",
+        "codecvt": "cpp",
+        "numbers": "cpp",
+        "semaphore": "cpp",
+        "text_encoding": "cpp",
+        "cinttypes": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

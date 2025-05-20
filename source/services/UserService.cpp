@@ -19,32 +19,40 @@ std::optional<User> UserService::getUserProfile(const std::string& userId) const
     return std::nullopt;
 }
 
+std::optional<User> UserService::getUserByUsername(const std::string& username) const {
+    auto it = std::find_if(users.cbegin(), users.cend(), [&](const User& u) {
+        return u.username == username;
+    });
+    if (it != users.cend()) {
+        return *it;
+    }
+    LOG_WARNING("User profile requested for non-existent username: " + username);
+    return std::nullopt;
+}
+
 bool UserService::updateUserProfile(const std::string& userId,
                                     const std::string& newFullName,
                                     const std::string& newEmail,
                                     const std::string& newPhoneNumber,
-                                    const std::string& otpCode, // User-provided OTP if applicable
+                                    const std::string& otpCode,
                                     std::string& outMessage) {
     auto it = std::find_if(users.begin(), users.end(), [&](User& u) {
         return u.userId == userId;
     });
 
     if (it == users.end()) {
-        outMessage = "User not found for profile update.";
-        LOG_WARNING(outMessage + " User ID: " + userId);
+        outMessage = "Khong tim thay tai khoan.";
         return false;
     }
 
-    // OTP Verification if user has OTP enabled and action requires it (assume it does for now if enabled)
+    // OTP Verification if user has OTP enabled
     if (!it->otpSecretKey.empty()) {
         if (otpCode.empty()) {
-            outMessage = "OTP is required for this action as you have it enabled.";
-            LOG_WARNING("Profile update failed for user '" + it->username + "': Missing OTP.");
+            outMessage = "Ban can nhap ma OTP de xac nhan thay doi.";
             return false;
         }
         if (!otpService.verifyOtp(it->otpSecretKey, otpCode)) {
-            outMessage = "Invalid OTP code.";
-            LOG_WARNING("Profile update failed for user '" + it->username + "': Invalid OTP.");
+            outMessage = "Ma OTP khong hop le.";
             return false;
         }
     }

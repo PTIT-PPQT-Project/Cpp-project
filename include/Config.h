@@ -2,7 +2,7 @@
 #pragma once
 
 #include <string>
-#include "../utils/Logger.hpp" // For LogLevel enum, adjust path if Logger.hpp is elsewhere or Config.h is in utils/
+#include "utils/Logger.hpp" // Fixed include path
 
 namespace AppConfig {
 

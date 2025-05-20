@@ -1,52 +1,48 @@
 // src/models/User.cpp
-#include "include/models/User.hpp" // Điều chỉnh đường dẫn nếu cần
+#include "../include/models/User.hpp" // Adjust path to be relative to source/models directory
 #include <stdexcept> // For std::invalid_argument
 
 // Default constructor
 User::User() :
     userId(""),
     username(""),
-    hashedPassword(""),
-    passwordSalt(""),
+    passwordHash(""),
     fullName(""),
     email(""),
     phoneNumber(""),
-    role(UserRole::RegularUser), // Default role
-    creationTimestamp(0),
-    lastLoginTimestamp(0),
-    status(AccountStatus::NotActivated), // Default status
-    isTemporaryPassword(false),
-    otpSecretKey("") {}
+    role(UserRole::RegularUser),
+    status(AccountStatus::NotActivated),
+    otpSecretKey(""),
+    isTemporaryPassword(false) {}
 
 // Static utility function implementations
-std::string User::roleToString(UserRole r) {
-    switch (r) {
+std::string User::roleToString(UserRole role) {
+    switch (role) {
         case UserRole::RegularUser: return "RegularUser";
         case UserRole::AdminUser: return "AdminUser";
-        default: return "UnknownRole";
+        default: return "Unknown";
     }
 }
 
 UserRole User::stringToRole(const std::string& roleStr) {
     if (roleStr == "RegularUser") return UserRole::RegularUser;
-    if (roleStr == "AdminUser") return UserRole::AdminUser;
-    // For robustness, you might log an error and return a default role
-    // or simply throw an exception if the string is unexpected.
-    throw std::invalid_argument("Invalid role string provided for conversion: " + roleStr);
+    else if (roleStr == "AdminUser") return UserRole::AdminUser;
+    else if (roleStr == "Admin") return UserRole::AdminUser; // Handle legacy format
+    else throw std::runtime_error("Invalid UserRole string value: " + roleStr);
 }
 
-std::string User::statusToString(AccountStatus s) {
-    switch (s) {
+std::string User::statusToString(AccountStatus status) {
+    switch (status) {
+        case AccountStatus::NotActivated: return "NotActivated";
         case AccountStatus::Active: return "Active";
         case AccountStatus::Inactive: return "Inactive";
-        case AccountStatus::NotActivated: return "NotActivated";
-        default: return "UnknownStatus";
+        default: return "Unknown";
     }
 }
 
 AccountStatus User::stringToStatus(const std::string& statusStr) {
-    if (statusStr == "Active") return AccountStatus::Active;
-    if (statusStr == "Inactive") return AccountStatus::Inactive;
     if (statusStr == "NotActivated") return AccountStatus::NotActivated;
-    throw std::invalid_argument("Invalid status string provided for conversion: " + statusStr);
+    else if (statusStr == "Active") return AccountStatus::Active;
+    else if (statusStr == "Inactive") return AccountStatus::Inactive;
+    else throw std::runtime_error("Invalid AccountStatus string value: " + statusStr);
 }

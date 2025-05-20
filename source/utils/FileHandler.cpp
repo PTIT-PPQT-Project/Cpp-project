@@ -1,8 +1,12 @@
 // src/utils/FileHandler.cpp
 #include "../../include/utils/FileHandler.hpp"
+#include "../../include/utils/Logger.hpp"
 #include <filesystem> // For std::filesystem::create_directories (C++17)
                       // If not C++17, you might need OS-specific directory creation or a library.
+#include <fstream>
+#include <nlohmann/json.hpp>
 
+using json = nlohmann::json;
 
 // IMPORTANT: Ensure the to_json and from_json functions for User, Wallet, Transaction,
 // and their enums are defined and accessible here.
@@ -23,7 +27,23 @@ void FileHandler::ensureDirectoryExists(const std::string& filePath) {
 
 
 FileHandler::FileHandler(const std::string& dataDir) {
-    std::string baseDir = dataDir;
+    // Get the project root directory (two levels up from build)
+    std::filesystem::path currentPath = std::filesystem::current_path();
+    std::filesystem::path projectRoot = currentPath.parent_path().parent_path();
+    
+    // Ensure we're in the Cpp-project directory
+    if (projectRoot.filename() != "Cpp-project") {
+        // Try to find Cpp-project in the path
+        std::filesystem::path tempPath = currentPath;
+        while (!tempPath.empty() && tempPath.filename() != "Cpp-project") {
+            tempPath = tempPath.parent_path();
+        }
+        if (!tempPath.empty()) {
+            projectRoot = tempPath;
+        }
+    }
+    
+    std::string baseDir = (projectRoot / "data").string();
     if (!baseDir.empty() && baseDir.back() != '/' && baseDir.back() != '\\') {
         baseDir += "/";
     }
@@ -31,6 +51,18 @@ FileHandler::FileHandler(const std::string& dataDir) {
     usersFilePath = baseDir + "users.json";
     walletsFilePath = baseDir + "wallets.json";
     transactionsFilePath = baseDir + "transactions.json";
+
+    // Get absolute paths for logging
+    std::filesystem::path absUsersPath = std::filesystem::absolute(usersFilePath);
+    std::filesystem::path absWalletsPath = std::filesystem::absolute(walletsFilePath);
+    std::filesystem::path absTransactionsPath = std::filesystem::absolute(transactionsFilePath);
+
+    LOG_INFO("FileHandler initialized with absolute paths:");
+    LOG_INFO("Current path: " + currentPath.string());
+    LOG_INFO("Project root: " + projectRoot.string());
+    LOG_INFO("Users file: " + absUsersPath.string());
+    LOG_INFO("Wallets file: " + absWalletsPath.string());
+    LOG_INFO("Transactions file: " + absTransactionsPath.string());
 
     // Ensure directories exist when FileHandler is created
     ensureDirectoryExists(usersFilePath);
@@ -43,33 +75,37 @@ bool FileHandler::loadUsers(std::vector<User>& users) {
     users.clear();
     std::ifstream file(usersFilePath);
     if (!file.is_open()) {
-        // If file doesn't exist, it's not an error, just no users loaded.
-        // Could create an empty file here if desired.
-        std::cerr << "[FileHandler] INFO: Users file (" << usersFilePath << ") not found. Starting with empty user list." << std::endl;
+        // If file doesn't exist, create it with an empty array
+        ensureDirectoryExists(usersFilePath);
+        std::ofstream newFile(usersFilePath);
+        if (newFile.is_open()) {
+            newFile << "[]";
+            newFile.close();
+        }
         return true; // Not an error if file simply doesn't exist yet
     }
 
     try {
         json j;
-        file >> j;
+        file >> j; 
+        
         // Assuming the top level is an array of users
         if (j.is_array()) {
             users = j.get<std::vector<User>>(); // Uses from_json for User
         } else if (j.is_null()) { // Handle empty file or file with just 'null'
-             std::cerr << "[FileHandler] INFO: Users file (" << usersFilePath << ") is null or empty. Starting with empty user list." << std::endl;
-        }
-         else {
-            std::cerr << "[FileHandler] ERROR: Users file (" << usersFilePath << ") does not contain a valid JSON array." << std::endl;
+            // Empty file is not an error
+        } else {
+            LOG_ERROR("Users file does not contain a valid JSON array.");
             return false;
         }
     } catch (json::parse_error& e) {
-        std::cerr << "[FileHandler] ERROR: JSON parse error in users file: " << e.what() << std::endl;
+        LOG_ERROR("JSON parse error in users file: " + std::string(e.what()));
         return false;
     } catch (json::type_error& e) {
-        std::cerr << "[FileHandler] ERROR: JSON type error in users file (likely malformed data): " << e.what() << std::endl;
+        LOG_ERROR("JSON type error in users file: " + std::string(e.what()));
         return false;
     } catch (std::exception& e) {
-        std::cerr << "[FileHandler] ERROR: Generic error loading users: " << e.what() << std::endl;
+        LOG_ERROR("Error loading users: " + std::string(e.what()));
         return false;
     }
     file.close();
@@ -77,26 +113,24 @@ bool FileHandler::loadUsers(std::vector<User>& users) {
 }
 
 bool FileHandler::saveUsers(const std::vector<User>& users) {
-    ensureDirectoryExists(usersFilePath);
-    std::ofstream file(usersFilePath);
-    if (!file.is_open()) {
-        std::cerr << "[FileHandler] ERROR: Could not open users file for writing: " << usersFilePath << std::endl;
-        return false;
-    }
     try {
-        json j = users; // Uses to_json for User (and std::vector<User>)
-        file << j.dump(4); // Pretty print with 4 spaces indent
-    } catch (json::type_error& e) {
-        std::cerr << "[FileHandler] ERROR: JSON type error saving users (data conversion failed): " << e.what() << std::endl;
-        file.close(); // Close file on error
-        return false;
-    } catch (std::exception& e) {
-        std::cerr << "[FileHandler] ERROR: Generic error saving users: " << e.what() << std::endl;
+        ensureDirectoryExists(usersFilePath);
+        json j = users; // Serialize users to JSON
+        
+        std::ofstream file(usersFilePath, std::ios::out | std::ios::trunc);
+        if (!file.is_open()) {
+            LOG_ERROR("Failed to open users file for writing");
+            return false;
+        }
+        
+        file << j.dump(4); // Pretty print JSON
+        file.flush(); // Ensure data is written to disk
         file.close();
+        return true;
+    } catch (const std::exception& e) {
+        LOG_ERROR("Error saving users: " + std::string(e.what()));
         return false;
     }
-    file.close();
-    return true;
 }
 
 // --- Wallet Data ---
@@ -190,23 +224,25 @@ bool FileHandler::loadTransactions(std::vector<Transaction>& transactions) {
 
 bool FileHandler::saveTransactions(const std::vector<Transaction>& transactions) {
     ensureDirectoryExists(transactionsFilePath);
-    std::ofstream file(transactionsFilePath);
+    std::ofstream file(transactionsFilePath, std::ios::out | std::ios::trunc);
     if (!file.is_open()) {
-        std::cerr << "[FileHandler] ERROR: Could not open transactions file for writing: " << transactionsFilePath << std::endl;
+        LOG_ERROR("Could not open transactions file for writing: " + transactionsFilePath);
         return false;
     }
     try {
         json j = transactions;
         file << j.dump(4);
+        file.flush(); // Ensure data is written to disk
+        file.close();
+        LOG_INFO("Successfully saved " + std::to_string(transactions.size()) + " transactions to file");
+        return true;
     } catch (json::type_error& e) {
-        std::cerr << "[FileHandler] ERROR: JSON type error saving transactions: " << e.what() << std::endl;
+        LOG_ERROR("JSON type error saving transactions: " + std::string(e.what()));
         file.close();
         return false;
     } catch (std::exception& e) {
-        std::cerr << "[FileHandler] ERROR: Generic error saving transactions: " << e.what() << std::endl;
+        LOG_ERROR("Generic error saving transactions: " + std::string(e.what()));
         file.close();
         return false;
     }
-    file.close();
-    return true;
 }

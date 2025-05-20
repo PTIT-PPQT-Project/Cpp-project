@@ -24,7 +24,7 @@ CMAKE_FIND_PACKAGE_REDIRECTS_DIR:STATIC=C:/Repositories/Cpp-project/_deps/nlohma
 CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/nlohmann_json-populate
 
 //No help, variable specified on the command line.
-CMAKE_MAKE_PROGRAM:FILEPATH=C:/MinGW/bin/mingw32-make.exe
+CMAKE_MAKE_PROGRAM:FILEPATH=C:/msys64/mingw64/bin/mingw32-make.exe
 
 //Value Computed by CMake
 CMAKE_PROJECT_DESCRIPTION:STATIC=

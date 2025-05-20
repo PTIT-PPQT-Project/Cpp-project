@@ -1,17 +1,17 @@
 // src/utils/Logger.cpp
-#include "../../include/utils/Logger.hpp"
+#include "../include/utils/Logger.hpp"
 #include "../../include/utils/TimeUtils.hpp" // Using our TimeUtils
 #include <filesystem> // For ensureDirectoryExists in C++17
 
 // Helper function (can be moved to a common utility if used elsewhere)
 void EnsureDirectoryForFileExists(const std::string& filePath) {
-    if (filePath.empty()) return;
-    std::filesystem::path pathObj(filePath);
-    std::filesystem::path dir = pathObj.parent_path();
-    if (!dir.empty() && !std::filesystem::exists(dir)) {
-        try {
-            std::filesystem::create_directories(dir);
-        } catch (const std::filesystem::filesystem_error& e) {
+        if (filePath.empty()) return;
+        std::filesystem::path pathObj(filePath);
+        std::filesystem::path dir = pathObj.parent_path();
+        if (!dir.empty() && !std::filesystem::exists(dir)) {
+            try {
+                std::filesystem::create_directories(dir);
+            } catch (const std::filesystem::filesystem_error& e) {
             std::cerr << "Logger Error: Could not create directory " << dir.string() << ": " << e.what() << std::endl;
         }
     }
@@ -19,13 +19,16 @@ void EnsureDirectoryForFileExists(const std::string& filePath) {
 
 
 Logger::Logger(const std::string& filePath, LogLevel consoleLevel, LogLevel fileLevel, bool enableConsole)
-    : logFilePath(filePath), currentConsoleLogLevel(consoleLevel), currentFileLogLevel(fileLevel), consoleOutputEnabled(enable) {
-    if (!logFilePath.empty()) {
-        EnsureDirectoryForFileExists(logFilePath);
-        logFile.open(logFilePath, std::ios::out | std::ios::app); // Open in append mode
-        if (!logFile.is_open()) {
-            std::cerr << "Logger Error: Failed to open log file: " << logFilePath << std::endl;
-        }
+    : logFilePath(filePath), currentConsoleLogLevel(consoleLevel), currentFileLogLevel(fileLevel), consoleOutputEnabled(enableConsole) {
+    
+    // Create directory if it doesn't exist
+    std::filesystem::path path(filePath);
+    std::filesystem::create_directories(path.parent_path());
+    
+    // Open log file in append mode
+    logFile.open(filePath, std::ios::app);
+    if (!logFile.is_open()) {
+        std::cerr << "Error: Could not open log file: " << filePath << std::endl;
     }
 }
 

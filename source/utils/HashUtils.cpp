@@ -1,10 +1,14 @@
 // src/utils/HashUtils.cpp
-#include "../../include/utils/HashUtils.hpp"
+#include "../include/utils/HashUtils.hpp"
+#include <chrono>
 #include <random>
 #include <sstream>
 #include <iomanip> // For std::hex
 #include <algorithm> // For std::generate_n
 #include <iostream> // For security warning
+#include <openssl/sha.h>
+#include <openssl/evp.h>
+#include <openssl/rand.h>
 
 HashUtils::HashUtils() {
     // Constructor

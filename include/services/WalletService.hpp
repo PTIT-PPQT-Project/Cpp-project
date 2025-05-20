@@ -4,10 +4,13 @@
 #include <string>
 #include <vector>
 #include <optional>
-#include "models/User.hpp"
-#include "models/Wallet.hpp"
-#include "models/Transaction.hpp"
-#include "services/OTPService.hpp"
+#include "../models/User.hpp"
+#include "../models/Wallet.hpp"
+#include "../models/Transaction.hpp"
+#include "../utils/FileHandler.hpp"
+#include "../utils/HashUtils.hpp"
+#include "../services/OTPService.hpp"
+#include "../Config.h"
 
 class FileHandler; // Forward declaration
 class HashUtils;   // Forward declaration (for generating transaction IDs)
@@ -41,5 +44,8 @@ public:
     bool depositPoints(const std::string& targetWalletId, double amount, 
                        const std::string& description, const std::string& initiatedByUserId, // For logging/audit, could be "SYSTEM" or adminId
                        std::string& outMessage, 
+                       const std::string& sourceWalletId = AppConfig::SYSTEM_WALLET_ID_FOR_DEPOSITS);
+
+    bool depositToWallet(const std::string& userId, double amount, const std::string& reason,
                        const std::string& sourceWalletId = AppConfig::SYSTEM_WALLET_ID_FOR_DEPOSITS);
 };

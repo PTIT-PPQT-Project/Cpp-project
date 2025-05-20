@@ -2,29 +2,30 @@
 #include "services/AdminService.hpp"
 #include "utils/Logger.hpp"
 #include "Config.h" // For AppConfig::MASTER_WALLET_ID if used
+#include "utils/InputValidator.hpp"
 
-AdminService::AdminService(std::vector<User>& u_ref, AuthService& as_ref, 
+AdminService::AdminService(std::vector<User>& u_ref, AuthService& as_ref,
                            UserService& us_ref, WalletService& ws_ref)
     : users(u_ref), authService(as_ref), userService(us_ref), walletService(ws_ref) {}
 
 std::vector<User> AdminService::listAllUsers() const {
-    LOG_INFO("Admin listed all users.");
+    LOG_INFO("Admin len danh sach tat ca nguoi dung.");
     return users; // Returns a copy. For performance on large sets, consider const ref or specific DTOs.
 }
 
 bool AdminService::adminCreateUserAccount(const std::string& username, const std::string& fullName,
                                           const std::string& email, const std::string& phoneNumber,
-                                          UserRole role, std::string& outCreatedTempPassword, 
+                                          UserRole role, std::string& outCreatedTempPassword,
                                           std::string& outMessage) {
     // Policy: Admin cannot create another Admin user through this simple function for safety.
     if (role == UserRole::AdminUser) {
-        outMessage = "Cannot create Admin accounts using this function for security reasons.";
-        LOG_WARNING("Admin attempt to create another Admin account for '" + username + "' was blocked.");
+        outMessage = "Khong the tao tai khoan Admin su dung chuc nang nay vi ly do an toan.";
+        LOG_WARNING("Admin dang thu tao mot tai khoan Admin khac cho '" + username + "' bi chan.");
         return false;
     }
     outCreatedTempPassword = authService.createAccountWithTemporaryPassword(
                                 username, fullName, email, phoneNumber, role, outMessage);
-    
+
     if (!outCreatedTempPassword.empty()) {
         // Auto-create wallet for the new user
         std::string newUserId;
@@ -37,16 +38,16 @@ bool AdminService::adminCreateUserAccount(const std::string& username, const std
         if (!newUserId.empty()) {
             std::string walletMsg;
             if (!walletService.createWalletForUser(newUserId, walletMsg)) {
-                LOG_ERROR("Admin created user '" + username + "' but failed to create wallet: " + walletMsg);
+                LOG_ERROR("Admin da tao tai khoan cho '" + username + "' nhung that bai khi tao vi: " + walletMsg);
                 // User created, but wallet failed. This is a partial success/failure state.
                 // outMessage might need to reflect this.
-                outMessage += " User created, but wallet creation failed: " + walletMsg;
+                outMessage += " Tai khoan da duoc tao nhung tao vi that bai: " + walletMsg;
             } else {
-                 LOG_INFO("Wallet created for new user '" + username + "' by admin action.");
+                 LOG_INFO("Vi da duoc tao cho tai khoan moi '" + username + "' boi admin.");
             }
         } else {
-            LOG_ERROR("Could not find newly created user '" + username + "' by admin to create wallet.");
-            outMessage += " User created, but could not find user to create wallet.";
+            LOG_ERROR("Khong the tim thay tai khoan '" + username + "' de tao vi boi admin.");
+            outMessage += " Tai khoan da duoc tao nhung khong tim thay nguoi dung de tao vi.";
         }
         return true;
     }
@@ -58,27 +59,22 @@ bool AdminService::adminUpdateUserProfile(const std::string& adminUserId, const 
                                           const std::string& newPhoneNumber, AccountStatus newStatus,
                                           const std::string& targetUserOtpCode,
                                           std::string& outMessage) {
-    LOG_INFO("Admin '" + adminUserId + "' attempting to update profile for user ID '" + targetUserId + "'.");
+    LOG_INFO("Admin '" + adminUserId + "' dang cap nhat thong tin nguoi dung co ID '" + targetUserId + "'.");
 
     auto targetUserOpt = userService.getUserProfile(targetUserId);
     if (!targetUserOpt) {
-        outMessage = "Target user not found.";
-        LOG_WARNING("Admin update profile failed: " + outMessage + " Target ID: " + targetUserId);
+        outMessage = "Khong tim thay tai khoan can cap nhat.";
         return false;
     }
-    User targetUser = targetUserOpt.value(); // Get a copy for checking OTP secret
-
-    // If target user has OTP enabled, admin needs to provide the OTP obtained from the user.
+    User targetUser = targetUserOpt.value();
+    // OTP Verification if target user has OTP enabled
     if (!targetUser.otpSecretKey.empty()) {
         if (targetUserOtpCode.empty()) {
-            outMessage = "Target user has OTP enabled. Admin must provide user's OTP code.";
-            LOG_WARNING("Admin update profile for '" + targetUser.username + "' failed: Missing target user OTP.");
+            outMessage = "Can nhap ma OTP cua nguoi dung de xac nhan thay doi.";
             return false;
         }
-        // Use the OTPService instance from AuthService (or pass one to AdminService)
-        if (!authService.otpService.verifyOtp(targetUser.otpSecretKey, targetUserOtpCode)) {
-            outMessage = "Invalid OTP code for target user.";
-            LOG_WARNING("Admin update profile for '" + targetUser.username + "' failed: Invalid target user OTP.");
+        if (!authService.getOtpService().verifyOtp(targetUser.otpSecretKey, targetUserOtpCode)) {
+            outMessage = "Ma OTP cua nguoi dung khong hop le.";
             return false;
         }
     }
@@ -86,8 +82,8 @@ bool AdminService::adminUpdateUserProfile(const std::string& adminUserId, const 
     // Now, actually find the user in the main vector to update
     auto it_target = std::find_if(users.begin(), users.end(), [&](User& u){ return u.userId == targetUserId; });
     if (it_target == users.end()){ 
-        outMessage = "Internal error: Target user found initially but not in updatable list.";
-        LOG_ERROR(outMessage + " Target ID: " + targetUserId);
+        outMessage = "Loi he thong: Tai khoan nguoi dung tim thay ban dau nhung khong tim thay trong danh sach cap nhat.";
+        LOG_ERROR(outMessage + " ID nguoi dung: " + targetUserId);
         return false;
     }
 
@@ -108,65 +104,65 @@ bool AdminService::adminUpdateUserProfile(const std::string& adminUserId, const 
 
     if (!newEmail.empty() && it_target->email != newEmail) {
         if (!InputValidator::isValidEmail(newEmail)) {
-            outMessage = "New email format is invalid.";
-             LOG_WARNING("Admin update profile for '" + it_target->username + "' failed: " + outMessage);
+            outMessage = "Dinh dang email moi khong hop le.";
+            LOG_WARNING("Admin cap nhat thong tin nguoi dung '" + it_target->username + "' that bai: " + outMessage);
             return false;
         }
         auto email_exists = std::find_if(users.cbegin(), users.cend(), [&](const User& u) {
             return u.email == newEmail && u.userId != targetUserId;
         });
         if (email_exists != users.cend()) {
-            outMessage = "New email address is already in use by another account.";
-            LOG_WARNING("Admin update profile for '" + it_target->username + "' failed: " + outMessage);
+            outMessage = "Email moi da duoc su dung boi mot tai khoan khac.";
+            LOG_WARNING("Admin cap nhat thong tin nguoi dung '" + it_target->username + "' that bai: " + outMessage);
             return false;
         }
         it_target->email = newEmail;
         changed = true;
     }
-    
+
     if (!changed) {
-        outMessage = "No changes provided for user profile.";
-        LOG_INFO("Admin update profile for '" + it_target->username + "': No actual changes made.");
+        outMessage = "Khong co thay doi nao duoc cung cap cho thong tin nguoi dung.";
+        LOG_INFO("Admin cap nhat thong tin nguoi dung '" + it_target->username + "': Khong co thay doi nao.");
         return true; // Or false if "no change" is an issue
     }
 
-    if (fileHandler.saveUsers(users)) { // Use fileHandler from one of the services, e.g. authService
-        outMessage = "Admin successfully updated user profile for " + it_target->username + ".";
+    if (authService.getFileHandler().saveUsers(users)) { // Use fileHandler from one of the services, e.g. authService
+        outMessage = "Admin da cap nhat thong tin nguoi dung " + it_target->username + " thanh cong.";
         LOG_INFO(outMessage);
         return true;
     } else {
-        outMessage = "Error saving updated user profile by admin.";
-        LOG_ERROR(outMessage + " Target User: " + it_target->username);
+        outMessage = "Loi khi luu thong tin nguoi dung cap nhat boi admin.";
+        LOG_ERROR(outMessage + " Tai khoan cua nguoi dung: " + it_target->username);
         // Consider rollback for in-memory changes.
         return false;
     }
 }
-    
+
 bool AdminService::adminActivateUser(const std::string& targetUserId, std::string& outMessage) {
-    LOG_INFO("Admin attempting to activate user ID '" + targetUserId + "'.");
+    LOG_INFO("Admin dang kich hoat tai khoan cua nguoi dung co ID '" + targetUserId + "'.");
     return userService.activateUserAccount(targetUserId, outMessage);
 }
 
 bool AdminService::adminDeactivateUser(const std::string& targetUserId, std::string& outMessage) {
-    LOG_INFO("Admin attempting to deactivate user ID '" + targetUserId + "'.");
+    LOG_INFO("Admin dang khoa tai khoan cua nguoi dung co ID '" + targetUserId + "'.");
     return userService.deactivateUserAccount(targetUserId, outMessage);
 }
 
-bool AdminService::adminDepositToUserWallet(const std::string& adminUserId, const std::string& targetUserId, 
+bool AdminService::adminDepositToUserWallet(const std::string& adminUserId, const std::string& targetUserId,
                                             double amount, const std::string& reason, std::string& outMessage) {
-    LOG_INFO("Admin '" + adminUserId + "' attempting to deposit " + std::to_string(amount) + 
-             " to user ID '" + targetUserId + "' for reason: " + reason);
+    LOG_INFO("Admin '" + adminUserId + "' dang chuyen khoan " + std::to_string(amount) + 
+             " cho tai khoan cua nguoi dung '" + targetUserId + "' voi ly do: " + reason);
 
     auto targetUserOpt = userService.getUserProfile(targetUserId);
     if (!targetUserOpt) {
-        outMessage = "Target user for deposit not found.";
-        LOG_WARNING("Admin deposit failed: " + outMessage + " Target User ID: " + targetUserId);
+        outMessage = "Tai khoan cua nguoi dung khong tim thay. Vui long kiem tra lai.";
+        LOG_WARNING("Admin chuyen khoan loi: " + outMessage + " Toi tai khoan cua nguoi dung " + targetUserId);
         return false;
     }
     auto targetWalletOpt = walletService.getWalletByUserId(targetUserId);
     if (!targetWalletOpt) {
-        outMessage = "Wallet for target user not found. Please ensure user has a wallet.";
-        LOG_WARNING("Admin deposit failed: " + outMessage + " Target User: " + targetUserOpt.value().username);
+        outMessage = "Tai khoan cua nguoi dung khong tim thay. Vui long kiem tra lai.";
+        LOG_WARNING("Admin chuyen khoan loi: " + outMessage + " Toi tai khoan cua nguoi dung " + targetUserOpt.value().username);
         // Option: Admin could trigger wallet creation here if desired.
         // std::string walletCreationMsg;
         // if (!walletService.createWalletForUser(targetUserId, walletCreationMsg)) {
@@ -178,8 +174,8 @@ bool AdminService::adminDepositToUserWallet(const std::string& adminUserId, cons
         return false;
     }
 
-    std::string description = "Admin deposit (" + adminUserId + "): " + reason;
+    std::string description = "Admin chuyen khoan (" + adminUserId + "): " + "voi ly do:" reason;
     // Using MASTER_WALLET_ID or a generic system source ID for deposits from admin
     return walletService.depositPoints(targetWalletOpt.value().walletId, amount, description, adminUserId, 
-                                       outMessage, AppConfig::MASTER_WALLET_ID); 
+                                       outMessage, AppConfig::MASTER_WALLET_ID);
 }

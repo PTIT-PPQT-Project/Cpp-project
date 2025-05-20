@@ -1,223 +1,243 @@
 // src/services/AuthService.cpp
-#include "services/AuthService.hpp"
-#include "utils/FileHandler.hpp"
-#include "utils/HashUtils.hpp"
-#include "utils/Logger.hpp" // For LOG_ macros
+#include "../include/services/AuthService.hpp"
+#include "../include/utils/FileHandler.hpp"
+#include "../include/utils/HashUtils.hpp"
+#include "../include/utils/Logger.hpp" // For LOG_ macros
+#include "../include/utils/TimeUtils.hpp"
+#include "../include/config/AppConfig.hpp"
 #include <algorithm>
 #include <ctime>
 
 AuthService::AuthService(std::vector<User>& users_ref, FileHandler& fh_ref, OTPService& otp_ref, HashUtils& hu_ref)
-    : users(users_ref), fileHandler(fh_ref), otpService(otp_ref), hashUtils(hu_ref) {}
+    : users(users_ref), fileHandler(fh_ref), otpService(otp_ref), hashUtils(hu_ref) {
+    // Load users from file when service is initialized
+    if (!fileHandler.loadUsers(users)) {
+        LOG_ERROR("Failed to load users from file during AuthService initialization");
+    } else {
+        LOG_INFO("Loaded " + std::to_string(users.size()) + " users from file");
+    }
+}
 
 bool AuthService::registerUser(const std::string& username, const std::string& password,
                                const std::string& fullName, const std::string& email,
                                const std::string& phoneNumber, UserRole role, std::string& outMessage) {
-    auto it_user = std::find_if(users.begin(), users.end(), [&](const User& u) {
-        return u.username == username || u.email == email;
-    });
-
-    if (it_user != users.end()) {
-        outMessage = (it_user->username == username) ? "Username already exists." : "Email already exists.";
-        LOG_WARNING("Registration failed: " + outMessage);
+    // Validate input
+    if (username.empty() || password.empty() || fullName.empty() || email.empty()) {
+        outMessage = "All fields are required.";
         return false;
     }
 
-    // Password validation should ideally use InputValidator, but basic check here for now
+    // Check password length
     if (password.length() < AppConfig::MIN_PASSWORD_LENGTH) {
         outMessage = "Password must be at least " + std::to_string(AppConfig::MIN_PASSWORD_LENGTH) + " characters long.";
-        LOG_WARNING("Registration failed: " + outMessage);
         return false;
     }
 
+    // Check if username already exists
+    auto it = std::find_if(users.begin(), users.end(),
+                    [&username](const User& u) { return u.username == username; });
+    if (it != users.end()) {
+        outMessage = "Username already exists.";
+        return false;
+    }
+
+    // Create new user
     User newUser;
     newUser.userId = hashUtils.generateUUID();
     newUser.username = username;
-    newUser.passwordSalt = hashUtils.generateSalt();
-    newUser.hashedPassword = hashUtils.hashPassword(password, newUser.passwordSalt);
+    
+    // Generate salt and hash password
+    std::string salt = hashUtils.generateSalt(16);
+    newUser.passwordHash = salt + hashUtils.hashPassword(password, salt);
+    
     newUser.fullName = fullName;
     newUser.email = email;
     newUser.phoneNumber = phoneNumber;
     newUser.role = role;
-    newUser.status = AccountStatus::NotActivated; // Or Active, depending on flow
+    newUser.status = AccountStatus::NotActivated;
     newUser.isTemporaryPassword = false;
-    newUser.creationTimestamp = TimeUtils::getCurrentTimestamp();
-    newUser.lastLoginTimestamp = 0;
 
+    LOG_INFO("Creating new user '" + username + "' with role: " + User::roleToString(role));
+
+    // Add to users list
     users.push_back(newUser);
-    if (fileHandler.saveUsers(users)) {
-        outMessage = "Registration successful! Account created for " + username + ".";
-        LOG_INFO(outMessage);
-        return true;
-    } else {
-        outMessage = "Error saving user data during registration.";
-        LOG_ERROR(outMessage + " Rolling back user addition for " + username);
-        users.pop_back(); // Rollback
+    
+    if (!fileHandler.saveUsers(users)) {
+        users.pop_back(); // Remove the user if save failed
+        outMessage = "Failed to save user data. Please try again.";
         return false;
     }
+    
+    outMessage = "User registered successfully.";
+    return true;
 }
 
 std::optional<User> AuthService::loginUser(const std::string& username, const std::string& password, std::string& outMessage) {
-    auto it = std::find_if(users.begin(), users.end(), [&](const User& u) {
-        return u.username == username;
-    });
-
-    if (it == users.end()) {
-        outMessage = "Username not found.";
-        LOG_WARNING("Login attempt failed for username '" + username + "': " + outMessage);
-        return std::nullopt;
-    }
-
-    if (it->status == AccountStatus::Inactive) {
-        outMessage = "Account is inactive. Please contact support.";
-        LOG_WARNING("Login attempt failed for username '" + username + "': " + outMessage);
-        return std::nullopt;
-    }
-     if (it->status == AccountStatus::NotActivated) {
-        outMessage = "Account is not activated yet.";
-        LOG_WARNING("Login attempt failed for username '" + username + "': " + outMessage);
-        return std::nullopt;
-    }
+    // Find user by username
+    auto it = std::find_if(users.begin(), users.end(),
+                    [&username](const User& u) { return u.username == username; });
     
-    if (hashUtils.verifyPassword(password, it->hashedPassword, it->passwordSalt)) {
-        outMessage = "Login successful.";
-        it->lastLoginTimestamp = TimeUtils::getCurrentTimestamp();
-        if (!fileHandler.saveUsers(users)) { // Attempt to save last login time
-            LOG_ERROR("Failed to save last login time for user: " + username);
-            // Continue with login even if save fails, but log it.
-        }
-        LOG_INFO("User '" + username + "' logged in successfully.");
-        return *it;
-    } else {
-        outMessage = "Incorrect password.";
-        LOG_WARNING("Login attempt failed for username '" + username + "': " + outMessage);
+    if (it == users.end()) {
+        outMessage = "Khong tim thay tai khoan.";
         return std::nullopt;
     }
+
+    // Check if account is active
+    if (it->status != AccountStatus::Active) {
+        outMessage = "Tai khoan chua duoc kich hoat hoac da bi khoa.";
+        return std::nullopt;
+    }
+
+    // Verify password
+    std::string salt = it->passwordHash.substr(0, 16);
+    std::string storedHash = it->passwordHash.substr(16);
+    std::string inputHash = hashUtils.hashPassword(password, salt);
+
+    if (inputHash != storedHash) {
+        outMessage = "Mat khau khong dung.";
+        return std::nullopt;
+    }
+
+    outMessage = "Dang nhap thanh cong.";
+    return *it; // Return a copy of the user object
 }
 
 bool AuthService::changePassword(const std::string& currentUserId, const std::string& oldPassword,
-                                   const std::string& newPassword, std::string& outMessage) {
-    auto it = std::find_if(users.begin(), users.end(), [&](User& u) {
-        return u.userId == currentUserId;
-    });
+                                   const std::string& newPassword, const std::string& otpCode, std::string& outMessage) {
+    auto it = std::find_if(users.begin(), users.end(),
+                          [&currentUserId](const User& u) { return u.userId == currentUserId; });
 
     if (it == users.end()) {
-        outMessage = "User not found.";
-        LOG_WARNING("Change password attempt failed: " + outMessage + " (User ID: " + currentUserId + ")");
+        outMessage = "Khong tim thay tai khoan.";
         return false;
     }
 
-    if (!hashUtils.verifyPassword(oldPassword, it->hashedPassword, it->passwordSalt)) {
-        outMessage = "Old password incorrect.";
-        LOG_WARNING("Change password attempt failed for user '" + it->username + "': " + outMessage);
+    // OTP Verification if user has OTP enabled
+    if (!it->otpSecretKey.empty()) {
+        if (otpCode.empty()) {
+            outMessage = "Ban can nhap ma OTP de xac nhan thay doi mat khau.";
+            return false;
+        }
+        if (!otpService.verifyOtp(it->otpSecretKey, otpCode)) {
+            outMessage = "Ma OTP khong hop le.";
         return false;
     }
-
-    if (newPassword.length() < AppConfig::MIN_PASSWORD_LENGTH) { // Use Config
-        outMessage = "New password must be at least " + std::to_string(AppConfig::MIN_PASSWORD_LENGTH) + " characters.";
-        LOG_WARNING("Change password attempt failed for user '" + it->username + "': " + outMessage);
-        return false;
     }
 
-    // Re-use the existing salt
-    it->hashedPassword = hashUtils.hashPassword(newPassword, it->passwordSalt);
-    it->isTemporaryPassword = false; 
+    // Extract salt from the stored password hash
+    std::string salt = it->passwordHash.substr(0, 16); // First 16 characters are the salt
+    std::string storedHash = it->passwordHash.substr(16); // Rest is the actual hash
     
-    if (fileHandler.saveUsers(users)) {
-        outMessage = "Password changed successfully.";
-        LOG_INFO("Password changed for user '" + it->username + "'.");
-        return true;
-    } else {
-        outMessage = "Error saving password changes.";
-        LOG_ERROR(outMessage + " User: " + it->username);
-        // Consider how to handle this failure; a rollback might be complex here if only save failed.
+    // Hash the input password with the salt
+    std::string inputHash = hashUtils.hashPassword(oldPassword, salt);
+    
+    if (storedHash != inputHash) {
+        outMessage = "Mat khau hien tai khong chinh xac.";
         return false;
     }
+
+    if (newPassword.length() < AppConfig::MIN_PASSWORD_LENGTH) {
+        outMessage = "Mat khau moi phai co it nhat " + std::to_string(AppConfig::MIN_PASSWORD_LENGTH) + " ky tu.";
+        return false;
+    }
+
+    // Generate new salt and hash for the new password
+    std::string newSalt = hashUtils.generateSalt(16);
+    std::string newHash = hashUtils.hashPassword(newPassword, newSalt);
+    it->passwordHash = newSalt + newHash;
+    it->isTemporaryPassword = false;
+    outMessage = "Mat khau da duoc thay doi thanh cong.";
+    return true;
 }
 
 std::string AuthService::createAccountWithTemporaryPassword(const std::string& username,
                                                             const std::string& fullName, const std::string& email,
                                                             const std::string& phoneNumber, UserRole role,
                                                             std::string& outMessage) {
-    auto it_user = std::find_if(users.begin(), users.end(), [&](const User& u) {
-        return u.username == username || u.email == email;
-    });
-     if (it_user != users.end()) {
-        outMessage = (it_user->username == username) ? "Username already exists." : "Email already exists.";
-        LOG_WARNING("Admin create account failed: " + outMessage);
+    // Validate input
+    if (username.empty() || fullName.empty() || email.empty()) {
+        outMessage = "Ten dang nhap, ten day du va email la bat buoc.";
         return "";
     }
 
-    std::string tempPassword = hashUtils.generateRandomPassword(AppConfig::MIN_PASSWORD_LENGTH); // Use Config for length
+    // Check if username already exists
+    if (std::find_if(users.begin(), users.end(),
+                    [&username](const User& u) { return u.username == username; }) != users.end()) {
+        outMessage = "Ten dang nhap da ton tai.";
+        return "";
+    }
 
+    // Generate temporary password
+    std::string tempPassword = hashUtils.generateRandomPassword(AppConfig::MIN_PASSWORD_LENGTH);
+
+    // Create new user
     User newUser;
     newUser.userId = hashUtils.generateUUID();
     newUser.username = username;
-    newUser.passwordSalt = hashUtils.generateSalt();
-    newUser.hashedPassword = hashUtils.hashPassword(tempPassword, newUser.passwordSalt);
+    
+    // Generate salt and hash password
+    std::string salt = hashUtils.generateSalt(16);
+    newUser.passwordHash = salt + hashUtils.hashPassword(tempPassword, salt);
+    
     newUser.fullName = fullName;
     newUser.email = email;
     newUser.phoneNumber = phoneNumber;
     newUser.role = role;
-    newUser.status = AccountStatus::Active; // Or NotActivated, admin can activate later
+    newUser.status = AccountStatus::NotActivated;
     newUser.isTemporaryPassword = true;
-    newUser.creationTimestamp = TimeUtils::getCurrentTimestamp();
 
+    // Add to users list
     users.push_back(newUser);
-    if (fileHandler.saveUsers(users)) {
-        outMessage = "Account created successfully with a temporary password.";
-        LOG_INFO("Admin created account for '" + username + "' with temporary password.");
-        return tempPassword;
-    } else {
-        outMessage = "Error saving new user data.";
-        LOG_ERROR(outMessage + " Rolling back admin user creation for " + username);
-        users.pop_back();
-        return "";
-    }
+    outMessage = "Tai khoan da duoc tao thanh cong voi mat khau tam thoi.";
+    return tempPassword;
 }
-    
+
 bool AuthService::forceTemporaryPasswordChange(User& userToUpdate, const std::string& newPassword, std::string& outMessage) {
-    // Find the user in the main vector to update them there, as userToUpdate might be a copy
-    auto it = std::find_if(users.begin(), users.end(), [&](const User& u_db) {
-        return u_db.userId == userToUpdate.userId;
-    });
+    auto it = std::find_if(users.begin(), users.end(),
+                          [&userToUpdate](const User& u) { return u.userId == userToUpdate.userId; });
 
-    if (it == users.end()){
-        outMessage = "User not found in database for temporary password change.";
-        LOG_ERROR(outMessage + " User ID: " + userToUpdate.userId);
+    if (it == users.end()) {
+        outMessage = "Khong tim thay tai khoan.";
         return false;
     }
 
-    if (!it->isTemporaryPassword) { // Check the persisted user's status
-        outMessage = "Account is not using a temporary password or it has already been changed.";
-        // LOG_INFO(outMessage + " User: " + it->username); // Not an error, just info
-        return true; // Or false if you consider this an invalid operation attempt
-    }
-    if (newPassword.length() < AppConfig::MIN_PASSWORD_LENGTH) { // Use Config
-        outMessage = "New password must be at least " + std::to_string(AppConfig::MIN_PASSWORD_LENGTH) + " characters.";
-        LOG_WARNING("Temp password change failed for user '" + it->username + "': " + outMessage);
+    if (!it->isTemporaryPassword) {
+        outMessage = "Tai khoan khong co mat khau tam thoi.";
         return false;
     }
 
-    it->hashedPassword = hashUtils.hashPassword(newPassword, it->passwordSalt);
+    if (newPassword.length() < AppConfig::MIN_PASSWORD_LENGTH) {
+        outMessage = "Mat khau moi phai co it nhat " + std::to_string(AppConfig::MIN_PASSWORD_LENGTH) + " ky tu.";
+        return false;
+    }
+
+    // Generate new salt and hash for the new password
+    std::string newSalt = hashUtils.generateSalt(16);
+    it->passwordHash = newSalt + hashUtils.hashPassword(newPassword, newSalt);
     it->isTemporaryPassword = false;
-    
-    // Also update the passed-in user object if it's intended to be used immediately (e.g. g_currentUser)
-    userToUpdate.isTemporaryPassword = false;
-    userToUpdate.hashedPassword = it->hashedPassword;
-
-    if (fileHandler.saveUsers(users)) {
-        outMessage = "Temporary password changed successfully.";
-        LOG_INFO("Temporary password changed for user '" + it->username + "'.");
+    outMessage = "Mat khau da duoc thay doi thanh cong.";
         return true;
-    } else {
-        outMessage = "Error saving new password after temporary change.";
-        LOG_ERROR(outMessage + " User: " + it->username);
-        // Critical: password changed in memory but not saved.
-        // Rollback in-memory change if possible, or flag for admin.
-        it->isTemporaryPassword = true; // Attempt to rollback in-memory
-        it->hashedPassword = hashUtils.hashPassword(userToUpdate.username, it->passwordSalt); // This is wrong, can't recover old hash
+}
+
+bool AuthService::updateUser(const User& userToUpdate, std::string& outMessage) {
+    auto it = std::find_if(users.begin(), users.end(),
+                          [&userToUpdate](const User& u) { return u.userId == userToUpdate.userId; });
+
+    if (it == users.end()) {
+        outMessage = "Khong tim thay tai khoan.";
         return false;
     }
+
+    // Update user fields
+    it->fullName = userToUpdate.fullName;
+    it->email = userToUpdate.email;
+    it->phoneNumber = userToUpdate.phoneNumber;
+    it->role = userToUpdate.role;
+    it->status = userToUpdate.status;
+    it->isTemporaryPassword = userToUpdate.isTemporaryPassword;
+
+    outMessage = "Tai khoan da duoc cap nhat thanh cong.";
+    return true;
 }
 
 std::optional<std::string> AuthService::setupOtpForUser(const std::string& userId, std::string& outMessage) {
@@ -226,14 +246,14 @@ std::optional<std::string> AuthService::setupOtpForUser(const std::string& userI
     });
 
     if (it == users.end()) {
-        outMessage = "User not found for OTP setup.";
+        outMessage = "Khong tim thay tai khoan.";
         LOG_WARNING(outMessage + " User ID: " + userId);
         return std::nullopt;
     }
 
     if (!it->otpSecretKey.empty()) {
-        outMessage = "OTP is already set up for this user. To change, disable OTP first (not implemented).";
-        LOG_INFO("OTP setup attempt for user '" + it->username + "' but OTP already exists.");
+        outMessage = "OTP da duoc thiet lap cho tai khoan nay. De thay doi, vui long tat OTP (chua thuc hien).";
+        LOG_INFO("OTP thiet lap thu cho tai khoan '" + it->username + "' nhung OTP da ton tai.");
         // Optionally return existing secret for display or an empty optional
         return std::nullopt; // Indicate no new setup was performed
     }
@@ -242,13 +262,37 @@ std::optional<std::string> AuthService::setupOtpForUser(const std::string& userI
     it->otpSecretKey = newSecret;
 
     if (fileHandler.saveUsers(users)) {
-        outMessage = "OTP setup successful. Please save this secret key securely.";
-        LOG_INFO("OTP setup successful for user '" + it->username + "'.");
+        outMessage = "OTP thiet lap thanh cong. Vui long luu lai OTP.";
+        LOG_INFO("OTP thiet lap thanh cong cho tai khoan '" + it->username + "'.");
         return newSecret;
     } else {
-        outMessage = "Error saving OTP secret key.";
-        LOG_ERROR(outMessage + " User: " + it->username);
+        outMessage = "Loi khi luu OTP.";
+        LOG_ERROR(outMessage + " Tai khoan: " + it->username);
         it->otpSecretKey = ""; // Rollback in-memory change
         return std::nullopt;
+    }
+}
+
+bool AuthService::activateAccount(const std::string& username, std::string& outMessage) {
+    auto it = std::find_if(users.begin(), users.end(),
+                          [&username](const User& u) { return u.username == username; });
+
+    if (it == users.end()) {
+        outMessage = "That bai: Khong tim thay tai khoan.";
+        return false;
+    }
+
+    if (it->status == AccountStatus::Active) {
+        outMessage = "That bai: Tai khoan da duoc kich hoat truoc do.";
+        return false;
+    }
+
+    it->status = AccountStatus::Active;
+    if (fileHandler.saveUsers(users)) {
+        outMessage = "Thanh cong: Kich hoat tai khoan thanh cong.";
+        return true;
+    } else {
+        outMessage = "That bai: Loi khi luu trang thai tai khoan.";
+        return false;
     }
 }

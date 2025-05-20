@@ -162,13 +162,6 @@ CMakeFiles/RewardSystemApp.dir/source/main.cpp.obj: \
  C:/msys64/mingw64/include/c++/15.1.0/sstream \
  C:/msys64/mingw64/include/c++/15.1.0/bits/sstream.tcc \
  C:/Repositories/Cpp-project/include/models/User.hpp \
- C:/Repositories/Cpp-project/include/models/Wallet.hpp \
- C:/Repositories/Cpp-project/include/models/Transaction.hpp \
- C:/Repositories/Cpp-project/include/utils/FileHandler.hpp \
- C:/msys64/mingw64/include/c++/15.1.0/fstream \
- C:/msys64/mingw64/include/c++/15.1.0/x86_64-w64-mingw32/bits/basic_file.h \
- C:/msys64/mingw64/include/c++/15.1.0/x86_64-w64-mingw32/bits/c++io.h \
- C:/msys64/mingw64/include/c++/15.1.0/bits/fstream.tcc \
  C:/Repositories/Cpp-project/include/nlohmann/json.hpp \
  C:/msys64/mingw64/include/c++/15.1.0/algorithm \
  C:/msys64/mingw64/include/c++/15.1.0/bits/stl_algo.h \
@@ -260,6 +253,13 @@ CMakeFiles/RewardSystemApp.dir/source/main.cpp.obj: \
  C:/msys64/mingw64/include/c++/15.1.0/bits/stl_numeric.h \
  C:/msys64/mingw64/include/c++/15.1.0/pstl/glue_numeric_defs.h \
  C:/msys64/mingw64/include/c++/15.1.0/any \
+ C:/Repositories/Cpp-project/include/models/Wallet.hpp \
+ C:/Repositories/Cpp-project/include/models/Transaction.hpp \
+ C:/Repositories/Cpp-project/include/utils/FileHandler.hpp \
+ C:/msys64/mingw64/include/c++/15.1.0/fstream \
+ C:/msys64/mingw64/include/c++/15.1.0/x86_64-w64-mingw32/bits/basic_file.h \
+ C:/msys64/mingw64/include/c++/15.1.0/x86_64-w64-mingw32/bits/c++io.h \
+ C:/msys64/mingw64/include/c++/15.1.0/bits/fstream.tcc \
  C:/Repositories/Cpp-project/include/utils/HashUtils.hpp \
  C:/Repositories/Cpp-project/include/utils/InputValidator.hpp \
  C:/msys64/mingw64/include/c++/15.1.0/regex \
@@ -290,6 +290,6 @@ CMakeFiles/RewardSystemApp.dir/source/main.cpp.obj: \
  C:/Repositories/Cpp-project/include/services/OTPService.hpp \
  C:/Repositories/Cpp-project/include/services/AuthService.hpp \
  C:/Repositories/Cpp-project/include/services/UserService.hpp \
- C:/Repositories/Cpp-project/include/services/OTPService.hpp \
  C:/Repositories/Cpp-project/include/services/WalletService.hpp \
+ C:/Repositories/Cpp-project/include/Config.h \
  C:/Repositories/Cpp-project/include/services/AdminService.hpp

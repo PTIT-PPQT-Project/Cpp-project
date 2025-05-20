@@ -20,6 +20,7 @@ public:
     UserService(std::vector<User>& users_ref, FileHandler& fh_ref, OTPService& otp_ref);
 
     std::optional<User> getUserProfile(const std::string& userId) const;
+    std::optional<User> getUserByUsername(const std::string& username) const;
 
     bool updateUserProfile(const std::string& userId,
                            const std::string& newFullName,

@@ -29,7 +29,7 @@ public:
     std::optional<User> loginUser(const std::string& username, const std::string& password, std::string& outMessage);
 
     bool changePassword(const std::string& currentUserId, const std::string& oldPassword,
-                        const std::string& newPassword, std::string& outMessage);
+                        const std::string& newPassword, const std::string& otpCode, std::string& outMessage);
 
     std::string createAccountWithTemporaryPassword(const std::string& username,
                                                  const std::string& fullName, const std::string& email,
@@ -40,11 +40,15 @@ public:
 
     std::optional<std::string> setupOtpForUser(const std::string& userId, std::string& outMessage);
     
+    bool updateUser(const User& userToUpdate, std::string& outMessage);
+    
+    bool activateAccount(const std::string& username, std::string& outMessage);
+
     // Made public for AdminService to use for OTP verification if needed, or AdminService can have its own OTPService ref.
     // Alternatively, OTP verification logic could be more centralized.
     // For now, keeping it here if AdminService needs to call it for a target user.
     // However, it's better if AdminService calls a UserService method which then internally uses OTPService.
     // For direct access if needed by AdminService (e.g. when admin helps user and user provides OTP)
-    // OTPService& getOtpService() { return otpService; } // Optional accessor
-    // FileHandler& getFileHandler() { return fileHandler; } // Optional accessor
+    OTPService& getOtpService() { return otpService; }
+    FileHandler& getFileHandler() { return fileHandler; }
 };

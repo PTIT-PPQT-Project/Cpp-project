@@ -3,36 +3,30 @@
 #include "utils/FileHandler.hpp"
 #include "utils/HashUtils.hpp"
 #include "utils/Logger.hpp"
-<<<<<<< HEAD
 #include "utils/TimeUtils.hpp"     // For TimeUtils::getCurrentTimestamp
 #include "Config.h"                // For AppConfig constants
-=======
-#include "Config.h" // For AppConfig::DEFAULT_INITIAL_WALLET_BALANCE, MASTER_WALLET_ID etc.
->>>>>>> parent of ffeed75 (updated alot of thing)
 #include <algorithm>
 #include <ctime>
 #include <iomanip>                 // For std::fixed, std::setprecision in logging
 #include <sstream>                 // For std::stringstream in tx description
 
-WalletService::WalletService(std::vector<User>& u_ref, std::vector<Wallet>& w_ref,
-                             std::vector<Transaction>& t_ref, FileHandler& fh_ref,
+WalletService::WalletService(std::vector<User>& u_ref, std::vector<Wallet>& w_ref, 
+                             std::vector<Transaction>& t_ref, FileHandler& fh_ref, 
                              OTPService& otp_ref, HashUtils& hu_ref)
-    : users(u_ref), wallets(w_ref), transactions(t_ref),
+    : users(u_ref), wallets(w_ref), transactions(t_ref), 
       fileHandler(fh_ref), otpService(otp_ref), hashUtils(hu_ref) {}
 
 bool WalletService::createWalletForUser(const std::string& userId, std::string& outMessage) {
     auto user_it = std::find_if(users.cbegin(), users.cend(), [&](const User& u){ return u.userId == userId; });
     if (user_it == users.cend()){
         outMessage = "User not found, cannot create wallet.";
-        LOG_WARNING(outMessage + " User ID: " + userId);
         return false;
     }
 
-    auto wallet_exists = std::find_if(wallets.cbegin(), wallets.cend(),
+    auto wallet_exists = std::find_if(wallets.cbegin(), wallets.cend(), 
                                       [&](const Wallet& w) { return w.userId == userId; });
     if (wallet_exists != wallets.cend()) {
         outMessage = "Wallet already exists for user " + user_it->username + ".";
-        LOG_INFO("Attempted to create wallet for user '" + user_it->username + "' but wallet already exists (ID: " + wallet_exists->walletId + ").");
         return true; // Not an error, wallet exists.
     }
 
@@ -46,18 +40,16 @@ bool WalletService::createWalletForUser(const std::string& userId, std::string& 
     wallets.push_back(newWallet);
     if (fileHandler.saveWallets(wallets)) {
         outMessage = "New wallet created successfully for user " + user_it->username + ". Wallet ID: " + newWallet.walletId;
-        LOG_INFO(outMessage);
         return true;
     } else {
         outMessage = "Error saving new wallet data.";
-        LOG_ERROR(outMessage + " User: " + user_it->username);
         wallets.pop_back(); // Rollback
         return false;
     }
 }
 
 std::optional<Wallet> WalletService::getWalletByUserId(const std::string& userId) const {
-    auto it = std::find_if(wallets.cbegin(), wallets.cend(),
+    auto it = std::find_if(wallets.cbegin(), wallets.cend(), 
                            [&](const Wallet& w) { return w.userId == userId; });
     if (it != wallets.cend()) {
         return *it;
@@ -67,7 +59,7 @@ std::optional<Wallet> WalletService::getWalletByUserId(const std::string& userId
 }
 
 std::optional<Wallet> WalletService::getWalletByWalletId(const std::string& walletId) const {
-     auto it = std::find_if(wallets.cbegin(), wallets.cend(),
+     auto it = std::find_if(wallets.cbegin(), wallets.cend(), 
                             [&](const Wallet& w) { return w.walletId == walletId; });
     if (it != wallets.cend()) {
         return *it;
@@ -90,7 +82,7 @@ bool WalletService::transferPoints(const std::string& senderUserId, const std::s
         return false;
     }
 
-    auto senderUserIt = std::find_if(users.cbegin(), users.cend(),
+    auto senderUserIt = std::find_if(users.cbegin(), users.cend(), 
                                      [&](const User& u) { return u.userId == senderUserId; });
     if (senderUserIt == users.cend()) {
         outMessage = "Sender user not found."; // This should ideally not happen if senderUserId is from a logged-in session
@@ -139,10 +131,10 @@ bool WalletService::transferPoints(const std::string& senderUserId, const std::s
 
     Transaction tx;
     tx.transactionId = "TXN-" + hashUtils.generateUUID().substr(0,12);
-    tx.senderWalletId = senderWalletId;
-    tx.receiverWalletId = receiverWalletId;
-    tx.amountTransferred = amount;
-    tx.transactionTimestamp = TimeUtils::getCurrentTimestamp();
+    tx.sourceWalletId = senderWalletId;
+    tx.targetWalletId = receiverWalletId;
+    tx.amount = amount;
+    tx.timestamp = TimeUtils::getCurrentTimestamp();
     std::stringstream desc_ss;
     desc_ss << "Transfer from " << senderUserIt->username << " (Wallet: " << senderWalletId 
             << ") to Wallet: " << receiverWalletId;
@@ -150,7 +142,7 @@ bool WalletService::transferPoints(const std::string& senderUserId, const std::s
 
     if (pSenderWallet->balance < amount) {
         outMessage = "Insufficient balance. Available: " + std::to_string(pSenderWallet->balance) + ", Required: " + std::to_string(amount);
-        tx.status = TransactionStatus::FailedInsufficientFunds;
+        tx.status = TransactionStatus::Failed;
         transactions.push_back(tx);
         if(!fileHandler.saveTransactions(transactions)) {
              LOG_ERROR("Failed to save transaction log for failed (insufficient funds) TxID: " + tx.transactionId);
@@ -171,7 +163,7 @@ bool WalletService::transferPoints(const std::string& senderUserId, const std::s
 
     // Attempt to save. Atomicity is a concern with multiple file writes.
     if (fileHandler.saveWallets(wallets)) { // Step 1: Save updated wallets
-        tx.status = TransactionStatus::Successful;
+        tx.status = TransactionStatus::Completed;
         transactions.push_back(tx);
         if (fileHandler.saveTransactions(transactions)) { // Step 2: Save successful transaction
             outMessage = "Points transferred successfully!";
@@ -196,7 +188,7 @@ bool WalletService::transferPoints(const std::string& senderUserId, const std::s
         // pReceiverWallet->lastUpdateTimestamp = originalReceiverLastUpdate;
 
         outMessage = "Failed to save wallet updates. Transfer has been rolled back.";
-        tx.status = TransactionStatus::FailedSystemError;
+        tx.status = TransactionStatus::Failed;
         transactions.push_back(tx); // Log the system error that prevented the transfer
         if(!fileHandler.saveTransactions(transactions)){
             LOG_ERROR("Failed to save transaction log for system error rollback (TxID: " + tx.transactionId + ")");
@@ -209,22 +201,22 @@ bool WalletService::transferPoints(const std::string& senderUserId, const std::s
 std::vector<Transaction> WalletService::getTransactionHistory(const std::string& walletId) const {
     std::vector<Transaction> history;
     for (const auto& tx : transactions) {
-        if (tx.senderWalletId == walletId || tx.receiverWalletId == walletId) {
+        if (tx.sourceWalletId == walletId || tx.targetWalletId == walletId) {
             history.push_back(tx);
         }
     }
     // Sort by timestamp, newest first
     std::sort(history.begin(), history.end(), [](const Transaction& a, const Transaction& b) {
-        return a.transactionTimestamp > b.transactionTimestamp;
+        return a.timestamp > b.timestamp;
     });
     LOG_DEBUG("Retrieved " + std::to_string(history.size()) + " transactions for Wallet ID: " + walletId);
     return history;
 }
 
-bool WalletService::depositPoints(const std::string& targetWalletId, double amount,
-                                  const std::string& description, const std::string& initiatedByUserId, // Can be "SYSTEM", adminId, etc.
-                                  std::string& outMessage,
-                                  const std::string& sourceWalletId) { // Default from AppConfig::SYSTEM_WALLET_ID_FOR_DEPOSITS
+bool WalletService::depositPoints(const std::string& targetWalletId, double amount, 
+                                  const std::string& description, const std::string& initiatedByUserId,
+                                  std::string& outMessage, 
+                                  const std::string& sourceWalletId) {
     if (amount <= 0) {
         outMessage = "Deposit amount must be positive.";
         LOG_WARNING("Deposit attempt failed: " + outMessage + " Amount: " + std::to_string(amount));
@@ -242,24 +234,45 @@ bool WalletService::depositPoints(const std::string& targetWalletId, double amou
         return false;
     }
 
-    // Optional: Logic to handle sourceWalletId if it's a specific account like MASTER_WALLET
-    // For example, if deducting from AppConfig::MASTER_WALLET_ID:
-    // Wallet* pSourceWallet = nullptr;
-    // if (sourceWalletId == AppConfig::MASTER_WALLET_ID) {
-    //     for (auto& w : wallets) { if (w.walletId == AppConfig::MASTER_WALLET_ID) pSourceWallet = &w; }
-    //     if (!pSourceWallet) { /* Handle error: Master wallet not found */ }
-    //     if (pSourceWallet->balance < amount) { /* Handle error: Master wallet insufficient funds */ }
-    //     pSourceWallet->balance -= amount;
-    // }
-
-
     Transaction tx;
     tx.transactionId = "DEP-" + hashUtils.generateUUID().substr(0,12);
-    tx.senderWalletId = sourceWalletId; // e.g., AppConfig::MASTER_WALLET_ID or AppConfig::SYSTEM_WALLET_ID_FOR_DEPOSITS
-    tx.receiverWalletId = targetWalletId;
-    tx.amountTransferred = amount;
-    tx.transactionTimestamp = TimeUtils::getCurrentTimestamp();
+    tx.sourceWalletId = sourceWalletId;
+    tx.targetWalletId = targetWalletId;
+    tx.amount = amount;
+    tx.timestamp = TimeUtils::getCurrentTimestamp();
     tx.description = description + " (Initiated by: " + initiatedByUserId + ")";
-    tx.status = TransactionStatus::Successful;
+    tx.status = TransactionStatus::Completed;
 
     double originalTargetBalance = pTargetWallet->balance; // For potential rollback
+
+    // Update balance
+    pTargetWallet->balance += amount;
+    pTargetWallet->lastUpdateTimestamp = TimeUtils::getCurrentTimestamp();
+
+    // Save updated wallets
+    if (fileHandler.saveWallets(wallets)) {
+        // Save transaction record
+        transactions.push_back(tx);
+        if (fileHandler.saveTransactions(transactions)) {
+            outMessage = "Deposit successful. New balance: " + std::to_string(pTargetWallet->balance);
+            LOG_INFO("Deposit successful for wallet " + targetWalletId + 
+                     ". Amount: " + std::to_string(amount) + 
+                     ", New balance: " + std::to_string(pTargetWallet->balance));
+            return true;
+        } else {
+            // Rollback wallet balance if transaction save fails
+            pTargetWallet->balance = originalTargetBalance;
+            pTargetWallet->lastUpdateTimestamp = TimeUtils::getCurrentTimestamp();
+            fileHandler.saveWallets(wallets); // Save the rollback
+            outMessage = "Deposit processed but failed to record transaction. Balance has been restored.";
+            LOG_ERROR("Deposit failed to save transaction record for wallet " + targetWalletId);
+            return false;
+        }
+    } else {
+        // Rollback in-memory changes
+        pTargetWallet->balance = originalTargetBalance;
+        outMessage = "Failed to save wallet updates. Deposit has been rolled back.";
+        LOG_ERROR("Deposit failed to save wallet updates for wallet " + targetWalletId);
+        return false;
+    }
+}

@@ -440,3 +440,708 @@
 2025-05-21 02:06:22 [INFO] Admin 'phuong_admin' logged out.
 =======
 >>>>>>> parent of 6202a1a (- add feature go back)
+2025-05-21 04:40:57 [INFO] Ung dung khoi dong.
+2025-05-21 04:40:57 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 04:40:57 [INFO] Project root: C:\Cpp-project
+2025-05-21 04:40:57 [INFO] Users file: C:\Cpp-project\data/users.json
+2025-05-21 04:40:57 [INFO] Wallets file: C:\Cpp-project\data/wallets.json
+2025-05-21 04:40:57 [INFO] Transactions file: C:\Cpp-project\data/transactions.json
+2025-05-21 04:40:57 [INFO] Created new users file with empty array at: C:\Cpp-project\data/users.json
+2025-05-21 04:40:57 [INFO] Loaded 0 users from file
+2025-05-21 04:40:57 [INFO] Dang tai du lieu...
+2025-05-21 04:40:57 [INFO] Loading users from JSON: []
+2025-05-21 04:40:57 [INFO] Successfully loaded 0 users
+2025-05-21 04:40:57 [INFO] Tai 0 nguoi dung thanh cong.
+2025-05-21 04:40:57 [INFO] Tai 0 vi thanh cong.
+2025-05-21 04:40:57 [INFO] Tai 0 giao dich thanh cong.
+2025-05-21 04:40:57 [INFO] Khong tim thay tai khoan Admin. Dang tao tai khoan Admin mac dinh...
+2025-05-21 04:40:57 [INFO] Tao tai khoan Admin thanh cong. Ten dang nhap: admin, Mat khau tam thoi: byOApI#n
+2025-05-21 04:40:57 [INFO] Vui long doi mat khau sau khi dang nhap lan dau.
+2025-05-21 04:40:57 [INFO] New wallet created successfully for user admin. Wallet ID: WLT-b8b15970-ad9
+2025-05-21 04:41:14 [INFO] Ung dung khoi dong.
+2025-05-21 04:41:14 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 04:41:14 [INFO] Project root: C:\Cpp-project
+2025-05-21 04:41:14 [INFO] Users file: C:\Cpp-project\data/users.json
+2025-05-21 04:41:14 [INFO] Wallets file: C:\Cpp-project\data/wallets.json
+2025-05-21 04:41:14 [INFO] Transactions file: C:\Cpp-project\data/transactions.json
+2025-05-21 04:41:14 [INFO] Loading users from JSON: []
+2025-05-21 04:41:14 [INFO] Successfully loaded 0 users
+2025-05-21 04:41:14 [INFO] Loaded 0 users from file
+2025-05-21 04:41:14 [INFO] Dang tai du lieu...
+2025-05-21 04:41:14 [INFO] Loading users from JSON: []
+2025-05-21 04:41:14 [INFO] Successfully loaded 0 users
+2025-05-21 04:41:14 [INFO] Tai 0 nguoi dung thanh cong.
+2025-05-21 04:41:14 [INFO] Tai 1 vi thanh cong.
+2025-05-21 04:41:14 [INFO] Tai 0 giao dich thanh cong.
+2025-05-21 04:41:14 [INFO] Khong tim thay tai khoan Admin. Dang tao tai khoan Admin mac dinh...
+2025-05-21 04:41:14 [INFO] Tao tai khoan Admin thanh cong. Ten dang nhap: admin, Mat khau tam thoi: ATLBCUYt
+2025-05-21 04:41:14 [INFO] Vui long doi mat khau sau khi dang nhap lan dau.
+2025-05-21 04:41:14 [INFO] New wallet created successfully for user admin. Wallet ID: WLT-d782f878-4ea
+2025-05-21 04:44:50 [INFO] Ung dung khoi dong.
+2025-05-21 04:44:50 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 04:44:50 [INFO] Project root: C:\Cpp-project
+2025-05-21 04:44:50 [INFO] Users file: C:\Cpp-project\data/users.json
+2025-05-21 04:44:50 [INFO] Wallets file: C:\Cpp-project\data/wallets.json
+2025-05-21 04:44:50 [INFO] Transactions file: C:\Cpp-project\data/transactions.json
+2025-05-21 04:44:50 [INFO] Loading users from JSON: []
+2025-05-21 04:44:50 [INFO] Successfully loaded 0 users
+2025-05-21 04:44:50 [INFO] Loaded 0 users from file
+2025-05-21 04:44:50 [INFO] Dang tai du lieu...
+2025-05-21 04:44:50 [INFO] Loading users from JSON: []
+2025-05-21 04:44:50 [INFO] Successfully loaded 0 users
+2025-05-21 04:44:50 [INFO] Tai 0 nguoi dung thanh cong.
+2025-05-21 04:44:50 [INFO] Tai 2 vi thanh cong.
+2025-05-21 04:44:50 [INFO] Tai 0 giao dich thanh cong.
+2025-05-21 04:44:50 [INFO] Khong tim thay tai khoan Admin. Dang tao tai khoan Admin mac dinh...
+2025-05-21 04:44:50 [INFO] Tao tai khoan Admin thanh cong. Ten dang nhap: admin, Mat khau tam thoi: G6#FJato
+2025-05-21 04:44:50 [INFO] Vui long doi mat khau sau khi dang nhap lan dau.
+2025-05-21 04:44:50 [INFO] New wallet created successfully for user admin. Wallet ID: WLT-f72ddb5c-caa
+2025-05-21 04:46:25 [INFO] Ung dung khoi dong.
+2025-05-21 04:46:25 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 04:46:25 [INFO] Project root: C:\Cpp-project
+2025-05-21 04:46:25 [INFO] Users file: C:\Cpp-project\data/users.json
+2025-05-21 04:46:25 [INFO] Wallets file: C:\Cpp-project\data/wallets.json
+2025-05-21 04:46:25 [INFO] Transactions file: C:\Cpp-project\data/transactions.json
+2025-05-21 04:46:25 [INFO] Loading users from JSON: []
+2025-05-21 04:46:25 [INFO] Successfully loaded 0 users
+2025-05-21 04:46:25 [INFO] Loaded 0 users from file
+2025-05-21 04:46:25 [INFO] Dang tai du lieu...
+2025-05-21 04:46:25 [INFO] Loading users from JSON: []
+2025-05-21 04:46:25 [INFO] Successfully loaded 0 users
+2025-05-21 04:46:25 [INFO] Tai 0 nguoi dung thanh cong.
+2025-05-21 04:46:25 [INFO] Tai 3 vi thanh cong.
+2025-05-21 04:46:25 [INFO] Tai 0 giao dich thanh cong.
+2025-05-21 04:46:25 [INFO] Khong tim thay tai khoan Admin. Dang tao tai khoan Admin mac dinh...
+2025-05-21 04:46:25 [INFO] Tao tai khoan Admin thanh cong. Ten dang nhap: admin, Mat khau tam thoi: @ObYkfd8
+2025-05-21 04:46:25 [INFO] Vui long doi mat khau sau khi dang nhap lan dau.
+2025-05-21 04:46:25 [INFO] New wallet created successfully for user admin. Wallet ID: WLT-3bfa0498-acc
+2025-05-21 04:46:35 [INFO] Attempting login for username: phuong_admin2
+2025-05-21 04:46:35 [INFO] Total users in system: 1
+2025-05-21 04:46:35 [ERROR] User not found: phuong_admin2
+2025-05-21 04:49:12 [INFO] Ung dung khoi dong.
+2025-05-21 04:49:12 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 04:49:12 [INFO] Project root: C:\Cpp-project
+2025-05-21 04:49:12 [INFO] Users file: C:\Cpp-project\data/users.json
+2025-05-21 04:49:12 [INFO] Wallets file: C:\Cpp-project\data/wallets.json
+2025-05-21 04:49:12 [INFO] Transactions file: C:\Cpp-project\data/transactions.json
+2025-05-21 04:49:12 [INFO] Loading users from JSON: []
+2025-05-21 04:49:12 [INFO] Found 0 users in JSON file
+2025-05-21 04:49:12 [INFO] Successfully loaded 0 users
+2025-05-21 04:49:12 [INFO] Loaded 0 users from file
+2025-05-21 04:49:12 [INFO] Dang tai du lieu...
+2025-05-21 04:49:12 [INFO] Loading users from JSON: []
+2025-05-21 04:49:12 [INFO] Found 0 users in JSON file
+2025-05-21 04:49:12 [INFO] Successfully loaded 0 users
+2025-05-21 04:49:12 [INFO] Tai 0 nguoi dung thanh cong.
+2025-05-21 04:49:12 [INFO] Tai 4 vi thanh cong.
+2025-05-21 04:49:12 [INFO] Tai 0 giao dich thanh cong.
+2025-05-21 04:49:12 [INFO] Khong tim thay tai khoan Admin. Dang tao tai khoan Admin mac dinh...
+2025-05-21 04:49:12 [INFO] Tao tai khoan Admin thanh cong. Ten dang nhap: admin, Mat khau tam thoi: ceOCso%S
+2025-05-21 04:49:12 [INFO] Vui long doi mat khau sau khi dang nhap lan dau.
+2025-05-21 04:49:12 [INFO] New wallet created successfully for user admin. Wallet ID: WLT-2d9c904c-f51
+2025-05-21 04:49:20 [INFO] Starting user search for username: phuong_admin2
+2025-05-21 04:49:20 [INFO] Current users in memory:
+2025-05-21 04:49:20 [INFO]   - User: admin (ID: 2d93c908-9f8f-e04a-42c8-fb6aedaa3b89, Role: AdminUser, Status: NotActivated)
+2025-05-21 04:49:20 [INFO] Comparing with user: admin
+2025-05-21 04:49:20 [INFO] Attempting login for username: phuong_admin2
+2025-05-21 04:49:20 [INFO] Total users in system: 1
+2025-05-21 04:49:20 [ERROR] User not found: phuong_admin2
+2025-05-21 04:50:57 [INFO] Ung dung khoi dong.
+2025-05-21 04:50:57 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 04:50:57 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 04:50:57 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 04:50:57 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 04:50:57 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 04:50:57 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 04:50:57 [INFO] Loading users from JSON: [
+    {
+        "email": "admin@example.com",
+        "fullName": "Administrator",
+        "isTemporaryPassword": true,
+        "otpSecretKey": "",
+        "passwordHash": "demo_hash$825939ea",
+        "phoneNumber": "0123456789",
+        "role": "AdminUser",
+        "status": "NotActivated",
+        "userId": "4f1d2dac-c101-1fc1-88e9-cdf1716da246",
+        "username": "admin"
+    },
+    {
+        "email": "HaTrinh@gmail.com",
+        "fullName": "Trinh Thi Thu Ha",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "demo_hash$95a59e39",
+        "phoneNumber": "0923881248",
+        "role": "AdminUser",
+        "status": "Active",
+        "userId": "aa7a1a88-f592-a521-eacb-b1539bbbd73f",
+        "username": "thuha_admin"
+    },
+    {
+        "email": "pn17020@gmail.com",
+        "fullName": "Phuong Nguyen",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "F@nUx1oob*OaayOWdemo_hash$1b8ab18b",
+        "phoneNumber": "0921372837",
+        "role": "RegularUser",
+        "status": "NotActivated",
+        "userId": "2b3048e4-86c2-677a-b5e4-fa509d6f28f3",
+        "username": "phuong_admin"
+    },
+    {
+        "email": "pn17@gmail.com",
+        "fullName": "Nguyen Phuong",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "THid%$7zbAhA*Bzsdemo_hash$ba4872c3",
+        "phoneNumber": "0921377824",
+        "role": "RegularUser",
+        "status": "NotActivated",
+        "userId": "d2a25108-77d8-271a-c7a7-e934d7500c6",
+        "username": "phuong_admin1"
+    },
+    {
+        "email": "pn@gmail.com",
+        "fullName": "phuong",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "hvKuA@BKrVr^J0*Hdemo_hash$5b3dd253",
+        "phoneNumber": "0924727834",
+        "role": "AdminUser",
+        "status": "Active",
+        "userId": "22ecc0f4-1190-d9a4-49b4-e0e10e358bf",
+        "username": "phuong_admin2"
+    }
+]
+2025-05-21 04:50:57 [INFO] Found 5 users in JSON file
+2025-05-21 04:50:57 [INFO] Successfully loaded 5 users
+2025-05-21 04:50:57 [INFO] Loaded user details: {
+  username: admin
+  userId: 4f1d2dac-c101-1fc1-88e9-cdf1716da246
+  role: AdminUser
+  status: NotActivated
+  email: admin@example.com
+  fullName: Administrator
+  passwordHash: demo_hash$825939ea
+}
+2025-05-21 04:50:57 [INFO] Loaded user details: {
+  username: thuha_admin
+  userId: aa7a1a88-f592-a521-eacb-b1539bbbd73f
+  role: AdminUser
+  status: Active
+  email: HaTrinh@gmail.com
+  fullName: Trinh Thi Thu Ha
+  passwordHash: demo_hash$95a59e39
+}
+2025-05-21 04:50:57 [INFO] Loaded user details: {
+  username: phuong_admin
+  userId: 2b3048e4-86c2-677a-b5e4-fa509d6f28f3
+  role: RegularUser
+  status: NotActivated
+  email: pn17020@gmail.com
+  fullName: Phuong Nguyen
+  passwordHash: F@nUx1oob*OaayOWdemo_hash$1b8ab18b
+}
+2025-05-21 04:50:57 [INFO] Loaded user details: {
+  username: phuong_admin1
+  userId: d2a25108-77d8-271a-c7a7-e934d7500c6
+  role: RegularUser
+  status: NotActivated
+  email: pn17@gmail.com
+  fullName: Nguyen Phuong
+  passwordHash: THid%$7zbAhA*Bzsdemo_hash$ba4872c3
+}
+2025-05-21 04:50:57 [INFO] Loaded user details: {
+  username: phuong_admin2
+  userId: 22ecc0f4-1190-d9a4-49b4-e0e10e358bf
+  role: AdminUser
+  status: Active
+  email: pn@gmail.com
+  fullName: phuong
+  passwordHash: hvKuA@BKrVr^J0*Hdemo_hash$5b3dd253
+}
+2025-05-21 04:50:57 [INFO] Loaded 5 users from file
+2025-05-21 04:50:57 [INFO] Dang tai du lieu...
+2025-05-21 04:50:57 [INFO] Loading users from JSON: [
+    {
+        "email": "admin@example.com",
+        "fullName": "Administrator",
+        "isTemporaryPassword": true,
+        "otpSecretKey": "",
+        "passwordHash": "demo_hash$825939ea",
+        "phoneNumber": "0123456789",
+        "role": "AdminUser",
+        "status": "NotActivated",
+        "userId": "4f1d2dac-c101-1fc1-88e9-cdf1716da246",
+        "username": "admin"
+    },
+    {
+        "email": "HaTrinh@gmail.com",
+        "fullName": "Trinh Thi Thu Ha",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "demo_hash$95a59e39",
+        "phoneNumber": "0923881248",
+        "role": "AdminUser",
+        "status": "Active",
+        "userId": "aa7a1a88-f592-a521-eacb-b1539bbbd73f",
+        "username": "thuha_admin"
+    },
+    {
+        "email": "pn17020@gmail.com",
+        "fullName": "Phuong Nguyen",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "F@nUx1oob*OaayOWdemo_hash$1b8ab18b",
+        "phoneNumber": "0921372837",
+        "role": "RegularUser",
+        "status": "NotActivated",
+        "userId": "2b3048e4-86c2-677a-b5e4-fa509d6f28f3",
+        "username": "phuong_admin"
+    },
+    {
+        "email": "pn17@gmail.com",
+        "fullName": "Nguyen Phuong",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "THid%$7zbAhA*Bzsdemo_hash$ba4872c3",
+        "phoneNumber": "0921377824",
+        "role": "RegularUser",
+        "status": "NotActivated",
+        "userId": "d2a25108-77d8-271a-c7a7-e934d7500c6",
+        "username": "phuong_admin1"
+    },
+    {
+        "email": "pn@gmail.com",
+        "fullName": "phuong",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "hvKuA@BKrVr^J0*Hdemo_hash$5b3dd253",
+        "phoneNumber": "0924727834",
+        "role": "AdminUser",
+        "status": "Active",
+        "userId": "22ecc0f4-1190-d9a4-49b4-e0e10e358bf",
+        "username": "phuong_admin2"
+    }
+]
+2025-05-21 04:50:57 [INFO] Found 5 users in JSON file
+2025-05-21 04:50:57 [INFO] Successfully loaded 5 users
+2025-05-21 04:50:57 [INFO] Loaded user details: {
+  username: admin
+  userId: 4f1d2dac-c101-1fc1-88e9-cdf1716da246
+  role: AdminUser
+  status: NotActivated
+  email: admin@example.com
+  fullName: Administrator
+  passwordHash: demo_hash$825939ea
+}
+2025-05-21 04:50:57 [INFO] Loaded user details: {
+  username: thuha_admin
+  userId: aa7a1a88-f592-a521-eacb-b1539bbbd73f
+  role: AdminUser
+  status: Active
+  email: HaTrinh@gmail.com
+  fullName: Trinh Thi Thu Ha
+  passwordHash: demo_hash$95a59e39
+}
+2025-05-21 04:50:57 [INFO] Loaded user details: {
+  username: phuong_admin
+  userId: 2b3048e4-86c2-677a-b5e4-fa509d6f28f3
+  role: RegularUser
+  status: NotActivated
+  email: pn17020@gmail.com
+  fullName: Phuong Nguyen
+  passwordHash: F@nUx1oob*OaayOWdemo_hash$1b8ab18b
+}
+2025-05-21 04:50:57 [INFO] Loaded user details: {
+  username: phuong_admin1
+  userId: d2a25108-77d8-271a-c7a7-e934d7500c6
+  role: RegularUser
+  status: NotActivated
+  email: pn17@gmail.com
+  fullName: Nguyen Phuong
+  passwordHash: THid%$7zbAhA*Bzsdemo_hash$ba4872c3
+}
+2025-05-21 04:50:57 [INFO] Loaded user details: {
+  username: phuong_admin2
+  userId: 22ecc0f4-1190-d9a4-49b4-e0e10e358bf
+  role: AdminUser
+  status: Active
+  email: pn@gmail.com
+  fullName: phuong
+  passwordHash: hvKuA@BKrVr^J0*Hdemo_hash$5b3dd253
+}
+2025-05-21 04:50:57 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 04:50:57 [INFO] Tai 5 vi thanh cong.
+2025-05-21 04:50:57 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 04:51:03 [INFO] Starting user search for username: phuong_admin2
+2025-05-21 04:51:03 [INFO] Current users in memory:
+2025-05-21 04:51:03 [INFO]   - User: admin (ID: 4f1d2dac-c101-1fc1-88e9-cdf1716da246, Role: AdminUser, Status: NotActivated)
+2025-05-21 04:51:03 [INFO]   - User: thuha_admin (ID: aa7a1a88-f592-a521-eacb-b1539bbbd73f, Role: AdminUser, Status: Active)
+2025-05-21 04:51:03 [INFO]   - User: phuong_admin (ID: 2b3048e4-86c2-677a-b5e4-fa509d6f28f3, Role: RegularUser, Status: NotActivated)
+2025-05-21 04:51:03 [INFO]   - User: phuong_admin1 (ID: d2a25108-77d8-271a-c7a7-e934d7500c6, Role: RegularUser, Status: NotActivated)
+2025-05-21 04:51:03 [INFO]   - User: phuong_admin2 (ID: 22ecc0f4-1190-d9a4-49b4-e0e10e358bf, Role: AdminUser, Status: Active)
+2025-05-21 04:51:03 [INFO] Comparing with user: admin
+2025-05-21 04:51:03 [INFO] Comparing with user: thuha_admin
+2025-05-21 04:51:03 [INFO] Comparing with user: phuong_admin
+2025-05-21 04:51:03 [INFO] Comparing with user: phuong_admin1
+2025-05-21 04:51:03 [INFO] Comparing with user: phuong_admin2
+2025-05-21 04:51:03 [INFO] Attempting login for username: phuong_admin2
+2025-05-21 04:51:03 [INFO] Total users in system: 5
+2025-05-21 04:51:03 [INFO] Found user: phuong_admin2 (ID: 22ecc0f4-1190-d9a4-49b4-e0e10e358bf, Role: AdminUser, Status: Active)
+2025-05-21 04:51:03 [INFO] Password verification:
+2025-05-21 04:51:03 [INFO]   Salt: hvKuA@BKrVr^J0*H
+2025-05-21 04:51:03 [INFO]   Stored hash: demo_hash$5b3dd253
+2025-05-21 04:51:03 [INFO]   Input hash: demo_hash$5b3dd253
+2025-05-21 04:51:03 [INFO] Login successful for user: phuong_admin2 with role: AdminUser
+2025-05-21 04:51:03 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 04:51:08 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 04:51:25 [INFO] Admin listed all users.
+2025-05-21 04:51:29 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 04:52:18 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 04:52:47 [INFO] Admin '22ecc0f4-1190-d9a4-49b4-e0e10e358bf' attempting to update profile for user ID '2b3048e4-86c2-677a-b5e4-fa509d6f28f3'.
+2025-05-21 04:52:47 [INFO] Saving users to JSON: [
+    {
+        "email": "admin@example.com",
+        "fullName": "Administrator",
+        "isTemporaryPassword": true,
+        "otpSecretKey": "",
+        "passwordHash": "demo_hash$825939ea",
+        "phoneNumber": "0123456789",
+        "role": "AdminUser",
+        "status": "NotActivated",
+        "userId": "4f1d2dac-c101-1fc1-88e9-cdf1716da246",
+        "username": "admin"
+    },
+    {
+        "email": "HaTrinh@gmail.com",
+        "fullName": "Trinh Thi Thu Ha",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "demo_hash$95a59e39",
+        "phoneNumber": "0923881248",
+        "role": "AdminUser",
+        "status": "Active",
+        "userId": "aa7a1a88-f592-a521-eacb-b1539bbbd73f",
+        "username": "thuha_admin"
+    },
+    {
+        "email": "pn17020@gmail.com",
+        "fullName": "Phuong Nguyen",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "F@nUx1oob*OaayOWdemo_hash$1b8ab18b",
+        "phoneNumber": "0921372837",
+        "role": "RegularUser",
+        "status": "Active",
+        "userId": "2b3048e4-86c2-677a-b5e4-fa509d6f28f3",
+        "username": "phuong_admin"
+    },
+    {
+        "email": "pn17@gmail.com",
+        "fullName": "Nguyen Phuong",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "THid%$7zbAhA*Bzsdemo_hash$ba4872c3",
+        "phoneNumber": "0921377824",
+        "role": "RegularUser",
+        "status": "NotActivated",
+        "userId": "d2a25108-77d8-271a-c7a7-e934d7500c6",
+        "username": "phuong_admin1"
+    },
+    {
+        "email": "pn@gmail.com",
+        "fullName": "phuong",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "hvKuA@BKrVr^J0*Hdemo_hash$5b3dd253",
+        "phoneNumber": "0924727834",
+        "role": "AdminUser",
+        "status": "Active",
+        "userId": "22ecc0f4-1190-d9a4-49b4-e0e10e358bf",
+        "username": "phuong_admin2"
+    }
+]
+2025-05-21 04:52:47 [INFO] Saving user: admin, Role: AdminUser, Status: NotActivated
+2025-05-21 04:52:47 [INFO] Saving user: thuha_admin, Role: AdminUser, Status: Active
+2025-05-21 04:52:47 [INFO] Saving user: phuong_admin, Role: RegularUser, Status: Active
+2025-05-21 04:52:47 [INFO] Saving user: phuong_admin1, Role: RegularUser, Status: NotActivated
+2025-05-21 04:52:47 [INFO] Saving user: phuong_admin2, Role: AdminUser, Status: Active
+2025-05-21 04:52:47 [INFO] Admin successfully updated user profile for phuong_admin.
+2025-05-21 04:54:36 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 04:54:40 [INFO] Admin phuong_admin2 dang xuat.
+2025-05-21 04:54:59 [INFO] Starting user search for username: phuong_admin2
+2025-05-21 04:54:59 [INFO] Current users in memory:
+2025-05-21 04:54:59 [INFO]   - User: admin (ID: 4f1d2dac-c101-1fc1-88e9-cdf1716da246, Role: AdminUser, Status: NotActivated)
+2025-05-21 04:54:59 [INFO]   - User: thuha_admin (ID: aa7a1a88-f592-a521-eacb-b1539bbbd73f, Role: AdminUser, Status: Active)
+2025-05-21 04:54:59 [INFO]   - User: phuong_admin (ID: 2b3048e4-86c2-677a-b5e4-fa509d6f28f3, Role: RegularUser, Status: Active)
+2025-05-21 04:54:59 [INFO]   - User: phuong_admin1 (ID: d2a25108-77d8-271a-c7a7-e934d7500c6, Role: RegularUser, Status: NotActivated)
+2025-05-21 04:54:59 [INFO]   - User: phuong_admin2 (ID: 22ecc0f4-1190-d9a4-49b4-e0e10e358bf, Role: AdminUser, Status: Active)
+2025-05-21 04:54:59 [INFO] Comparing with user: admin
+2025-05-21 04:54:59 [INFO] Comparing with user: thuha_admin
+2025-05-21 04:54:59 [INFO] Comparing with user: phuong_admin
+2025-05-21 04:54:59 [INFO] Comparing with user: phuong_admin1
+2025-05-21 04:54:59 [INFO] Comparing with user: phuong_admin2
+2025-05-21 04:54:59 [INFO] Attempting login for username: phuong_admin2
+2025-05-21 04:54:59 [INFO] Total users in system: 5
+2025-05-21 04:54:59 [INFO] Found user: phuong_admin2 (ID: 22ecc0f4-1190-d9a4-49b4-e0e10e358bf, Role: AdminUser, Status: Active)
+2025-05-21 04:54:59 [INFO] Password verification:
+2025-05-21 04:54:59 [INFO]   Salt: hvKuA@BKrVr^J0*H
+2025-05-21 04:54:59 [INFO]   Stored hash: demo_hash$5b3dd253
+2025-05-21 04:54:59 [INFO]   Input hash: demo_hash$5b3dd253
+2025-05-21 04:54:59 [INFO] Login successful for user: phuong_admin2 with role: AdminUser
+2025-05-21 04:54:59 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 04:56:29 [INFO] Ung dung khoi dong.
+2025-05-21 04:56:29 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 04:56:29 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 04:56:29 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 04:56:29 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 04:56:29 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 04:56:29 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 04:56:29 [INFO] Loaded 5 users from file
+2025-05-21 04:56:29 [INFO] Dang tai du lieu...
+2025-05-21 04:56:29 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 04:56:29 [INFO] Tai 5 vi thanh cong.
+2025-05-21 04:56:29 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 04:56:37 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 04:58:45 [INFO] Ung dung khoi dong.
+2025-05-21 04:58:45 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 04:58:45 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 04:58:45 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 04:58:45 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 04:58:45 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 04:58:45 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 04:58:45 [INFO] Loaded 5 users from file
+2025-05-21 04:58:45 [INFO] Dang tai du lieu...
+2025-05-21 04:58:45 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 04:58:45 [INFO] Tai 5 vi thanh cong.
+2025-05-21 04:58:45 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 04:58:51 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 04:58:57 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 04:59:12 [INFO] Admin attempting to activate user ID '2b3048e4-86c2-677a-b5e4-fa509d6f28f3'.
+2025-05-21 04:59:12 [INFO] Account activation attempted for already active user 'phuong_admin'.
+2025-05-21 05:00:51 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:00:55 [INFO] Admin attempting to activate user ID '2b3048e4-86c2-677a-b5e4-fa509d6f28f3'.
+2025-05-21 05:00:55 [INFO] Account activation attempted for already active user 'phuong_admin'.
+2025-05-21 05:01:04 [INFO] Ung dung khoi dong.
+2025-05-21 05:01:04 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:01:04 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:01:04 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:01:04 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:01:04 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:01:04 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:01:04 [INFO] Loaded 5 users from file
+2025-05-21 05:01:04 [INFO] Dang tai du lieu...
+2025-05-21 05:01:04 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:01:04 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:01:04 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 05:01:12 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 05:01:14 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:01:26 [INFO] Admin attempting to activate user ID ''.
+2025-05-21 05:01:26 [WARNING] User not found for activation. User ID: 
+2025-05-21 05:01:30 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:01:52 [INFO] Admin attempting to activate user ID '2b3048e4-86c2-677a-b5e4-fa509d6f28f3'.
+2025-05-21 05:01:52 [INFO] Account activation attempted for already active user 'phuong_admin'.
+2025-05-21 05:02:29 [INFO] Ung dung khoi dong.
+2025-05-21 05:02:29 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:02:29 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:02:29 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:02:29 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:02:29 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:02:29 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:02:29 [INFO] Loaded 5 users from file
+2025-05-21 05:02:29 [INFO] Dang tai du lieu...
+2025-05-21 05:02:29 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:02:29 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:02:29 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 05:02:34 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 05:02:35 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:02:43 [INFO] Admin attempting to activate user ID '2b3048e4-86c2-677a-b5e4-fa509d6f28f3'.
+2025-05-21 05:02:43 [INFO] Account activation attempted for already active user 'phuong_admin'.
+2025-05-21 05:05:12 [INFO] Ung dung khoi dong.
+2025-05-21 05:05:12 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:05:12 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:05:12 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:05:12 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:05:12 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:05:12 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:05:12 [INFO] Loaded 5 users from file
+2025-05-21 05:05:12 [INFO] Dang tai du lieu...
+2025-05-21 05:05:12 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:05:12 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:05:12 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 05:05:21 [INFO] Ung dung khoi dong.
+2025-05-21 05:05:21 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:05:21 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:05:21 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:05:21 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:05:21 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:05:21 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:05:21 [INFO] Loaded 5 users from file
+2025-05-21 05:05:21 [INFO] Dang tai du lieu...
+2025-05-21 05:05:21 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:05:21 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:05:21 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 05:05:29 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 05:05:32 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:05:53 [INFO] Admin attempting to activate user ID '2b3048e4-86c2-677a-b5e4-fa509d6f28f3'.
+2025-05-21 05:05:53 [INFO] Account activation attempted for already active user 'phuong_admin'.
+2025-05-21 05:06:46 [INFO] Ung dung khoi dong.
+2025-05-21 05:06:46 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:06:46 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:06:46 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:06:46 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:06:46 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:06:46 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:06:46 [INFO] Loaded 5 users from file
+2025-05-21 05:06:46 [INFO] Dang tai du lieu...
+2025-05-21 05:06:46 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:06:46 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:06:46 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 05:06:53 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 05:06:54 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:07:05 [INFO] Admin attempting to activate user ID '2b3048e4-86c2-677a-b5e4-fa509d6f28f3'.
+2025-05-21 05:07:05 [INFO] Account activation attempted for already active user 'phuong_admin'.
+2025-05-21 05:08:54 [INFO] Ung dung khoi dong.
+2025-05-21 05:08:54 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:08:54 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:08:54 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:08:54 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:08:54 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:08:54 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:08:54 [INFO] Loaded 5 users from file
+2025-05-21 05:08:54 [INFO] Dang tai du lieu...
+2025-05-21 05:08:54 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:08:54 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:08:54 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 05:09:00 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 05:09:01 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:09:10 [INFO] Admin attempting to activate user ID '2b3048e4-86c2-677a-b5e4-fa509d6f28f3'.
+2025-05-21 05:09:10 [INFO] Account activation attempted for already active user 'phuong_admin'.
+2025-05-21 05:09:13 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:09:33 [INFO] Admin attempting to activate user ID 'd2a25108-77d8-271a-c7a7-e934d7500c6'.
+2025-05-21 05:09:33 [INFO] Account activated for user 'phuong_admin1'.
+2025-05-21 05:10:52 [INFO] Ung dung khoi dong.
+2025-05-21 05:10:52 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:10:52 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:10:52 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:10:52 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:10:52 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:10:52 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:10:52 [INFO] Loaded 5 users from file
+2025-05-21 05:10:52 [INFO] Dang tai du lieu...
+2025-05-21 05:10:52 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:10:52 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:10:52 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 05:10:59 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 05:11:00 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:11:14 [INFO] Admin attempting to activate user ID 'd2a25108-77d8-271a-c7a7-e934d7500c6'.
+2025-05-21 05:11:14 [INFO] Account activation attempted for already active user 'phuong_admin1'.
+2025-05-21 05:12:32 [INFO] Ung dung khoi dong.
+2025-05-21 05:12:32 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:12:32 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:12:32 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:12:32 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:12:32 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:12:32 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:12:32 [INFO] Loaded 5 users from file
+2025-05-21 05:12:32 [INFO] Dang tai du lieu...
+2025-05-21 05:12:32 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:12:32 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:12:32 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 05:12:38 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 05:12:39 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:12:48 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:13:16 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:18:08 [INFO] Ung dung khoi dong.
+2025-05-21 05:18:08 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:18:08 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:18:08 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:18:08 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:18:08 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:18:08 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:18:08 [INFO] Loaded 5 users from file
+2025-05-21 05:18:08 [INFO] Dang tai du lieu...
+2025-05-21 05:18:08 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:18:08 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:18:08 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 05:18:17 [INFO] Ung dung khoi dong.
+2025-05-21 05:18:17 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:18:17 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:18:17 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:18:17 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:18:17 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:18:17 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:18:17 [INFO] Loaded 5 users from file
+2025-05-21 05:18:17 [INFO] Dang tai du lieu...
+2025-05-21 05:18:17 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:18:17 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:18:17 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 05:18:24 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 05:18:25 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:21:11 [INFO] Ung dung khoi dong.
+2025-05-21 05:21:11 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:21:11 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:21:11 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:21:11 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:21:11 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:21:11 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:21:11 [INFO] Loaded 5 users from file
+2025-05-21 05:21:11 [INFO] Dang tai du lieu...
+2025-05-21 05:21:11 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:21:11 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:21:11 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 05:21:17 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 05:21:18 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:21:22 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:23:28 [INFO] Ung dung khoi dong.
+2025-05-21 05:23:28 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:23:28 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:23:28 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:23:28 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:23:28 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:23:28 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:23:28 [INFO] Loaded 5 users from file
+2025-05-21 05:23:28 [INFO] Dang tai du lieu...
+2025-05-21 05:23:28 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:23:28 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:23:28 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 05:23:35 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 05:23:36 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:23:43 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:23:50 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:23:55 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:23:58 [INFO] Profile updated for user 'phuong_admin2'.
+2025-05-21 05:23:58 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:24:00 [INFO] Profile updated for user 'phuong_admin2'.
+2025-05-21 05:24:04 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:24:08 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:24:12 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:24:14 [INFO] Admin listed all users.
+2025-05-21 05:24:19 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:24:28 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:24:35 [INFO] Admin attempting to deactivate user ID 'd2a25108-77d8-271a-c7a7-e934d7500c6'.
+2025-05-21 05:24:35 [INFO] Account deactivated for user 'phuong_admin1'.
+2025-05-21 05:24:44 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:25:08 [INFO] Admin '22ecc0f4-1190-d9a4-49b4-e0e10e358bf' attempting to deposit 50000.000000 to user ID '2b3048e4-86c2-677a-b5e4-fa509d6f28f3' for reason: Hihihehe
+2025-05-21 05:25:12 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:25:33 [INFO] Admin '22ecc0f4-1190-d9a4-49b4-e0e10e358bf' attempting to deposit 50000.000000 to user ID '2b3048e4-86c2-677a-b5e4-fa509d6f28f3' for reason: test
+2025-05-21 05:28:36 [INFO] Ung dung khoi dong.
+2025-05-21 05:28:36 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:28:36 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:28:36 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:28:36 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:28:36 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:28:36 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:28:36 [INFO] Loaded 5 users from file
+2025-05-21 05:28:36 [INFO] Dang tai du lieu...
+2025-05-21 05:28:36 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:28:36 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:28:36 [INFO] Tai 0 giao dich thanh cong.
+2025-05-21 05:28:43 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 05:28:44 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:28:54 [INFO] Admin '22ecc0f4-1190-d9a4-49b4-e0e10e358bf' attempting to deposit 500000.000000 to user ID 'd2a25108-77d8-271a-c7a7-e934d7500c6' for reason: aaa
+2025-05-21 05:28:54 [INFO] Successfully saved 1 transactions to file
+2025-05-21 05:28:54 [INFO] Deposit successful for wallet WLT-d2b2c524-e1f. Amount: 500000.000000, New balance: 500000.000000

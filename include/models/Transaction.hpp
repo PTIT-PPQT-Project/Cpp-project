@@ -3,71 +3,61 @@
 
 #include <string>
 #include <ctime>
-#include "nlohmann/json.hpp"
+#include <nlohmann/json.hpp>
+#include <optional>
 
 using json = nlohmann::json;
 
 // Enum for transaction statuses
 enum class TransactionStatus {
-    PendingOtpConfirmation,
-    Successful,
-    FailedInsufficientFunds,
-    FailedOtpInvalid,
-    FailedWalletNotFound,
-    FailedSystemError,
-    CancelledByUser // Or just "Cancelled"
+    Pending,
+    Completed,
+    Failed,
+    Cancelled
 };
 
 class Transaction {
 public:
     std::string transactionId;      // Unique identifier for the transaction
-    std::string senderWalletId;     // ID of the wallet sending the points
-    std::string receiverWalletId;   // ID of the wallet receiving the points
-    double amountTransferred;       // Amount of points transferred
-    time_t transactionTimestamp;    // Timestamp when the transaction was recorded/processed
-    TransactionStatus status;       // Current status of the transaction
-    std::string description;        // Optional description for the transaction
+    std::string sourceWalletId;     // ID of the wallet sending the points
+    std::string targetWalletId;     // ID of the wallet receiving the points
+    double amount;                  // Amount of points transferred
+    std::string description;         // Optional description for the transaction
+    time_t timestamp;               // Timestamp when the transaction was recorded/processed
+    TransactionStatus status;        // Current status of the transaction
 
     // Default constructor
     Transaction();
 
     // Static utility functions for enum conversion
-    static std::string statusToString(TransactionStatus s);
+    static std::string statusToString(TransactionStatus status);
     static TransactionStatus stringToStatus(const std::string& statusStr);
-};
 
-// --- nlohmann/json serialization/deserialization for Enums ---
-// TransactionStatus
-inline void to_json(json& j, const TransactionStatus& ts) {
-    j = Transaction::statusToString(ts);
+    // JSON serialization
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(Transaction, transactionId, sourceWalletId, targetWalletId, amount, description, timestamp, status)
+
+    // Custom JSON conversion for enums
+    static void to_json(json& j, const TransactionStatus& status) {
+        j = static_cast<int>(status);
 }
-inline void from_json(const json& j, TransactionStatus& ts) {
+
+    static void from_json(const json& j, TransactionStatus& status) {
     if (j.is_string()) {
-        ts = Transaction::stringToStatus(j.get<std::string>());
+            std::string statusStr = j.get<std::string>();
+            if (statusStr == "Pending") status = TransactionStatus::Pending;
+            else if (statusStr == "Completed") status = TransactionStatus::Completed;
+            else if (statusStr == "Failed") status = TransactionStatus::Failed;
+            else if (statusStr == "Cancelled") status = TransactionStatus::Cancelled;
+            else throw std::runtime_error("Invalid TransactionStatus string value: " + statusStr);
+        } else if (j.is_number()) {
+            int statusInt = j.get<int>();
+            if (statusInt == 0) status = TransactionStatus::Pending;
+            else if (statusInt == 1) status = TransactionStatus::Completed;
+            else if (statusInt == 2) status = TransactionStatus::Failed;
+            else if (statusInt == 3) status = TransactionStatus::Cancelled;
+            else throw std::runtime_error("Invalid TransactionStatus integer value: " + std::to_string(statusInt));
     } else {
-        throw json::type_error::create(302, "TransactionStatus must be a string in JSON", j);
+            throw std::runtime_error("TransactionStatus must be a string or integer in JSON");
+        }
     }
-}
-
-// --- nlohmann/json serialization/deserialization for Transaction class ---
-inline void to_json(json& j, const Transaction& t) {
-    j = json{
-        {"transactionId", t.transactionId},
-        {"senderWalletId", t.senderWalletId},
-        {"receiverWalletId", t.receiverWalletId},
-        {"amountTransferred", t.amountTransferred},
-        {"transactionTimestamp", t.transactionTimestamp},
-        {"status", t.status}, // Automatically uses to_json for TransactionStatus
-        {"description", t.description}
-    };
-}
-
-inline void from_json(const json& j, Transaction& t) {
-    j.at("transactionId").get_to(t.transactionId);
-    j.at("senderWalletId").get_to(t.senderWalletId);
-    j.at("receiverWalletId").get_to(t.receiverWalletId);
-    j.at("amountTransferred").get_to(t.amountTransferred);
-    j.at("transactionTimestamp").get_to(t.transactionTimestamp);
-    j.at("status").get_to(t.status); // Automatically uses from_json for TransactionStatus
-    t.description = j.value("description", ""); // Gracefully handle if key is missing
-}
+};
