@@ -1,0 +1,17 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**", // Dòng này thường có sẵn
+                "${workspaceFolder}/include" // **Thêm dòng này**
+            ],
+            // ... các cài đặt khác
+            "compilerPath": "C:/msys64/mingw64/bin/g++.exe", // ví dụ đường dẫn compiler
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-gcc-x64" // ví dụ
+        }
+    ],
+    "version": 4
+}

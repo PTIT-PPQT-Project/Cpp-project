@@ -1,0 +1,5 @@
+C:/Repositories/Cpp-project/CMakeFiles/RewardSystemApp.dir
+C:/Repositories/Cpp-project/CMakeFiles/edit_cache.dir
+C:/Repositories/Cpp-project/CMakeFiles/rebuild_cache.dir
+C:/Repositories/Cpp-project/_deps/nlohmann_json-build/CMakeFiles/edit_cache.dir
+C:/Repositories/Cpp-project/_deps/nlohmann_json-build/CMakeFiles/rebuild_cache.dir
