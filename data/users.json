@@ -2,15 +2,15 @@
     {
         "creationTimestamp": 1747767100,
         "email": "pn17020@gmail.com",
-        "fullName": "Phuong Nguyen",
-        "hashedPassword": "M^}<LkoxRSSXPiX(HelloWorld@2",
+        "fullName": "nadsnand",
+        "hashedPassword": "demo_fnv1a$320000000000",
         "isTemporaryPassword": false,
-        "lastLoginTimestamp": 1747767963,
+        "lastLoginTimestamp": 0,
         "otpSecretKey": "",
         "passwordSalt": "M^}<LkoxRSSXPiX(",
         "phoneNumber": "0913451731",
-        "role": "AdminUser",
-        "status": "Active",
+        "role": "RegularUser",
+        "status": "NotActivated",
         "userId": "4827fb21-f816-bbed-5e8b-2e9160d4df14",
         "username": "phuong_admin"
     }

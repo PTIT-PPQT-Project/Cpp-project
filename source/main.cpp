@@ -58,22 +58,19 @@ std::string getPasswordInput(const std::string& prompt, bool allowEmpty = false)
     
     while (attempts < MAX_ATTEMPTS) {
         std::string input = getStringInput(prompt, allowEmpty);
-        if (input == "GO_BACK") {
-            return "GO_BACK";
-        }
         if (input.empty() && !allowEmpty) {
             std::cout << "Input cannot be empty. Please try again." << std::endl;
             attempts++;
             if (attempts >= MAX_ATTEMPTS) {
                 std::cout << "Too many failed attempts. Returning to previous menu." << std::endl;
                 pauseScreen();
-                return "GO_BACK";
+                return ""; // Return empty string to indicate failure
             }
             continue;
         }
         return input;
     }
-    return "GO_BACK";
+    return ""; // Return empty string if all attempts failed
 }
 
 int main() {
@@ -252,15 +249,14 @@ std::string getStringInput(const std::string& prompt, bool allowEmpty) {
     std::string input;
     while (true) {
         std::cout << prompt;
-        if (std::cin.peek() == '\n') {
+        // std::ws consumes leading whitespace before getline reads.
+        // However, if cin buffer is dirty from previous unconsumed newlines,
+        // it might still cause issues. The pauseScreen often helps clear this.
+        // A more robust way is to always use getline and then parse.
+        if (std::cin.peek() == '\n') { // Consume leftover newline from previous numeric input
             std::cin.ignore();
         }
         std::getline(std::cin, input);
-
-        // Check for go back command
-        if (input == "b" || input == "B") {
-            return "GO_BACK";
-        }
 
         if (allowEmpty || InputValidator::isNonEmpty(input)) {
             return input;
@@ -305,49 +301,28 @@ void displayMainMenu() {
 void handleRegistration(AuthService& authService, WalletService& walletService) {
     clearScreen();
     std::cout << "--- Register New Account ---" << std::endl;
-    std::cout << "Enter 'b' to go back to main menu" << std::endl;
     std::string username, password, fullName, email, phone, msg;
 
-    do { 
-        username = getStringInput("Enter username (3-20 chars, alphanumeric, '_'): "); 
-        if (username == "GO_BACK") return;
-        if (!InputValidator::isValidUsername(username)) {
-            std::cout << "Invalid username format. Try again.\n";
-            continue;
-        }
-        break;
-    } while (true);
+    do { username = getStringInput("Enter username (3-20 chars, alphanumeric, '_'): "); } 
+    while (!InputValidator::isValidUsername(username) && (std::cout << "Invalid username format. Try again.\n", true));
     
     password = getPasswordInput("Enter password (min " + std::to_string(AppConfig::MIN_PASSWORD_LENGTH) + " chars, upper, lower, digit): ");
-    if (password == "GO_BACK") return;
+    if (password.empty()) {
+        return; // Return to main menu if password input failed
+    }
     while (!InputValidator::isValidPassword(password)) {
         std::cout << "Password not strong enough. Try again." << std::endl;
         password = getPasswordInput("Enter password (min " + std::to_string(AppConfig::MIN_PASSWORD_LENGTH) + " chars, upper, lower, digit): ");
-        if (password == "GO_BACK") return;
+        if (password.empty()) {
+            return; // Return to main menu if password input failed
+        }
     }
 
     fullName = getStringInput("Enter full name: ");
-    if (fullName == "GO_BACK") return;
-
-    do { 
-        email = getStringInput("Enter email: "); 
-        if (email == "GO_BACK") return;
-        if (!InputValidator::isValidEmail(email)) {
-            std::cout << "Invalid email format. Try again.\n";
-            continue;
-        }
-        break;
-    } while (true);
-
-    do { 
-        phone = getStringInput("Enter phone number: "); 
-        if (phone == "GO_BACK") return;
-        if (!InputValidator::isValidPhoneNumber(phone)) {
-            std::cout << "Invalid phone number format. Try again.\n";
-            continue;
-        }
-        break;
-    } while (true);
+    do { email = getStringInput("Enter email: "); } 
+    while (!InputValidator::isValidEmail(email) && (std::cout << "Invalid email format. Try again.\n", true));
+    do { phone = getStringInput("Enter phone number: "); } 
+    while (!InputValidator::isValidPhoneNumber(phone) && (std::cout << "Invalid phone number format. Try again.\n", true));
 
     if (authService.registerUser(username, password, fullName, email, phone, UserRole::RegularUser, msg)) {
         std::cout << "Registration: " << msg << std::endl;
@@ -375,24 +350,22 @@ void handleRegistration(AuthService& authService, WalletService& walletService) 
 void handleLogin(AuthService& authService, UserService& userService) {
     clearScreen();
     std::cout << "--- Login ---" << std::endl;
-    std::cout << "Enter 'b' to go back to main menu" << std::endl;
     std::string username = getStringInput("Username: ");
-    if (username == "GO_BACK") return;
-    
     std::string msg;
     int attempts = 0;
     const int MAX_ATTEMPTS = 3;
 
     while (attempts < MAX_ATTEMPTS) {
         std::string password = getPasswordInput("Password: ");
-        if (password.empty() || password == "GO_BACK") {
-            return;
+        if (password.empty()) {
+            return; // Return to main menu if password input failed
         }
 
         std::optional<User> userOpt = authService.loginUser(username, password, msg);
         if (userOpt) {
             g_currentUser = userOpt.value();
             std::cout << msg << " Welcome, " << g_currentUser.value().fullName << "!" << std::endl;
+            LOG_INFO("User '" + g_currentUser.value().username + "' logged in.");
             pauseScreen();
             return;
         } else {
@@ -403,9 +376,6 @@ void handleLogin(AuthService& authService, UserService& userService) {
                 pauseScreen();
                 return;
             }
-            // Return to main menu immediately after any failed attempt
-            pauseScreen();
-            return;
         }
     }
 }
@@ -451,36 +421,18 @@ void handleUserActions(UserService& userService, AuthService& authService, Walle
         case 2: { // Update Profile
             clearScreen();
             std::cout << "--- Update Profile ---" << std::endl;
-            std::cout << "Enter 'b' to go back to user menu" << std::endl;
             std::string newFullName = getStringInput("New Full Name (current: " + CUser.fullName + ", leave empty to keep): ", true);
-            if (newFullName == "GO_BACK") return;
-
             std::string newEmail;
-            do { 
-                newEmail = getStringInput("New Email (current: " + CUser.email + ", leave empty to keep): ", true);
-                if (newEmail == "GO_BACK") return;
-                if (!newEmail.empty() && !InputValidator::isValidEmail(newEmail)) {
-                    std::cout << "Invalid email format.\n";
-                    continue;
-                }
-                break;
-            } while (true);
-
+            do { newEmail = getStringInput("New Email (current: " + CUser.email + ", leave empty to keep): ", true);
+            } while (!newEmail.empty() && !InputValidator::isValidEmail(newEmail) && (std::cout << "Invalid email format.\n", true));
             std::string newPhone;
-            do { 
-                newPhone = getStringInput("New Phone (current: " + CUser.phoneNumber + ", leave empty to keep): ", true);
-                if (newPhone == "GO_BACK") return;
-                if (!newPhone.empty() && !InputValidator::isValidPhoneNumber(newPhone)) {
-                    std::cout << "Invalid phone format.\n";
-                    continue;
-                }
-                break;
-            } while (true);
+            do { newPhone = getStringInput("New Phone (current: " + CUser.phoneNumber + ", leave empty to keep): ", true);
+            } while (!newPhone.empty() && !InputValidator::isValidPhoneNumber(newPhone) && (std::cout << "Invalid phone format.\n", true));
 
             if (newFullName.empty()) newFullName = CUser.fullName;
             if (newEmail.empty()) newEmail = CUser.email;
             if (newPhone.empty()) newPhone = CUser.phoneNumber;
-
+            
             otpInput = "";
             if (!CUser.otpSecretKey.empty()) {
                 otpInput = getStringInput("Enter your OTP code to confirm changes: ");
@@ -500,27 +452,38 @@ void handleUserActions(UserService& userService, AuthService& authService, Walle
         case 3: { // Change Password
             clearScreen();
             std::cout << "--- Change Password ---" << std::endl;
-            std::cout << "Enter 'b' to go back to user menu" << std::endl;
             std::string oldPass = getPasswordInput("Enter current password: ");
-            if (oldPass == "GO_BACK") return;
+            if (oldPass.empty()) {
+                return; // Return to user menu if password input failed
+            }
 
             std::string newPass = getPasswordInput("Enter new password: ");
-            if (newPass == "GO_BACK") return;
+            if (newPass.empty()) {
+                return; // Return to user menu if password input failed
+            }
             while (!InputValidator::isValidPassword(newPass)) {
                 std::cout << "Password not strong enough." << std::endl;
                 newPass = getPasswordInput("Enter new password: ");
-                if (newPass == "GO_BACK") return;
+                if (newPass.empty()) {
+                    return; // Return to user menu if password input failed
+                }
             }
 
             std::string confirmPass = getPasswordInput("Confirm new password: ");
-            if (confirmPass == "GO_BACK") return;
+            if (confirmPass.empty()) {
+                return; // Return to user menu if password input failed
+            }
 
-            if (authService.changePassword(CUser.userId, oldPass, newPass, msg)) {
-                std::cout << "Success: " << msg << std::endl;
-                auto updatedUserOpt = userService.getUserProfile(CUser.userId);
-                if(updatedUserOpt) g_currentUser = updatedUserOpt.value();
+            if (newPass == confirmPass) {
+                if (authService.changePassword(CUser.userId, oldPass, newPass, msg)) {
+                    std::cout << "Success: " << msg << std::endl;
+                    auto updatedUserOpt = userService.getUserProfile(CUser.userId);
+                    if(updatedUserOpt) g_currentUser = updatedUserOpt.value();
+                } else {
+                    std::cout << "Failed: " << msg << std::endl;
+                }
             } else {
-                std::cout << "Failed: " << msg << std::endl;
+                std::cout << "New passwords do not match." << std::endl;
             }
             pauseScreen();
             break;
@@ -713,42 +676,12 @@ void handleAdminActions(AdminService& adminService, UserService& userService, Au
             clearScreen();
             std::cout << "--- Admin: Create New User Account ---" << std::endl;
             std::string newUsername, newPassword, newFullName, newEmail, newPhone, tempPass;
-            UserRole newUserRole = UserRole::RegularUser;
+            UserRole newUserRole = UserRole::RegularUser; // Default to regular user
 
-            std::cout << "Enter 'b' to go back to admin menu" << std::endl;
-            do { 
-                newUsername = getStringInput("Enter username for new user: "); 
-                if (newUsername == "GO_BACK") return;
-                if (!InputValidator::isValidUsername(newUsername)) {
-                    std::cout << "Invalid username format.\n";
-                    continue;
-                }
-                break;
-            } while (true);
-
-            std::cout << "Enter 'b' to go back to admin menu" << std::endl;
+            do { newUsername = getStringInput("Enter username for new user: "); } while (!InputValidator::isValidUsername(newUsername) && (std::cout << "Invalid username format.\n", true));
             newFullName = getStringInput("Enter full name for new user: ");
-            if (newFullName == "GO_BACK") return;
-
-            do { 
-                newEmail = getStringInput("Enter email for new user: "); 
-                if (newEmail == "GO_BACK") return;
-                if (!InputValidator::isValidEmail(newEmail)) {
-                    std::cout << "Invalid email format.\n";
-                    continue;
-                }
-                break;
-            } while (true);
-
-            do { 
-                newPhone = getStringInput("Enter phone for new user: "); 
-                if (newPhone == "GO_BACK") return;
-                if (!InputValidator::isValidPhoneNumber(newPhone)) {
-                    std::cout << "Invalid phone format.\n";
-                    continue;
-                }
-                break;
-            } while (true);
+            do { newEmail = getStringInput("Enter email for new user: "); } while (!InputValidator::isValidEmail(newEmail) && (std::cout << "Invalid email format.\n", true));
+            do { newPhone = getStringInput("Enter phone for new user: "); } while (!InputValidator::isValidPhoneNumber(newPhone) && (std::cout << "Invalid phone format.\n", true));
             
             // Admin cannot create another admin via this simplified interface for now.
             if (adminService.adminCreateUserAccount(newUsername, newFullName, newEmail, newPhone, newUserRole, tempPass, msg)) {
@@ -772,42 +705,23 @@ void handleAdminActions(AdminService& adminService, UserService& userService, Au
         case 13: { // Update User Profile
             clearScreen();
             std::cout << "--- Admin: Update User Profile ---" << std::endl;
-            std::cout << "Enter 'b' to go back to admin menu" << std::endl;
             std::string targetUserId = getStringInput("Enter User ID of the user to update: ");
-            if (targetUserId == "GO_BACK") return;
-
             auto targetUserOpt = userService.getUserProfile(targetUserId);
             if (!targetUserOpt) {
                 std::cout << "User with ID '" << targetUserId << "' not found." << std::endl;
                 pauseScreen();
                 break;
             }
-            User targetUser = targetUserOpt.value();
+            User targetUser = targetUserOpt.value(); // Get a copy for display and checks
+            std::cout << "Updating profile for: " << targetUser.username << " (" << targetUser.fullName << ")" << std::endl;
 
             std::string newFullName = getStringInput("New Full Name (current: " + targetUser.fullName + ", leave empty to keep): ", true);
-            if (newFullName == "GO_BACK") return;
-
             std::string newEmail;
-            do { 
-                newEmail = getStringInput("New Email (current: " + targetUser.email + ", leave empty to keep): ", true);
-                if (newEmail == "GO_BACK") return;
-                if (!newEmail.empty() && !InputValidator::isValidEmail(newEmail)) {
-                    std::cout << "Invalid email format.\n";
-                    continue;
-                }
-                break;
-            } while (true);
-
+            do { newEmail = getStringInput("New Email (current: " + targetUser.email + ", leave empty to keep): ", true);
+            } while (!newEmail.empty() && !InputValidator::isValidEmail(newEmail) && (std::cout << "Invalid email format.\n", true));
             std::string newPhone;
-            do { 
-                newPhone = getStringInput("New Phone (current: " + targetUser.phoneNumber + ", leave empty to keep): ", true);
-                if (newPhone == "GO_BACK") return;
-                if (!newPhone.empty() && !InputValidator::isValidPhoneNumber(newPhone)) {
-                    std::cout << "Invalid phone format.\n";
-                    continue;
-                }
-                break;
-            } while (true);
+            do { newPhone = getStringInput("New Phone (current: " + targetUser.phoneNumber + ", leave empty to keep): ", true);
+            } while (!newPhone.empty() && !InputValidator::isValidPhoneNumber(newPhone) && (std::cout << "Invalid phone format.\n", true));
             
             std::cout << "Current Status: " << User::statusToString(targetUser.status) << std::endl;
             std::cout << "New Status (0=NotActivated, 1=Active, 2=Inactive, Enter to keep current): ";
@@ -840,45 +754,32 @@ void handleAdminActions(AdminService& adminService, UserService& userService, Au
             pauseScreen();
             break;
         }
-        case 14: { // Activate User
+        case 14: // Activate User
             clearScreen();
             std::cout << "--- Admin: Activate User Account ---" << std::endl;
-            std::cout << "Enter 'b' to go back to admin menu" << std::endl;
-            std::string userId = getStringInput("Enter User ID to activate: ");
-            if (userId == "GO_BACK") return;
-
-            if(adminService.adminActivateUser(userId, msg)){
+            if(adminService.adminActivateUser(getStringInput("Enter User ID to activate: "), msg)){
                  std::cout << "Success: " << msg << std::endl;
             } else {
                  std::cout << "Failed: " << msg << std::endl;
             }
             pauseScreen();
             break;
-        }
-        case 15: { // Deactivate User
+        case 15: // Deactivate User
             clearScreen();
             std::cout << "--- Admin: Deactivate User Account ---" << std::endl;
-            std::cout << "Enter 'b' to go back to admin menu" << std::endl;
-            std::string userId = getStringInput("Enter User ID to deactivate: ");
-            if (userId == "GO_BACK") return;
-
-            if(adminService.adminDeactivateUser(userId, msg)){
+            if(adminService.adminDeactivateUser(getStringInput("Enter User ID to deactivate: "), msg)){
                 std::cout << "Success: " << msg << std::endl;
             } else {
                 std::cout << "Failed: " << msg << std::endl;
             }
             pauseScreen();
             break;
-        }
 
         // Wallet Management
         case 21: { // Deposit Points
             clearScreen();
             std::cout << "--- Admin: Deposit Points ---" << std::endl;
-            std::cout << "Enter 'b' to go back to admin menu" << std::endl;
             std::string targetUserId = getStringInput("Enter User ID to deposit points to: ");
-            if (targetUserId == "GO_BACK") return;
-
             double amount = getDoubleInput("Enter amount to deposit: ");
             std::string reason = getStringInput("Reason for deposit: ");
             if (adminService.adminDepositToUserWallet(CAdmin.userId, targetUserId, amount, reason, msg)) {

@@ -339,6 +339,7 @@
 2025-05-21 01:51:40 [INFO] Registration successful! Account created for phuong_admin. Please wait for activation.
 2025-05-21 01:51:40 [INFO] Saved 6 wallets to data/wallets.json
 2025-05-21 01:51:40 [INFO] New wallet created successfully for user phuong_admin. Wallet ID: WLT-86e284a7-3fe
+<<<<<<< HEAD
 2025-05-21 01:53:14 [WARNING] Login attempt failed for username 'phuong_admin': Account is not activated yet. Please check your email or contact support.
 2025-05-21 01:53:15 [WARNING] Login attempt failed for username 'phuong_admin': Account is not activated yet. Please check your email or contact support.
 2025-05-21 01:53:24 [WARNING] Login attempt failed for username 'phuong_admin': Account is not activated yet. Please check your email or contact support.
@@ -437,3 +438,5 @@
 2025-05-21 02:05:49 [INFO] Data loading complete. Users: 1, Wallets: 6, Transactions: 0
 2025-05-21 02:06:03 [INFO] User 'phuong_admin' logged in successfully.
 2025-05-21 02:06:22 [INFO] Admin 'phuong_admin' logged out.
+=======
+>>>>>>> parent of 6202a1a (- add feature go back)

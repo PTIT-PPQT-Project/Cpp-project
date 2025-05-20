@@ -51,15 +51,19 @@ std::string HashUtils::generateSalt(size_t length) const {
 
 // --- DEMONSTRATION HASHING - NOT SECURE ---
 std::string HashUtils::hashPassword(const std::string& password, const std::string& salt) const {
-    // For demo purposes, we'll use a simple concatenation of salt and password
-    // In a real application, use a proper cryptographic library like bcrypt or Argon2
-    return salt + password;
+    std::string saltedPassword = salt + password; // Simple concatenation for demo
+    unsigned long long hash_val = 14695981039346656037ULL; // FNV-1a 64-bit offset basis
+    for (char c : saltedPassword) {
+        hash_val ^= static_cast<unsigned long long>(static_cast<unsigned char>(c));
+        hash_val *= 1099511627776ULL; // FNV-1a 64-bit prime
+    }
+    std::stringstream ss;
+    ss << "demo_fnv1a$" << std::hex << hash_val; // Prefix to indicate it's a demo hash
+    return ss.str();
 }
 
 bool HashUtils::verifyPassword(const std::string& password, const std::string& hashedPassword, const std::string& salt) const {
-    // For demo purposes, we'll use a simple concatenation comparison
-    // In a real application, use a proper cryptographic library like bcrypt or Argon2
-    std::string computedHash = salt + password;
+    std::string computedHash = hashPassword(password, salt);
     return computedHash == hashedPassword;
 }
 // --- END OF DEMONSTRATION HASHING ---

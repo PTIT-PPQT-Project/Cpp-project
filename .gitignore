@@ -53,4 +53,8 @@ Makefile
 .Spotlight-V100
 .Trashes
 ehthumbs.db
+<<<<<<< HEAD
 Thumbs.db
+=======
+Thumbs.db 
+>>>>>>> parent of 3979a7c (Delete all folder to add to git ignore)
