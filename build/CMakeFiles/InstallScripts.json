@@ -1,8 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"C:/Repositories/Cpp-project/build/cmake_install.cmake",
-		"C:/Repositories/Cpp-project/build/_deps/nlohmann_json-build/cmake_install.cmake"
-	],
-	"Parallel" : false
-}
