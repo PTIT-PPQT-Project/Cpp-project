@@ -435,3 +435,5 @@
 2025-05-21 02:05:49 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
 2025-05-21 02:05:49 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
 2025-05-21 02:05:49 [INFO] Data loading complete. Users: 1, Wallets: 6, Transactions: 0
+2025-05-21 02:06:03 [INFO] User 'phuong_admin' logged in successfully.
+2025-05-21 02:06:22 [INFO] Admin 'phuong_admin' logged out.
