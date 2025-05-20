@@ -2,71 +2,73 @@
 #pragma once
 
 #include <string>
-#include "../utils/Logger.hpp" // For LogLevel enum, adjust path if Logger.hpp is elsewhere or Config.h is in utils/
+#include "utils/Logger.hpp" // For LogLevel enum definition.
+                            // Ensure this path is correct based on your Logger.hpp location.
+                            // If Logger.hpp is in include/utils/Logger.hpp, and Config.h is in include/,
+                            // then "utils/Logger.hpp" is correct.
 
 namespace AppConfig {
 
-    // === Data File Configuration ===
-    // Directory where data files (users.json, wallets.json, etc.) are stored.
-    // Ensure it ends with a slash.
+    // --- Application Information ---
+    // Can be used for display purposes, OTP issuer name, etc.
+    constexpr const char* APPLICATION_NAME = "Reward System";
+    constexpr const char* APPLICATION_VERSION = "1.0.0";
+
+    // --- Data Storage Configuration ---
+    // Base directory for all data files. Ensure it ends with a slash.
     constexpr const char* DATA_DIRECTORY = "data/";
 
-    // Filenames for data storage
+    // Specific filenames for data
     constexpr const char* USERS_FILENAME = "users.json";
     constexpr const char* WALLETS_FILENAME = "wallets.json";
     constexpr const char* TRANSACTIONS_FILENAME = "transactions.json";
-    constexpr const char* BACKUP_SUBDIRECTORY = "backup/"; // Subdirectory within DATA_DIRECTORY for backups
+    constexpr const char* BACKUP_SUBDIRECTORY = "backup/"; // Subdirectory within DATA_DIRECTORY
 
-    // === Logging Configuration ===
-    // Directory where log files are stored.
-    // Ensure it ends with a slash.
+    // --- Logging Configuration ---
+    // Base directory for log files. Ensure it ends with a slash.
     constexpr const char* LOG_DIRECTORY = "logs/";
 
     // Default filename for the application log.
     constexpr const char* LOG_FILENAME = "app.log";
 
     // Default log levels for the logger instance.
-    // Note: LogLevel enum is defined in Logger.hpp
+    // Note: The LogLevel enum itself is defined in Logger.hpp
     constexpr LogLevel DEFAULT_CONSOLE_LOG_LEVEL = LogLevel::INFO;
     constexpr LogLevel DEFAULT_FILE_LOG_LEVEL = LogLevel::DEBUG;
     constexpr bool DEFAULT_CONSOLE_LOGGING_ENABLED = true;
 
-    // === OTP Configuration ===
-    // Issuer name to be displayed in OTP authenticator apps.
-    constexpr const char* OTP_ISSUER_NAME = "RewardSystemApp";
+    // --- OTP (One-Time Password) Configuration ---
+    // Issuer name to be displayed in OTP authenticator apps (e.g., Google Authenticator, Authy).
+    constexpr const char* OTP_ISSUER_NAME = APPLICATION_NAME; // Using APPLICATION_NAME for consistency
 
-    // === Security & Validation Configuration ===
+    // --- Security & Input Validation Parameters ---
     // Username policies
     constexpr int MIN_USERNAME_LENGTH = 3;
     constexpr int MAX_USERNAME_LENGTH = 20;
 
     // Password policies
     constexpr int MIN_PASSWORD_LENGTH = 8;
-    // Flags for password complexity (can be used by InputValidator)
-    // These are more conceptual for Config.h; actual checks are in InputValidator.
+    // Conceptual flags for password complexity (actual logic is in InputValidator)
     // constexpr bool REQUIRE_PASSWORD_UPPERCASE = true;
     // constexpr bool REQUIRE_PASSWORD_LOWERCASE = true;
     // constexpr bool REQUIRE_PASSWORD_DIGIT = true;
-    // constexpr bool REQUIRE_PASSWORD_SPECIAL_CHAR = true;
+    // constexpr bool REQUIRE_PASSWORD_SPECIAL_CHAR = true; // Already part of InputValidator logic
 
-    // Phone number policies
+    // Phone number policies (digit count after optional '+')
     constexpr int MIN_PHONE_NUMBER_DIGITS = 9;
     constexpr int MAX_PHONE_NUMBER_DIGITS = 15;
 
-
-    // === Application Information ===
-    // (Can be used for display purposes or User-Agent strings if making network requests)
-    constexpr const char* APPLICATION_NAME = "Reward System";
-    constexpr const char* APPLICATION_VERSION = "1.0.0";
-
-
-    // === Wallet Configuration ===
-    // Default balance for newly created wallets
+    // --- Wallet & Transaction Configuration ---
+    // Default balance for newly created user wallets
     constexpr double DEFAULT_INITIAL_WALLET_BALANCE = 0.0;
 
-    // Special Wallet IDs
-    constexpr const char* MASTER_WALLET_ID = "MASTER_WALLET_001";
-    constexpr const char* SYSTEM_WALLET_ID_FOR_DEPOSITS = "SYSTEM_DEPOSIT_SRC"; // For deposits not from master
+    // Special Wallet IDs (used for system operations like master funding or generic deposits)
+    constexpr const char* MASTER_WALLET_ID = "MASTER_WLT_001";
+    // ID for deposits that don't originate from a specific user or the master wallet (e.g., initial system points)
+    constexpr const char* SYSTEM_WALLET_ID_FOR_DEPOSITS = "SYSTEM_DEPOSIT_SRC";
 
+    // --- UI/UX Configuration (Optional) ---
+    // Example: Could be used if you implement pagination for listings.
+    // constexpr int ITEMS_PER_PAGE = 10;
 
 } // namespace AppConfig

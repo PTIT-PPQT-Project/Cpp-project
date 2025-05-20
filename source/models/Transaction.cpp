@@ -1,5 +1,5 @@
 // src/models/Transaction.cpp
-#include "include/models/Transaction.hpp" // Điều chỉnh đường dẫn nếu cần
+#include "../../include/models/Transaction.hpp" // Fixed include path
 #include <stdexcept> // For std::invalid_argument
 
 // Default constructor

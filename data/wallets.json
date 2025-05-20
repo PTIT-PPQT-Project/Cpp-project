@@ -1,0 +1,44 @@
+[
+    {
+        "balance": 0.0,
+        "creationTimestamp": 1747764678,
+        "lastUpdateTimestamp": 1747764678,
+        "userId": "64e69eaf-559f-f823-b174-751e5e06760b",
+        "walletId": "WLT-120387e6-198"
+    },
+    {
+        "balance": 0.0,
+        "creationTimestamp": 1747765396,
+        "lastUpdateTimestamp": 1747765396,
+        "userId": "d1837148-4eb2-a45a-1dde-448fb448bbc0",
+        "walletId": "WLT-77d32d8b-18a"
+    },
+    {
+        "balance": 0.0,
+        "creationTimestamp": 1747766040,
+        "lastUpdateTimestamp": 1747766040,
+        "userId": "97ab5865-acd1-8727-eefc-a3600ab0dbfd",
+        "walletId": "WLT-52098f8a-2cf"
+    },
+    {
+        "balance": 0.0,
+        "creationTimestamp": 1747766266,
+        "lastUpdateTimestamp": 1747766266,
+        "userId": "f5307fa5-9c65-508a-4bfa-3728f6e8d8cf",
+        "walletId": "WLT-3c7377d0-3bc"
+    },
+    {
+        "balance": 0.0,
+        "creationTimestamp": 1747766531,
+        "lastUpdateTimestamp": 1747766531,
+        "userId": "dcb7658d-ab98-8c16-981e-ecada2b6b6ec",
+        "walletId": "WLT-a2946512-45a"
+    },
+    {
+        "balance": 0.0,
+        "creationTimestamp": 1747767100,
+        "lastUpdateTimestamp": 1747767100,
+        "userId": "4827fb21-f816-bbed-5e8b-2e9160d4df14",
+        "walletId": "WLT-86e284a7-3fe"
+    }
+]

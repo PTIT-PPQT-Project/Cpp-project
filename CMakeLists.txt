@@ -31,12 +31,11 @@ set(APP_SOURCES
     source/utils/InputValidator.cpp
     source/utils/Logger.cpp
     source/utils/TimeUtils.cpp
-    source/utils/Config.cpp # If you made a Config.cpp, otherwise Config.h is header only
-    source/services/OTPService.cpp   # <-- Add these
-    source/services/AuthService.cpp  # <-- Add these
-    source/services/UserService.cpp  # <-- Add these
-    source/services/WalletService.cpp# <-- Add these
-    source/services/AdminService.cpp # <-- Add these
+    source/services/OTPService.cpp
+    source/services/AuthService.cpp
+    source/services/UserService.cpp
+    source/services/WalletService.cpp
+    source/services/AdminService.cpp
 )
 
 add_executable(RewardSystemApp ${APP_SOURCES})

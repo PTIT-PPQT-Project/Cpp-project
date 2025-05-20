@@ -161,14 +161,22 @@ CMakeFiles/RewardSystemApp.dir/source/main.cpp.obj: \
  C:/msys64/mingw64/include/c++/15.1.0/bits/quoted_string.h \
  C:/msys64/mingw64/include/c++/15.1.0/sstream \
  C:/msys64/mingw64/include/c++/15.1.0/bits/sstream.tcc \
- C:/Repositories/Cpp-project/include/models/User.hpp \
- C:/Repositories/Cpp-project/include/models/Wallet.hpp \
- C:/Repositories/Cpp-project/include/models/Transaction.hpp \
- C:/Repositories/Cpp-project/include/utils/FileHandler.hpp \
+ C:/Repositories/Cpp-project/include/Config.h \
+ C:/Repositories/Cpp-project/include/utils/Logger.hpp \
  C:/msys64/mingw64/include/c++/15.1.0/fstream \
  C:/msys64/mingw64/include/c++/15.1.0/x86_64-w64-mingw32/bits/basic_file.h \
  C:/msys64/mingw64/include/c++/15.1.0/x86_64-w64-mingw32/bits/c++io.h \
  C:/msys64/mingw64/include/c++/15.1.0/bits/fstream.tcc \
+ C:/msys64/mingw64/include/c++/15.1.0/mutex \
+ C:/msys64/mingw64/include/c++/15.1.0/bits/chrono.h \
+ C:/msys64/mingw64/include/c++/15.1.0/ratio \
+ C:/msys64/mingw64/include/c++/15.1.0/cstdint \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/stdint.h \
+ C:/msys64/mingw64/include/stdint.h \
+ C:/msys64/mingw64/include/c++/15.1.0/bits/parse_numbers.h \
+ C:/msys64/mingw64/include/c++/15.1.0/bits/std_mutex.h \
+ C:/msys64/mingw64/include/c++/15.1.0/bits/unique_lock.h \
+ C:/Repositories/Cpp-project/include/models/User.hpp \
  C:/Repositories/Cpp-project/include/nlohmann/json.hpp \
  C:/msys64/mingw64/include/c++/15.1.0/algorithm \
  C:/msys64/mingw64/include/c++/15.1.0/bits/stl_algo.h \
@@ -238,9 +246,6 @@ CMakeFiles/RewardSystemApp.dir/source/main.cpp.obj: \
  C:/msys64/mingw64/include/c++/15.1.0/bits/gslice_array.h \
  C:/msys64/mingw64/include/c++/15.1.0/bits/mask_array.h \
  C:/msys64/mingw64/include/c++/15.1.0/bits/indirect_array.h \
- C:/msys64/mingw64/include/c++/15.1.0/cstdint \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/stdint.h \
- C:/msys64/mingw64/include/stdint.h \
  C:/msys64/mingw64/include/c++/15.1.0/version \
  C:/msys64/mingw64/include/c++/15.1.0/cassert \
  C:/msys64/mingw64/include/assert.h \
@@ -249,9 +254,6 @@ CMakeFiles/RewardSystemApp.dir/source/main.cpp.obj: \
  C:/msys64/mingw64/include/sec_api/string_s.h \
  C:/msys64/mingw64/include/c++/15.1.0/filesystem \
  C:/msys64/mingw64/include/c++/15.1.0/bits/fs_fwd.h \
- C:/msys64/mingw64/include/c++/15.1.0/bits/chrono.h \
- C:/msys64/mingw64/include/c++/15.1.0/ratio \
- C:/msys64/mingw64/include/c++/15.1.0/bits/parse_numbers.h \
  C:/msys64/mingw64/include/c++/15.1.0/bits/fs_path.h \
  C:/msys64/mingw64/include/c++/15.1.0/codecvt \
  C:/msys64/mingw64/include/c++/15.1.0/bits/fs_dir.h \
@@ -260,6 +262,9 @@ CMakeFiles/RewardSystemApp.dir/source/main.cpp.obj: \
  C:/msys64/mingw64/include/c++/15.1.0/bits/stl_numeric.h \
  C:/msys64/mingw64/include/c++/15.1.0/pstl/glue_numeric_defs.h \
  C:/msys64/mingw64/include/c++/15.1.0/any \
+ C:/Repositories/Cpp-project/include/models/Wallet.hpp \
+ C:/Repositories/Cpp-project/include/models/Transaction.hpp \
+ C:/Repositories/Cpp-project/include/utils/FileHandler.hpp \
  C:/Repositories/Cpp-project/include/utils/HashUtils.hpp \
  C:/Repositories/Cpp-project/include/utils/InputValidator.hpp \
  C:/msys64/mingw64/include/c++/15.1.0/regex \
@@ -281,15 +286,10 @@ CMakeFiles/RewardSystemApp.dir/source/main.cpp.obj: \
  C:/msys64/mingw64/include/c++/15.1.0/bits/regex.tcc \
  C:/msys64/mingw64/include/c++/15.1.0/bits/regex_executor.h \
  C:/msys64/mingw64/include/c++/15.1.0/bits/regex_executor.tcc \
- C:/Repositories/Cpp-project/include/utils/Logger.hpp \
- C:/msys64/mingw64/include/c++/15.1.0/mutex \
- C:/msys64/mingw64/include/c++/15.1.0/bits/std_mutex.h \
- C:/msys64/mingw64/include/c++/15.1.0/bits/unique_lock.h \
  C:/Repositories/Cpp-project/include/utils/TimeUtils.hpp \
  C:/msys64/mingw64/include/c++/15.1.0/chrono \
  C:/Repositories/Cpp-project/include/services/OTPService.hpp \
  C:/Repositories/Cpp-project/include/services/AuthService.hpp \
  C:/Repositories/Cpp-project/include/services/UserService.hpp \
- C:/Repositories/Cpp-project/include/services/OTPService.hpp \
  C:/Repositories/Cpp-project/include/services/WalletService.hpp \
  C:/Repositories/Cpp-project/include/services/AdminService.hpp

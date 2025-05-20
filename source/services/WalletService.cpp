@@ -4,6 +4,7 @@
 #include "utils/HashUtils.hpp" // For generating transaction IDs
 #include "utils/Logger.hpp"
 #include "Config.h" // For AppConfig::DEFAULT_INITIAL_WALLET_BALANCE, MASTER_WALLET_ID etc.
+#include "utils/TimeUtils.hpp"  // Add missing include for TimeUtils
 #include <algorithm>
 #include <ctime>
 #include <iomanip> // for std::fixed, std::setprecision for logging amounts

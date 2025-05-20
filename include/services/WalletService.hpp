@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <optional>
+#include "Config.h"  // Add missing include for AppConfig
 #include "models/User.hpp"
 #include "models/Wallet.hpp"
 #include "models/Transaction.hpp"

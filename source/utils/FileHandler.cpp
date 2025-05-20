@@ -1,41 +1,46 @@
 // src/utils/FileHandler.cpp
-#include "../../include/utils/FileHandler.hpp"
-#include <filesystem> // For std::filesystem::create_directories (C++17)
-                      // If not C++17, you might need OS-specific directory creation or a library.
+#include "utils/FileHandler.hpp"
+#include "Config.h"                 // <<< THÊM ĐỂ DÙNG AppConfig
+#include "utils/Logger.hpp"         // Để sử dụng LOG_INFO, LOG_ERROR
+#include <filesystem>             
+
+// Giả định ModelJsonSerialization.hpp đã được include ở đâu đó hoặc các hàm to/from_json
+// được định nghĩa trong header của model.
+// Nếu chưa, bạn cần include chúng ở đây:
+// #include "models/ModelJsonSerialization.hpp" // Ví dụ
 
 
-// IMPORTANT: Ensure the to_json and from_json functions for User, Wallet, Transaction,
-// and their enums are defined and accessible here.
-// Typically, you would include a header that defines them, or define them in the model's .cpp files
-// and include nlohmann/json.hpp there.
-// For this example, I've provided them above as free functions. If you put them in a separate header,
-// e.g., "ModelJsonSerialization.hpp", include it here:
-// #include "../../include/models/ModelJsonSerialization.hpp" // Example
-
-// Helper function to ensure directory for a file path exists
-void FileHandler::ensureDirectoryExists(const std::string& filePath) {
+void FileHandler::ensureDirectoryExistsForFile(const std::string& filePath) {
+    if (filePath.empty()) return;
     std::filesystem::path pathObj(filePath);
     std::filesystem::path dir = pathObj.parent_path();
     if (!dir.empty() && !std::filesystem::exists(dir)) {
-        std::filesystem::create_directories(dir);
+        try {
+            if (std::filesystem::create_directories(dir)) {
+                LOG_INFO("FileHandler: Created directory: " + dir.string());
+            }
+        } catch (const std::filesystem::filesystem_error& e) {
+            LOG_ERROR("FileHandler: Could not create directory " + dir.string() + ": " + e.what());
+        }
     }
 }
 
-
-FileHandler::FileHandler(const std::string& dataDir) {
-    std::string baseDir = dataDir;
+FileHandler::FileHandler() {
+    std::string baseDir = AppConfig::DATA_DIRECTORY;
     if (!baseDir.empty() && baseDir.back() != '/' && baseDir.back() != '\\') {
         baseDir += "/";
     }
+    // Đảm bảo thư mục data/ tồn tại
+    if (!baseDir.empty()) { // Check if baseDir is not just "/" or empty
+         ensureDirectoryExistsForFile(baseDir + "dummy_check.txt"); // To create baseDir
+    }
 
-    usersFilePath = baseDir + "users.json";
-    walletsFilePath = baseDir + "wallets.json";
-    transactionsFilePath = baseDir + "transactions.json";
 
-    // Ensure directories exist when FileHandler is created
-    ensureDirectoryExists(usersFilePath);
-    ensureDirectoryExists(walletsFilePath);
-    ensureDirectoryExists(transactionsFilePath);
+    usersFilePath = baseDir + AppConfig::USERS_FILENAME;
+    walletsFilePath = baseDir + AppConfig::WALLETS_FILENAME;
+    transactionsFilePath = baseDir + AppConfig::TRANSACTIONS_FILENAME;
+
+    LOG_INFO("FileHandler initialized. Users: " + usersFilePath + ", Wallets: " + walletsFilePath + ", Transactions: " + transactionsFilePath);
 }
 
 // --- User Data ---
@@ -43,33 +48,33 @@ bool FileHandler::loadUsers(std::vector<User>& users) {
     users.clear();
     std::ifstream file(usersFilePath);
     if (!file.is_open()) {
-        // If file doesn't exist, it's not an error, just no users loaded.
-        // Could create an empty file here if desired.
-        std::cerr << "[FileHandler] INFO: Users file (" << usersFilePath << ") not found. Starting with empty user list." << std::endl;
-        return true; // Not an error if file simply doesn't exist yet
+        LOG_INFO("Users file (" + usersFilePath + ") not found. Starting with empty list.");
+        return true; 
     }
-
     try {
         json j;
-        file >> j;
-        // Assuming the top level is an array of users
+        file >> j; 
         if (j.is_array()) {
-            users = j.get<std::vector<User>>(); // Uses from_json for User
-        } else if (j.is_null()) { // Handle empty file or file with just 'null'
-             std::cerr << "[FileHandler] INFO: Users file (" << usersFilePath << ") is null or empty. Starting with empty user list." << std::endl;
-        }
-         else {
-            std::cerr << "[FileHandler] ERROR: Users file (" << usersFilePath << ") does not contain a valid JSON array." << std::endl;
+            users = j.get<std::vector<User>>();
+            LOG_INFO("Loaded " + std::to_string(users.size()) + " users from " + usersFilePath);
+        } else if (j.is_null() || j.empty()) { 
+             LOG_INFO("Users file (" + usersFilePath + ") is null or empty.");
+        } else {
+            LOG_ERROR("Users file (" + usersFilePath + ") does not contain a valid JSON array. Content: " + j.dump());
+            file.close();
             return false;
         }
-    } catch (json::parse_error& e) {
-        std::cerr << "[FileHandler] ERROR: JSON parse error in users file: " << e.what() << std::endl;
+    } catch (const json::parse_error& e) {
+        LOG_ERROR("JSON parse error in users file ("+ usersFilePath +"): " + std::string(e.what()));
+        file.close();
         return false;
-    } catch (json::type_error& e) {
-        std::cerr << "[FileHandler] ERROR: JSON type error in users file (likely malformed data): " << e.what() << std::endl;
+    } catch (const json::type_error& e) {
+        LOG_ERROR("JSON type error in users file ("+ usersFilePath +"): " + std::string(e.what()));
+        file.close();
         return false;
-    } catch (std::exception& e) {
-        std::cerr << "[FileHandler] ERROR: Generic error loading users: " << e.what() << std::endl;
+    } catch (const std::exception& e) {
+        LOG_ERROR("Generic error loading users from ("+ usersFilePath +"): " + std::string(e.what()));
+        file.close();
         return false;
     }
     file.close();
@@ -77,21 +82,21 @@ bool FileHandler::loadUsers(std::vector<User>& users) {
 }
 
 bool FileHandler::saveUsers(const std::vector<User>& users) {
-    ensureDirectoryExists(usersFilePath);
+    ensureDirectoryExistsForFile(usersFilePath);
     std::ofstream file(usersFilePath);
     if (!file.is_open()) {
-        std::cerr << "[FileHandler] ERROR: Could not open users file for writing: " << usersFilePath << std::endl;
+        LOG_ERROR("Could not open users file for writing: " + usersFilePath);
         return false;
     }
     try {
-        json j = users; // Uses to_json for User (and std::vector<User>)
-        file << j.dump(4); // Pretty print with 4 spaces indent
-    } catch (json::type_error& e) {
-        std::cerr << "[FileHandler] ERROR: JSON type error saving users (data conversion failed): " << e.what() << std::endl;
-        file.close(); // Close file on error
+        json j = users; 
+        file << std::setw(4) << j << std::endl; // Pretty print
+    } catch (const json::type_error& e) {
+        LOG_ERROR("JSON type error saving users: " + std::string(e.what()));
+        file.close();
         return false;
-    } catch (std::exception& e) {
-        std::cerr << "[FileHandler] ERROR: Generic error saving users: " << e.what() << std::endl;
+    } catch (const std::exception& e) {
+        LOG_ERROR("Generic error saving users to ("+ usersFilePath +"): " + std::string(e.what()));
         file.close();
         return false;
     }
@@ -104,7 +109,7 @@ bool FileHandler::loadWallets(std::vector<Wallet>& wallets) {
     wallets.clear();
     std::ifstream file(walletsFilePath);
     if (!file.is_open()) {
-        std::cerr << "[FileHandler] INFO: Wallets file (" << walletsFilePath << ") not found. Starting with empty wallet list." << std::endl;
+        LOG_INFO("Wallets file (" + walletsFilePath + ") not found. Starting empty.");
         return true;
     }
     try {
@@ -112,20 +117,25 @@ bool FileHandler::loadWallets(std::vector<Wallet>& wallets) {
         file >> j;
         if (j.is_array()) {
             wallets = j.get<std::vector<Wallet>>();
-        } else if (j.is_null()) {
-             std::cerr << "[FileHandler] INFO: Wallets file (" << walletsFilePath << ") is null or empty." << std::endl;
+            LOG_INFO("Loaded " + std::to_string(wallets.size()) + " wallets from " + walletsFilePath);
+        } else if (j.is_null() || j.empty()) {
+             LOG_INFO("Wallets file (" + walletsFilePath + ") is null or empty.");
         } else {
-            std::cerr << "[FileHandler] ERROR: Wallets file (" << walletsFilePath << ") does not contain a valid JSON array." << std::endl;
+            LOG_ERROR("Wallets file (" + walletsFilePath + ") is not a valid JSON array. Content: " + j.dump());
+            file.close();
             return false;
         }
-    } catch (json::parse_error& e) {
-        std::cerr << "[FileHandler] ERROR: JSON parse error in wallets file: " << e.what() << std::endl;
+    } catch (const json::parse_error& e) {
+        LOG_ERROR("JSON parse error in wallets file ("+ walletsFilePath +"): " + std::string(e.what()));
+        file.close();
         return false;
-    } catch (json::type_error& e) {
-        std::cerr << "[FileHandler] ERROR: JSON type error in wallets file: " << e.what() << std::endl;
+    } catch (const json::type_error& e) {
+        LOG_ERROR("JSON type error in wallets file ("+ walletsFilePath +"): " + std::string(e.what()));
+        file.close();
         return false;
-    } catch (std::exception& e) {
-        std::cerr << "[FileHandler] ERROR: Generic error loading wallets: " << e.what() << std::endl;
+    } catch (const std::exception& e) {
+        LOG_ERROR("Generic error loading wallets ("+ walletsFilePath +"): " + std::string(e.what()));
+        file.close();
         return false;
     }
     file.close();
@@ -133,21 +143,22 @@ bool FileHandler::loadWallets(std::vector<Wallet>& wallets) {
 }
 
 bool FileHandler::saveWallets(const std::vector<Wallet>& wallets) {
-    ensureDirectoryExists(walletsFilePath);
+    ensureDirectoryExistsForFile(walletsFilePath);
     std::ofstream file(walletsFilePath);
     if (!file.is_open()) {
-        std::cerr << "[FileHandler] ERROR: Could not open wallets file for writing: " << walletsFilePath << std::endl;
+        LOG_ERROR("Could not open wallets file for writing: " + walletsFilePath);
         return false;
     }
     try {
         json j = wallets;
-        file << j.dump(4);
-    } catch (json::type_error& e) {
-        std::cerr << "[FileHandler] ERROR: JSON type error saving wallets: " << e.what() << std::endl;
+        file << std::setw(4) << j << std::endl;
+        LOG_INFO("Saved " + std::to_string(wallets.size()) + " wallets to " + walletsFilePath);
+    } catch (const json::type_error& e) {
+        LOG_ERROR("JSON type error saving wallets: " + std::string(e.what()));
         file.close();
         return false;
-    } catch (std::exception& e) {
-        std::cerr << "[FileHandler] ERROR: Generic error saving wallets: " << e.what() << std::endl;
+    } catch (const std::exception& e) {
+        LOG_ERROR("Generic error saving wallets ("+ walletsFilePath +"): " + std::string(e.what()));
         file.close();
         return false;
     }
@@ -160,7 +171,7 @@ bool FileHandler::loadTransactions(std::vector<Transaction>& transactions) {
     transactions.clear();
     std::ifstream file(transactionsFilePath);
     if (!file.is_open()) {
-        std::cerr << "[FileHandler] INFO: Transactions file (" << transactionsFilePath << ") not found. Starting with empty transaction list." << std::endl;
+        LOG_INFO("Transactions file (" + transactionsFilePath + ") not found. Starting empty.");
         return true;
     }
     try {
@@ -168,20 +179,25 @@ bool FileHandler::loadTransactions(std::vector<Transaction>& transactions) {
         file >> j;
         if (j.is_array()) {
             transactions = j.get<std::vector<Transaction>>();
-        } else if (j.is_null()) {
-            std::cerr << "[FileHandler] INFO: Transactions file (" << transactionsFilePath << ") is null or empty." << std::endl;
+            LOG_INFO("Loaded " + std::to_string(transactions.size()) + " transactions from " + transactionsFilePath);
+        } else if (j.is_null() || j.empty()) {
+            LOG_INFO("Transactions file (" + transactionsFilePath + ") is null or empty.");
         } else {
-            std::cerr << "[FileHandler] ERROR: Transactions file (" << transactionsFilePath << ") does not contain a valid JSON array." << std::endl;
+            LOG_ERROR("Transactions file (" + transactionsFilePath + ") is not a valid JSON array. Content: " + j.dump());
+            file.close();
             return false;
         }
-    } catch (json::parse_error& e) {
-        std::cerr << "[FileHandler] ERROR: JSON parse error in transactions file: " << e.what() << std::endl;
+    } catch (const json::parse_error& e) {
+        LOG_ERROR("JSON parse error in transactions file ("+ transactionsFilePath +"): " + std::string(e.what()));
+        file.close();
         return false;
-    } catch (json::type_error& e) {
-        std::cerr << "[FileHandler] ERROR: JSON type error in transactions file: " << e.what() << std::endl;
+    } catch (const json::type_error& e) {
+        LOG_ERROR("JSON type error in transactions file ("+ transactionsFilePath +"): " + std::string(e.what()));
+        file.close();
         return false;
-    } catch (std::exception& e) {
-        std::cerr << "[FileHandler] ERROR: Generic error loading transactions: " << e.what() << std::endl;
+    } catch (const std::exception& e) {
+        LOG_ERROR("Generic error loading transactions ("+ transactionsFilePath +"): " + std::string(e.what()));
+        file.close();
         return false;
     }
     file.close();
@@ -189,21 +205,22 @@ bool FileHandler::loadTransactions(std::vector<Transaction>& transactions) {
 }
 
 bool FileHandler::saveTransactions(const std::vector<Transaction>& transactions) {
-    ensureDirectoryExists(transactionsFilePath);
+    ensureDirectoryExistsForFile(transactionsFilePath);
     std::ofstream file(transactionsFilePath);
     if (!file.is_open()) {
-        std::cerr << "[FileHandler] ERROR: Could not open transactions file for writing: " << transactionsFilePath << std::endl;
+        LOG_ERROR("Could not open transactions file for writing: " + transactionsFilePath);
         return false;
     }
     try {
         json j = transactions;
-        file << j.dump(4);
-    } catch (json::type_error& e) {
-        std::cerr << "[FileHandler] ERROR: JSON type error saving transactions: " << e.what() << std::endl;
+        file << std::setw(4) << j << std::endl;
+        LOG_INFO("Saved " + std::to_string(transactions.size()) + " transactions to " + transactionsFilePath);
+    } catch (const json::type_error& e) {
+        LOG_ERROR("JSON type error saving transactions: " + std::string(e.what()));
         file.close();
         return false;
-    } catch (std::exception& e) {
-        std::cerr << "[FileHandler] ERROR: Generic error saving transactions: " << e.what() << std::endl;
+    } catch (const std::exception& e) {
+        LOG_ERROR("Generic error saving transactions ("+ transactionsFilePath +"): " + std::string(e.what()));
         file.close();
         return false;
     }

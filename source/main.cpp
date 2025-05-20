@@ -3,717 +3,808 @@
 #include <vector>
 #include <string>
 #include <optional>
-#include <limits> 
-#include <iomanip> 
+#include <limits>   // For std::numeric_limits
+#include <iomanip>  // For std::fixed, std::setprecision
 
-// --- MOVE ALL INCLUDES HERE ---
+// Config - Should be one of the first to be included by main
+#include "Config.h" // Assuming it's directly in include/
+
 // Models
-#include "../include/models/User.hpp"
-#include "../include/models/Wallet.hpp"
-#include "../include/models/Transaction.hpp"
+#include "models/User.hpp"
+#include "models/Wallet.hpp"
+#include "models/Transaction.hpp"
 
 // Utils
-#include "../include/utils/FileHandler.hpp"
-#include "../include/utils/HashUtils.hpp"
-#include "../include/utils/InputValidator.hpp"
-#include "../include/utils/Logger.hpp"
-#include "../include/utils/TimeUtils.hpp"
+#include "utils/FileHandler.hpp"
+#include "utils/HashUtils.hpp"
+#include "utils/InputValidator.hpp"
+#include "utils/Logger.hpp" // Logger.hpp itself doesn't include Config.h directly
+#include "utils/TimeUtils.hpp"
 
 // Services
-#include "../include/services/OTPService.hpp"   // <<< ENSURE THESE ARE PRESENT AND CORRECT
-#include "../include/services/AuthService.hpp"
-#include "../include/services/UserService.hpp"
-#include "../include/services/WalletService.hpp"
-#include "../include/services/AdminService.hpp"
-// --- END OF INCLUDES ---
+#include "services/OTPService.hpp"
+#include "services/AuthService.hpp"
+#include "services/UserService.hpp"
+#include "services/WalletService.hpp"
+#include "services/AdminService.hpp"
 
-
-// Global data or application state
+// Global data stores (for simplicity in this console application)
 std::vector<User> g_users;
 std::vector<Wallet> g_wallets;
 std::vector<Transaction> g_transactions;
-std::optional<User> g_currentUser;
+std::optional<User> g_currentUser; // Currently logged-in user
 
-// Forward declarations for handler functions (now the types should be known)
+// Forward declarations for menu handler functions
 void displayMainMenu();
-void displayUserMenu(const User& user); // User type is known from User.hpp
-void displayAdminMenu(const User& admin); // User type is known
+void displayUserMenu(const User& user);
+void displayAdminMenu(const User& admin);
 
-// Prototypes for handler functions - types like AuthService, WalletService should now be known
 void handleRegistration(AuthService& authService, WalletService& walletService);
-void handleLogin(AuthService& authService);
-void handleUserActions(UserService& userService, AuthService& authService, WalletService& walletService);
-void handleAdminActions(AdminService& adminService, UserService& userService, AuthService& authService, WalletService& walletService);
+void handleLogin(AuthService& authService, UserService& userService /*needed for post-login update*/);
+void handleUserActions(UserService& userService, AuthService& authService, WalletService& walletService, OTPService& otpService);
+void handleAdminActions(AdminService& adminService, UserService& userService, AuthService& authService, WalletService& walletService, OTPService& otpService);
 
 // Utility input functions
 std::string getStringInput(const std::string& prompt, bool allowEmpty = false);
 int getIntInput(const std::string& prompt);
 double getDoubleInput(const std::string& prompt);
 void clearScreen();
-void pauseScreen();
+void pauseScreen(const std::string& message = "\nPress Enter to continue...");
 
+// Add this new helper function after the other input functions
+std::string getPasswordInput(const std::string& prompt, bool allowEmpty = false) {
+    const int MAX_ATTEMPTS = 3;
+    int attempts = 0;
+    
+    while (attempts < MAX_ATTEMPTS) {
+        std::string input = getStringInput(prompt, allowEmpty);
+        if (input.empty() && !allowEmpty) {
+            std::cout << "Input cannot be empty. Please try again." << std::endl;
+            attempts++;
+            if (attempts >= MAX_ATTEMPTS) {
+                std::cout << "Too many failed attempts. Returning to previous menu." << std::endl;
+                pauseScreen();
+                return ""; // Return empty string to indicate failure
+            }
+            continue;
+        }
+        return input;
+    }
+    return ""; // Return empty string if all attempts failed
+}
 
 int main() {
-    // 1. Khởi tạo Logger
-    // Cấu hình logger một lần (có thể đặt tên file log khác hoặc mức log khác)
-    // Logger sẽ tự tạo thư mục "logs" nếu chưa có, dựa vào EnsureDirectoryForFileExists
-    Logger::getInstance("logs/app.log", LogLevel::INFO, LogLevel::DEBUG);
-    LOG_INFO("Ung dung khoi dong.");
+    // 1. Initialize Logger using AppConfig defaults
+    // This static instance will be configured once.
+    Logger::getInstance(
+        std::string(AppConfig::LOG_DIRECTORY) + AppConfig::LOG_FILENAME,
+        AppConfig::DEFAULT_CONSOLE_LOG_LEVEL,
+        AppConfig::DEFAULT_FILE_LOG_LEVEL,
+        AppConfig::DEFAULT_CONSOLE_LOGGING_ENABLED
+    );
+    LOG_INFO("===================================");
+    LOG_INFO("Application Starting...");
+    LOG_INFO("Version: " + std::string(AppConfig::APPLICATION_VERSION));
+    LOG_INFO("Data Directory: " + std::string(AppConfig::DATA_DIRECTORY));
+    LOG_INFO("===================================");
 
-    // 2. Khởi tạo các Utilities và Services
-    HashUtils hashUtils; // HashUtils có thông báo WARNING về demo hashing trong constructor
-    FileHandler fileHandler("data/"); // Dữ liệu sẽ lưu trong thư mục "data/"
+
+    // 2. Initialize Utilities and Services
+    HashUtils hashUtils; // Constructor prints security warning for demo hash
+    FileHandler fileHandler; // Uses AppConfig::DATA_DIRECTORY by default
     OTPService otpService;
 
-    // 3. Tải dữ liệu ban đầu
-    LOG_INFO("Dang tai du lieu...");
+    // 3. Load initial data
+    LOG_INFO("Loading data...");
     if (!fileHandler.loadUsers(g_users)) {
-        LOG_ERROR("Khong the tai du lieu nguoi dung. Co the file bi loi hoac khong ton tai.");
-        // Có thể quyết định dừng ứng dụng ở đây nếu dữ liệu người dùng là thiết yếu
-    } else {
-        LOG_INFO("Tai " + std::to_string(g_users.size()) + " nguoi dung thanh cong.");
+        LOG_ERROR("Failed to load user data. Application might behave unexpectedly.");
     }
     if (!fileHandler.loadWallets(g_wallets)) {
-        LOG_ERROR("Khong the tai du lieu vi. Co the file bi loi hoac khong ton tai.");
-    } else {
-        LOG_INFO("Tai " + std::to_string(g_wallets.size()) + " vi thanh cong.");
+        LOG_ERROR("Failed to load wallet data. Application might behave unexpectedly.");
     }
     if (!fileHandler.loadTransactions(g_transactions)) {
-        LOG_ERROR("Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.");
-    } else {
-        LOG_INFO("Tai " + std::to_string(g_transactions.size()) + " giao dich thanh cong.");
+        LOG_ERROR("Failed to load transaction data. Application might behave unexpectedly.");
     }
-
+    LOG_INFO("Data loading complete. Users: " + std::to_string(g_users.size()) +
+             ", Wallets: " + std::to_string(g_wallets.size()) +
+             ", Transactions: " + std::to_string(g_transactions.size()));
 
     AuthService authService(g_users, fileHandler, otpService, hashUtils);
     UserService userService(g_users, fileHandler, otpService);
-    WalletService walletService(g_users, g_wallets, g_transactions, fileHandler, otpService);
+    WalletService walletService(g_users, g_wallets, g_transactions, fileHandler, otpService, hashUtils);
     AdminService adminService(g_users, authService, userService, walletService);
 
-    // ---- Tạo tài khoản Admin mẫu nếu chưa có ----
-    bool adminExists = false;
-    for(const auto& u : g_users) {
-        if(u.role == UserRole::AdminUser) {
-            adminExists = true;
-            break;
-        }
-    }
-    if (!adminExists && g_users.empty()) { // Chỉ tạo nếu chưa có admin và chưa có user nào
-        LOG_INFO("Khong tim thay tai khoan Admin. Dang tao tai khoan Admin mac dinh...");
-        std::string adminMsg;
-        // Mật khẩu cho tài khoản admin mẫu này sẽ được in ra console khi tạo.
-        // Trong thực tế, điều này cần được xử lý cẩn thận hơn.
-        std::string tempPass = authService.createAccountWithTemporaryPassword(
-            "admin", "Administrator", "admin@example.com", "0123456789", UserRole::AdminUser, adminMsg
-        );
-        if (!tempPass.empty()) {
-            LOG_INFO("Tao tai khoan Admin thanh cong. Ten dang nhap: admin, Mat khau tam thoi: " + tempPass);
-            LOG_INFO("Vui long doi mat khau sau khi dang nhap lan dau.");
-            // Admin cũng cần ví
-            for(const auto& u : g_users){
-                if(u.username == "admin"){
-                    std::string walletMsg;
-                    walletService.createWalletForUser(u.userId, walletMsg);
-                    LOG_INFO(walletMsg);
-                    break;
-                }
-            }
+    // --- Create a default Admin account if no users exist ---
+    if (g_users.empty()) {
+        LOG_INFO("No users found. Creating default Admin account...");
+        std::string adminMsg, tempPass;
+        if (adminService.adminCreateUserAccount("admin", "Administrator", "admin@reward.system", "000000000", UserRole::AdminUser, tempPass, adminMsg)) {
+            LOG_INFO("Default Admin account created. Username: admin, Temp Password: " + tempPass);
+            LOG_INFO("Message: " + adminMsg); // Will include wallet creation status
+            LOG_INFO("Please change the password after first login.");
         } else {
-            LOG_ERROR("Tao tai khoan Admin mac dinh that bai: " + adminMsg);
+            LOG_ERROR("Failed to create default Admin account: " + adminMsg);
         }
     }
-    // ---- Kết thúc tạo tài khoản Admin mẫu ----
-
+    // --- End default Admin account creation ---
 
     bool running = true;
     while (running) {
-        if (!g_currentUser.has_value()) { // Chưa đăng nhập
+        if (!g_currentUser.has_value()) { // Not logged in
             displayMainMenu();
-            int choice = getIntInput("Lua chon cua ban: ");
+            int choice = getIntInput("Your choice: ");
             switch (choice) {
-                case 1: // Đăng ký
+                case 1:
                     handleRegistration(authService, walletService);
                     break;
-                case 2: // Đăng nhập
-                    handleLogin(authService);
-                    // Kiểm tra nếu đăng nhập thành công và là mật khẩu tạm
-                    if (g_currentUser.has_value() && g_currentUser.value().isTemporaryPassword) {
-                        std::cout << "Ban dang su dung mat khau tam thoi. Vui long doi mat khau moi." << std::endl;
-                        std::string newPass = getStringInput("Nhap mat khau moi: ");
-                        std::string confirmPass = getStringInput("Xac nhan mat khau moi: ");
-                        if (newPass == confirmPass) {
-                            std::string changeMsg;
-                            // Cần lấy đối tượng User không phải const để authService có thể thay đổi
-                            User modifiableUser = g_currentUser.value();
-                            if (authService.forceTemporaryPasswordChange(modifiableUser, newPass, changeMsg)) {
-                                std::cout << changeMsg << std::endl;
-                                g_currentUser = modifiableUser; // Cập nhật lại currentUser với trạng thái mới
-                            } else {
-                                std::cout << "Loi: " << changeMsg << std::endl;
-                                g_currentUser.reset(); // Đăng xuất nếu đổi mk tạm thất bại
-                            }
-                        } else {
-                            std::cout << "Mat khau xac nhan khong khop. Vui long dang nhap lai de thu lai." << std::endl;
-                            g_currentUser.reset(); // Đăng xuất
-                        }
-                         pauseScreen();
-                    }
+                case 2:
+                    handleLogin(authService, userService); // Pass userService to update g_currentUser
                     break;
-                case 0: // Thoát
+                case 0:
                     running = false;
                     break;
                 default:
-                    std::cout << "Lua chon khong hop le. Vui long chon lai." << std::endl;
+                    std::cout << "Invalid choice. Please try again." << std::endl;
                     pauseScreen();
                     break;
             }
-        } else { // Đã đăng nhập
-            User& currentUserRef = g_currentUser.value(); // Lấy tham chiếu để có thể cập nhật
-            if (currentUserRef.role == UserRole::AdminUser) {
-                handleAdminActions(adminService, userService, authService, walletService);
+        } else { // Logged in
+            // Ensure g_currentUser reflects the latest state from g_users
+            // This is important if other operations modified the user in g_users
+            bool userStillExists = false;
+            for(const auto& u_db : g_users){
+                if(u_db.userId == g_currentUser.value().userId){
+                    g_currentUser = u_db; // Refresh current user data
+                    userStillExists = true;
+                    break;
+                }
+            }
+            if (!userStillExists || g_currentUser.value().status == AccountStatus::Inactive) {
+                LOG_WARNING("Current user session invalid (user deleted or inactive). Logging out.");
+                std::cout << "Your session is no longer valid. You have been logged out." << std::endl;
+                g_currentUser.reset();
+                pauseScreen();
+                continue; // Go back to main menu
+            }
+
+
+            if (g_currentUser.value().isTemporaryPassword) {
+                clearScreen();
+                std::cout << "--- TEMPORARY PASSWORD ---" << std::endl;
+                std::cout << "You are using a temporary password. You must change it now." << std::endl;
+                std::string newPass = getPasswordInput("Enter new password: ");
+                if (newPass.empty()) {
+                    g_currentUser.reset(); // Log out if password input failed
+                    continue;
+                }
+                while (!InputValidator::isValidPassword(newPass)) {
+                    std::cout << "Password is not strong enough (min "
+                              << AppConfig::MIN_PASSWORD_LENGTH
+                              << " chars, needs upper, lower, digit). Try again." << std::endl;
+                    newPass = getPasswordInput("Enter new password: ");
+                    if (newPass.empty()) {
+                        g_currentUser.reset(); // Log out if password input failed
+                        continue;
+                    }
+                }
+
+                std::string confirmPass = getPasswordInput("Confirm new password: ");
+                if (confirmPass.empty()) {
+                    g_currentUser.reset(); // Log out if password input failed
+                    continue;
+                }
+
+                if (newPass == confirmPass) {
+                    User modifiableCurrentUser = g_currentUser.value();
+                    std::string changeMsg;
+                    if (authService.forceTemporaryPasswordChange(modifiableCurrentUser, newPass, changeMsg)) {
+                        std::cout << changeMsg << std::endl;
+                        g_currentUser = modifiableCurrentUser;
+                        LOG_INFO("User '" + g_currentUser.value().username + "' changed temporary password.");
+                    } else {
+                        std::cout << "Error: " << changeMsg << std::endl;
+                        LOG_ERROR("Failed temp password change for '" + g_currentUser.value().username + "': " + changeMsg);
+                        std::cout << "Logging out for security." << std::endl;
+                        g_currentUser.reset();
+                    }
+                } else {
+                    std::cout << "Passwords do not match. Logging out for security." << std::endl;
+                    LOG_WARNING("Temp password change passwords mismatch for '" + g_currentUser.value().username + "'. Logging out.");
+                    g_currentUser.reset();
+                }
+                pauseScreen();
+                continue;
+            }
+            else if (g_currentUser.value().role == UserRole::AdminUser) {
+                handleAdminActions(adminService, userService, authService, walletService, otpService);
             } else {
-                handleUserActions(userService, authService, walletService);
+                handleUserActions(userService, authService, walletService, otpService);
             }
         }
     }
 
-    LOG_INFO("Ung dung ket thuc.");
+    LOG_INFO("Application shutting down gracefully.");
+    std::cout << "Thank you for using the Reward System!" << std::endl;
     return 0;
 }
 
-// --- Implementations of helper functions ---
+// --- Implementation of Helper and Handler Functions ---
 
 void clearScreen() {
-    // Đơn giản cho đa nền tảng, có thể không hoàn hảo
-    // Trên Windows: system("cls");
-    // Trên Linux/macOS: system("clear");
-    // Dùng ANSI escape code (hoạt động trên nhiều terminal hiện đại)
+    // ANSI escape code for clearing screen (works on most modern terminals)
     std::cout << "\033[2J\033[1;1H";
-    // Hoặc đơn giản là in nhiều dòng mới
-    // for (int i = 0; i < 50; ++i) std::cout << std::endl;
+    // On Windows, you might prefer: system("cls");
+    // On Linux/macOS: system("clear");
+    // (system calls are generally less portable and have security implications)
 }
 
-void pauseScreen() {
-    std::cout << "\nNhan Enter de tiep tuc...";
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Xóa buffer trước khi getline
+void pauseScreen(const std::string& message) {
+    std::cout << message;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear previous newline
     std::string dummy;
-    std::getline(std::cin, dummy);
+    std::getline(std::cin, dummy); // Wait for user to press Enter
 }
-
 
 std::string getStringInput(const std::string& prompt, bool allowEmpty) {
     std::string input;
     while (true) {
         std::cout << prompt;
+        // std::ws consumes leading whitespace before getline reads.
+        // However, if cin buffer is dirty from previous unconsumed newlines,
+        // it might still cause issues. The pauseScreen often helps clear this.
+        // A more robust way is to always use getline and then parse.
+        if (std::cin.peek() == '\n') { // Consume leftover newline from previous numeric input
+            std::cin.ignore();
+        }
         std::getline(std::cin, input);
+
         if (allowEmpty || InputValidator::isNonEmpty(input)) {
             return input;
         }
-        std::cout << "Dau vao khong duoc de trong. Vui long nhap lai." << std::endl;
+        std::cout << "Input cannot be empty. Please try again." << std::endl;
     }
 }
 
 int getIntInput(const std::string& prompt) {
-    std::string input;
+    std::string inputStr;
     int value;
     while (true) {
-        input = getStringInput(prompt);
-        if (InputValidator::isValidInteger(input, value)) {
+        inputStr = getStringInput(prompt);
+        if (InputValidator::isValidInteger(inputStr, value)) {
             return value;
         }
-        std::cout << "Dau vao khong phai la so nguyen hop le. Vui long nhap lai." << std::endl;
+        std::cout << "Invalid integer input. Please try again." << std::endl;
     }
 }
 
 double getDoubleInput(const std::string& prompt) {
-    std::string input;
+    std::string inputStr;
     double value;
     while (true) {
-        input = getStringInput(prompt);
-        if (InputValidator::isValidDouble(input, value)) {
+        inputStr = getStringInput(prompt);
+        if (InputValidator::isValidDouble(inputStr, value)) {
             return value;
         }
-        std::cout << "Dau vao khong phai la so thuc hop le. Vui long nhap lai." << std::endl;
+        std::cout << "Invalid decimal number input. Please try again." << std::endl;
     }
 }
 
 void displayMainMenu() {
     clearScreen();
-    std::cout << "===== HE THONG VI DIEM THUONG =====" << std::endl;
-    std::cout << "1. Dang ky" << std::endl;
-    std::cout << "2. Dang nhap" << std::endl;
-    std::cout << "0. Thoat" << std::endl;
-    std::cout << "===================================" << std::endl;
+    std::cout << "===== " << AppConfig::APPLICATION_NAME << " v" << AppConfig::APPLICATION_VERSION << " =====" << std::endl;
+    std::cout << "1. Register Account" << std::endl;
+    std::cout << "2. Login" << std::endl;
+    std::cout << "0. Exit Application" << std::endl;
+    std::cout << "==========================================" << std::endl;
 }
 
 void handleRegistration(AuthService& authService, WalletService& walletService) {
     clearScreen();
-    std::cout << "--- Dang Ky Tai Khoan ---" << std::endl;
-    std::string username, password, fullName, email, phone;
+    std::cout << "--- Register New Account ---" << std::endl;
+    std::string username, password, fullName, email, phone, msg;
+
+    do { username = getStringInput("Enter username (3-20 chars, alphanumeric, '_'): "); } 
+    while (!InputValidator::isValidUsername(username) && (std::cout << "Invalid username format. Try again.\n", true));
     
-    while(true){
-        username = getStringInput("Ten dang nhap (3-20 ky tu, alphanumeric, _): ");
-        if(InputValidator::isValidUsername(username)) break;
-        std::cout << "Ten dang nhap khong hop le.\n";
+    password = getPasswordInput("Enter password (min " + std::to_string(AppConfig::MIN_PASSWORD_LENGTH) + " chars, upper, lower, digit): ");
+    if (password.empty()) {
+        return; // Return to main menu if password input failed
     }
-    while(true){
-        password = getStringInput("Mat khau (min 8 ky tu, co chu hoa, thuong, so, ky tu dac biet): ");
-        if(InputValidator::isValidPassword(password)) break;
-        std::cout << "Mat khau khong du manh.\n";
-    }
-    fullName = getStringInput("Ho ten day du: ");
-     while(true){
-        email = getStringInput("Email: ");
-        if(InputValidator::isValidEmail(email)) break;
-        std::cout << "Email khong hop le.\n";
-    }
-    while(true){
-        phone = getStringInput("So dien thoai: ");
-        if(InputValidator::isValidPhoneNumber(phone)) break;
-        std::cout << "So dien thoai khong hop le.\n";
-    }
-
-
-    std::string msg;
-    if (authService.registerUser(username, password, fullName, email, phone, UserRole::RegularUser, msg)) {
-        std::cout << msg << std::endl;
-        // Tự động tạo ví cho người dùng mới
-        User newUser; // Cần tìm lại user vừa tạo để lấy ID
-        for(const auto& u : g_users){
-            if(u.username == username){
-                newUser = u;
-                break;
-            }
+    while (!InputValidator::isValidPassword(password)) {
+        std::cout << "Password not strong enough. Try again." << std::endl;
+        password = getPasswordInput("Enter password (min " + std::to_string(AppConfig::MIN_PASSWORD_LENGTH) + " chars, upper, lower, digit): ");
+        if (password.empty()) {
+            return; // Return to main menu if password input failed
         }
+    }
+
+    fullName = getStringInput("Enter full name: ");
+    do { email = getStringInput("Enter email: "); } 
+    while (!InputValidator::isValidEmail(email) && (std::cout << "Invalid email format. Try again.\n", true));
+    do { phone = getStringInput("Enter phone number: "); } 
+    while (!InputValidator::isValidPhoneNumber(phone) && (std::cout << "Invalid phone number format. Try again.\n", true));
+
+    if (authService.registerUser(username, password, fullName, email, phone, UserRole::RegularUser, msg)) {
+        std::cout << "Registration: " << msg << std::endl;
+        // Auto-create wallet for the new user
+        User newUser; // Find the newly created user to get their ID
+        for(const auto& u : g_users){ if(u.username == username){ newUser = u; break; } }
+
         if(!newUser.userId.empty()){
             std::string walletMsg;
             if(walletService.createWalletForUser(newUser.userId, walletMsg)){
-                std::cout << walletMsg << std::endl;
+                std::cout << "Wallet creation: " << walletMsg << std::endl;
             } else {
-                LOG_ERROR("Tao vi that bai cho nguoi dung " + newUser.username + ": " + walletMsg);
-                std::cout << "Loi khi tao vi: " << walletMsg << std::endl;
+                LOG_ERROR("Wallet creation failed for user '" + newUser.username + "' after registration: " + walletMsg);
+                std::cout << "Error creating wallet: " << walletMsg << std::endl;
             }
         } else {
-            LOG_ERROR("Khong tim thay nguoi dung " + username + " sau khi dang ky de tao vi.");
+            LOG_ERROR("Could not find user '" + username + "' after registration to create wallet.");
         }
     } else {
-        std::cout << "Dang ky that bai: " << msg << std::endl;
+        std::cout << "Registration failed: " << msg << std::endl;
     }
     pauseScreen();
 }
 
-void handleLogin(AuthService& authService) {
+void handleLogin(AuthService& authService, UserService& userService) {
     clearScreen();
-    std::cout << "--- Dang Nhap ---" << std::endl;
-    std::string username = getStringInput("Ten dang nhap: ");
-    std::string password = getStringInput("Mat khau: ");
+    std::cout << "--- Login ---" << std::endl;
+    std::string username = getStringInput("Username: ");
     std::string msg;
-    std::optional<User> userOpt = authService.loginUser(username, password, msg);
-    if (userOpt) {
-        g_currentUser = userOpt.value();
-        std::cout << msg << " Chao mung, " << g_currentUser.value().fullName << "!" << std::endl;
-    } else {
-        std::cout << "Dang nhap that bai: " << msg << std::endl;
-    }
-    pauseScreen();
-}
+    int attempts = 0;
+    const int MAX_ATTEMPTS = 3;
 
+    while (attempts < MAX_ATTEMPTS) {
+        std::string password = getPasswordInput("Password: ");
+        if (password.empty()) {
+            return; // Return to main menu if password input failed
+        }
+
+        std::optional<User> userOpt = authService.loginUser(username, password, msg);
+        if (userOpt) {
+            g_currentUser = userOpt.value();
+            std::cout << msg << " Welcome, " << g_currentUser.value().fullName << "!" << std::endl;
+            LOG_INFO("User '" + g_currentUser.value().username + "' logged in.");
+            pauseScreen();
+            return;
+        } else {
+            std::cout << "Login failed: " << msg << std::endl;
+            attempts++;
+            if (attempts >= MAX_ATTEMPTS) {
+                std::cout << "Too many failed attempts. Returning to main menu." << std::endl;
+                pauseScreen();
+                return;
+            }
+        }
+    }
+}
 
 void displayUserMenu(const User& user) {
     clearScreen();
-    std::cout << "===== MENU NGUOI DUNG (" << user.username << ") =====" << std::endl;
-    std::cout << "1. Xem thong tin ca nhan" << std::endl;
-    std::cout << "2. Cap nhat thong tin ca nhan" << std::endl;
-    std::cout << "3. Doi mat khau" << std::endl;
-    std::cout << "4. Thiet lap/Xem OTP" << std::endl;
-    std::cout << "5. Xem so du vi" << std::endl;
-    std::cout << "6. Chuyen diem" << std::endl;
-    std::cout << "7. Xem lich su giao dich" << std::endl;
-    std::cout << "9. Dang xuat" << std::endl;
-    std::cout << "0. Thoat ung dung" << std::endl;
-    std::cout << "===================================" << std::endl;
+    std::cout << "===== USER MENU (" << user.username << ") =====" << std::endl;
+    std::cout << "1. View Profile" << std::endl;
+    std::cout << "2. Update Profile" << std::endl;
+    std::cout << "3. Change Password" << std::endl;
+    std::cout << "4. Setup/View OTP" << std::endl;
+    std::cout << "5. View Wallet Balance" << std::endl;
+    std::cout << "6. Transfer Points" << std::endl;
+    std::cout << "7. View Transaction History" << std::endl;
+    std::cout << "9. Logout" << std::endl;
+    std::cout << "0. Exit Application" << std::endl;
+    std::cout << "==============================" << std::endl;
 }
 
-void handleUserActions(UserService& userService, AuthService& authService, WalletService& walletService) {
-    User& user = g_currentUser.value(); // Lấy tham chiếu để có thể cập nhật (ví dụ: sau khi đổi mk)
-    displayUserMenu(user);
-    int choice = getIntInput("Lua chon cua ban: ");
-    std::string msg, otpCode;
+void handleUserActions(UserService& userService, AuthService& authService, WalletService& walletService, OTPService& otpService) {
+    // g_currentUser is guaranteed to have a value here
+    User& CUser = g_currentUser.value(); // Get a reference to the global current user for direct updates if needed
+
+    displayUserMenu(CUser);
+    int choice = getIntInput("Your choice: ");
+    std::string msg, otpInput;
 
     switch (choice) {
-        case 1: { // Xem thông tin
+        case 1: // View Profile
             clearScreen();
-            std::cout << "--- Thong Tin Ca Nhan ---" << std::endl;
-            std::cout << "ID: " << user.userId << std::endl;
-            std::cout << "Ten dang nhap: " << user.username << std::endl;
-            std::cout << "Ho ten: " << user.fullName << std::endl;
-            std::cout << "Email: " << user.email << std::endl;
-            std::cout << "So dien thoai: " << user.phoneNumber << std::endl;
-            std::cout << "Vai tro: " << User::roleToString(user.role) << std::endl;
-            std::cout << "Trang thai: " << User::statusToString(user.status) << std::endl;
-            std::cout << "OTP da thiet lap: " << (user.otpSecretKey.empty() ? "Chua" : "Roi") << std::endl;
+            std::cout << "--- Your Profile ---" << std::endl;
+            std::cout << "User ID: " << CUser.userId << std::endl;
+            std::cout << "Username: " << CUser.username << std::endl;
+            std::cout << "Full Name: " << CUser.fullName << std::endl;
+            std::cout << "Email: " << CUser.email << std::endl;
+            std::cout << "Phone: " << CUser.phoneNumber << std::endl;
+            std::cout << "Role: " << User::roleToString(CUser.role) << std::endl;
+            std::cout << "Status: " << User::statusToString(CUser.status) << std::endl;
+            std::cout << "OTP Enabled: " << (CUser.otpSecretKey.empty() ? "No" : "Yes") << std::endl;
             pauseScreen();
             break;
-        }
-        case 2: { // Cập nhật thông tin
+
+        case 2: { // Update Profile
             clearScreen();
-            std::cout << "--- Cap Nhat Thong Tin Ca Nhan ---" << std::endl;
-            std::string newFullName = getStringInput("Ho ten moi (de trong de bo qua): ", true);
-            std::string newEmail = getStringInput("Email moi (de trong de bo qua): ", true);
-            std::string newPhone = getStringInput("So dien thoai moi (de trong de bo qua): ", true);
+            std::cout << "--- Update Profile ---" << std::endl;
+            std::string newFullName = getStringInput("New Full Name (current: " + CUser.fullName + ", leave empty to keep): ", true);
+            std::string newEmail;
+            do { newEmail = getStringInput("New Email (current: " + CUser.email + ", leave empty to keep): ", true);
+            } while (!newEmail.empty() && !InputValidator::isValidEmail(newEmail) && (std::cout << "Invalid email format.\n", true));
+            std::string newPhone;
+            do { newPhone = getStringInput("New Phone (current: " + CUser.phoneNumber + ", leave empty to keep): ", true);
+            } while (!newPhone.empty() && !InputValidator::isValidPhoneNumber(newPhone) && (std::cout << "Invalid phone format.\n", true));
+
+            if (newFullName.empty()) newFullName = CUser.fullName;
+            if (newEmail.empty()) newEmail = CUser.email;
+            if (newPhone.empty()) newPhone = CUser.phoneNumber;
             
-            if (newFullName.empty()) newFullName = user.fullName;
-            if (newEmail.empty()) newEmail = user.email;
-            if (newPhone.empty()) newPhone = user.phoneNumber;
-
-            otpCode = "";
-            if (!user.otpSecretKey.empty()) { // Nếu đã thiết lập OTP, yêu cầu OTP
-                otpCode = getStringInput("Nhap ma OTP (neu da thiet lap): ", true);
+            otpInput = "";
+            if (!CUser.otpSecretKey.empty()) {
+                otpInput = getStringInput("Enter your OTP code to confirm changes: ");
             }
 
-            if (userService.updateUserProfile(user.userId, newFullName, newEmail, newPhone, otpCode, msg)) {
-                std::cout << "Thanh cong: " << msg << std::endl;
-                // Cập nhật lại g_currentUser nếu thông tin thay đổi được lưu trong vector g_users
-                // Cách tốt hơn là userService trả về User đã cập nhật hoặc AuthService cập nhật trực tiếp g_currentUser
-                 auto updatedUserOpt = userService.getUserProfile(user.userId); // Tải lại từ vector
-                 if(updatedUserOpt) g_currentUser = updatedUserOpt.value();
-
+            if (userService.updateUserProfile(CUser.userId, newFullName, newEmail, newPhone, otpInput, msg)) {
+                std::cout << "Success: " << msg << std::endl;
+                // Refresh g_currentUser from g_users which userService modified
+                auto updatedUserOpt = userService.getUserProfile(CUser.userId);
+                if (updatedUserOpt) g_currentUser = updatedUserOpt.value();
             } else {
-                std::cout << "That bai: " << msg << std::endl;
+                std::cout << "Failed: " << msg << std::endl;
             }
             pauseScreen();
             break;
         }
-        case 3: { // Đổi mật khẩu
+        case 3: { // Change Password
             clearScreen();
-            std::cout << "--- Doi Mat Khau ---" << std::endl;
-            std::string oldPass = getStringInput("Mat khau cu: ");
-            std::string newPass, confirmPass;
-             while(true){
-                newPass = getStringInput("Mat khau moi (min 8 ky tu, phức tạp): ");
-                if(InputValidator::isValidPassword(newPass)) break;
-                std::cout << "Mat khau khong du manh.\n";
+            std::cout << "--- Change Password ---" << std::endl;
+            std::string oldPass = getPasswordInput("Enter current password: ");
+            if (oldPass.empty()) {
+                return; // Return to user menu if password input failed
             }
-            confirmPass = getStringInput("Xac nhan mat khau moi: ");
+
+            std::string newPass = getPasswordInput("Enter new password: ");
+            if (newPass.empty()) {
+                return; // Return to user menu if password input failed
+            }
+            while (!InputValidator::isValidPassword(newPass)) {
+                std::cout << "Password not strong enough." << std::endl;
+                newPass = getPasswordInput("Enter new password: ");
+                if (newPass.empty()) {
+                    return; // Return to user menu if password input failed
+                }
+            }
+
+            std::string confirmPass = getPasswordInput("Confirm new password: ");
+            if (confirmPass.empty()) {
+                return; // Return to user menu if password input failed
+            }
+
             if (newPass == confirmPass) {
-                if (authService.changePassword(user.userId, oldPass, newPass, msg)) {
-                    std::cout << "Thanh cong: " << msg << std::endl;
-                     auto updatedUserOpt = userService.getUserProfile(user.userId); // Tải lại từ vector
-                     if(updatedUserOpt) g_currentUser = updatedUserOpt.value();
+                if (authService.changePassword(CUser.userId, oldPass, newPass, msg)) {
+                    std::cout << "Success: " << msg << std::endl;
+                    auto updatedUserOpt = userService.getUserProfile(CUser.userId);
+                    if(updatedUserOpt) g_currentUser = updatedUserOpt.value();
                 } else {
-                    std::cout << "That bai: " << msg << std::endl;
+                    std::cout << "Failed: " << msg << std::endl;
                 }
             } else {
-                std::cout << "Mat khau xac nhan khong khop." << std::endl;
+                std::cout << "New passwords do not match." << std::endl;
             }
             pauseScreen();
             break;
         }
-        case 4: { // Thiết lập OTP
+        case 4: { // Setup/View OTP
             clearScreen();
-            std::cout << "--- Thiet Lap/Xem OTP ---" << std::endl;
-            if (user.otpSecretKey.empty()) {
-                std::cout << "Ban chua thiet lap OTP. Ban co muon thiet lap khong? (y/n): ";
-                std::string choiceOtp = getStringInput("");
-                if (choiceOtp == "y" || choiceOtp == "Y") {
-                    std::optional<std::string> secretKeyOpt = authService.setupOtpForUser(user.userId, msg);
-                    if (secretKeyOpt) {
-                        std::cout << msg << std::endl;
-                        std::cout << "Khoa bi mat cua ban (Base32): " << secretKeyOpt.value() << std::endl;
-                        std::cout << "Hay them khoa nay vao ung dung Authenticator cua ban." << std::endl;
-                        std::cout << "URI (cho QR code, sao chep va dan vao trinh tao QR): " << std::endl;
-                        std::cout << otpService.generateOtpUri(user.username, secretKeyOpt.value(), "RewardApp") << std::endl;
-                        // Cập nhật g_currentUser
-                        auto updatedUserOpt = userService.getUserProfile(user.userId);
+            std::cout << "--- OTP Setup ---" << std::endl;
+            if (CUser.otpSecretKey.empty()) {
+                std::cout << "OTP is not yet enabled." << std::endl;
+                std::string setupChoice = getStringInput("Do you want to set up OTP now? (y/n): ");
+                if (setupChoice == "y" || setupChoice == "Y") {
+                    std::optional<std::string> secretOpt = authService.setupOtpForUser(CUser.userId, msg);
+                    if (secretOpt) {
+                        std::cout << "Success: " << msg << std::endl;
+                        std::cout << "Your OTP Secret Key (Base32): " << secretOpt.value() << std::endl;
+                        std::cout << "Scan this URI with your Authenticator app (or add manually):" << std::endl;
+                        std::cout << otpService.generateOtpUri(CUser.username, secretOpt.value()) << std::endl;
+                        // Refresh g_currentUser
+                        auto updatedUserOpt = userService.getUserProfile(CUser.userId);
                         if(updatedUserOpt) g_currentUser = updatedUserOpt.value();
-
                     } else {
-                        std::cout << "That bai: " << msg << std::endl;
+                        std::cout << "Failed: " << msg << std::endl;
                     }
                 }
             } else {
-                std::cout << "OTP da duoc thiet lap." << std::endl;
-                std::cout << "Khoa bi mat cua ban (Base32): " << user.otpSecretKey << std::endl;
-                 std::cout << "URI (cho QR code, sao chep va dan vao trinh tao QR): " << std::endl;
-                 std::cout << otpService.generateOtpUri(user.username, user.otpSecretKey, "RewardApp") << std::endl;
-                // Không hiển thị lại secret key ở đây trừ khi người dùng yêu cầu explicit và xác thực lại.
-                // Hoặc cung cấp tùy chọn "Vô hiệu hóa OTP"
+                std::cout << "OTP is already enabled for your account." << std::endl;
+                std::cout << "For security, your secret key is not displayed again." << std::endl;
+                std::cout << "If you need to re-setup, a 'Disable OTP' feature would be required first (not implemented)." << std::endl;
+                 std::cout << "You can use this URI to re-add to an authenticator if you have your secret:" << std::endl;
+                 std::cout << otpService.generateOtpUri(CUser.username, CUser.otpSecretKey) << std::endl;
             }
             pauseScreen();
             break;
         }
-        case 5: { // Xem số dư ví
+        case 5: { // View Wallet Balance
             clearScreen();
-            std::cout << "--- So Du Vi ---" << std::endl;
-            auto walletOpt = walletService.getWalletByUserId(user.userId);
+            std::cout << "--- Wallet Balance ---" << std::endl;
+            auto walletOpt = walletService.getWalletByUserId(CUser.userId);
             if (walletOpt) {
-                std::cout << "So du hien tai: " << std::fixed << std::setprecision(2) << walletOpt.value().balance << " diem" << std::endl;
+                std::cout << "Current Balance: " << std::fixed << std::setprecision(2) 
+                          << walletOpt.value().balance << " " << AppConfig::APPLICATION_NAME << " Points" << std::endl;
             } else {
-                std::cout << "Khong tim thay thong tin vi. Vui long lien he ho tro." << std::endl;
+                std::cout << "Could not retrieve wallet information. Please contact support." << std::endl;
+                 LOG_ERROR("Wallet not found for logged in user: " + CUser.username);
             }
             pauseScreen();
             break;
         }
-        case 6: { // Chuyển điểm
+        case 6: { // Transfer Points
             clearScreen();
-            std::cout << "--- Chuyen Diem ---" << std::endl;
-            auto senderWalletOpt = walletService.getWalletByUserId(user.userId);
+            std::cout << "--- Transfer Points ---" << std::endl;
+            auto senderWalletOpt = walletService.getWalletByUserId(CUser.userId);
             if (!senderWalletOpt) {
-                std::cout << "Loi: Khong tim thay vi cua ban." << std::endl;
+                std::cout << "Error: Your wallet information could not be found." << std::endl;
                 pauseScreen();
                 break;
             }
-            std::string receiverWalletId = getStringInput("Nhap ID vi nguoi nhan: ");
-            double amount = getDoubleInput("Nhap so diem muon chuyen: ");
+            std::string receiverWalletId = getStringInput("Enter Receiver's Wallet ID: ");
+            double amount = getDoubleInput("Enter amount to transfer: ");
             
-            otpCode = "";
-            if (!user.otpSecretKey.empty()) {
-                 otpCode = getStringInput("Nhap ma OTP cua ban: ");
+            otpInput = "";
+            if (!CUser.otpSecretKey.empty()) {
+                otpInput = getStringInput("Enter your OTP code: ");
             }
 
-            if (walletService.transferPoints(user.userId, senderWalletOpt.value().walletId, receiverWalletId, amount, otpCode, msg)) {
-                std::cout << "Thanh cong: " << msg << std::endl;
+            if (walletService.transferPoints(CUser.userId, senderWalletOpt.value().walletId, receiverWalletId, amount, otpInput, msg)) {
+                std::cout << "Success: " << msg << std::endl;
             } else {
-                std::cout << "That bai: " << msg << std::endl;
+                std::cout << "Failed: " << msg << std::endl;
             }
             pauseScreen();
             break;
         }
-        case 7: { // Xem lịch sử giao dịch
+        case 7: { // View Transaction History
             clearScreen();
-            std::cout << "--- Lich Su Giao Dich ---" << std::endl;
-            auto walletOpt = walletService.getWalletByUserId(user.userId);
+            std::cout << "--- Transaction History ---" << std::endl;
+            auto walletOpt = walletService.getWalletByUserId(CUser.userId);
             if (walletOpt) {
                 std::vector<Transaction> history = walletService.getTransactionHistory(walletOpt.value().walletId);
                 if (history.empty()) {
-                    std::cout << "Khong co giao dich nao." << std::endl;
+                    std::cout << "No transactions found." << std::endl;
                 } else {
                     for (const auto& tx : history) {
-                        std::cout << "---------------------------" << std::endl;
-                        std::cout << "ID Giao Dich: " << tx.transactionId << std::endl;
-                        std::cout << "Thoi gian: " << TimeUtils::formatTimestamp(tx.transactionTimestamp) << std::endl;
-                        std::cout << "Tu Vi: " << tx.senderWalletId << std::endl;
-                        std::cout << "Den Vi: " << tx.receiverWalletId << std::endl;
-                        std::cout << "So diem: " << std::fixed << std::setprecision(2) << tx.amountTransferred << std::endl;
-                        std::cout << "Trang thai: " << Transaction::statusToString(tx.status) << std::endl;
+                        std::cout << "----------------------------------" << std::endl;
+                        std::cout << "Tx ID: " << tx.transactionId << std::endl;
+                        std::cout << "Date: " << TimeUtils::formatTimestamp(tx.transactionTimestamp) << std::endl;
+                        std::cout << "Type: " << (tx.senderWalletId == walletOpt.value().walletId ? "Sent" : "Received") << std::endl;
+                        std::cout << "From: " << tx.senderWalletId << std::endl;
+                        std::cout << "To: " << tx.receiverWalletId << std::endl;
+                        std::cout << "Amount: " << std::fixed << std::setprecision(2) << tx.amountTransferred << std::endl;
+                        std::cout << "Status: " << Transaction::statusToString(tx.status) << std::endl;
                         if (!tx.description.empty()) {
-                            std::cout << "Mo ta: " << tx.description << std::endl;
+                            std::cout << "Description: " << tx.description << std::endl;
                         }
                     }
-                    std::cout << "---------------------------" << std::endl;
+                    std::cout << "----------------------------------" << std::endl;
                 }
             } else {
-                std::cout << "Khong tim thay thong tin vi." << std::endl;
+                std::cout << "Could not retrieve wallet information." << std::endl;
             }
             pauseScreen();
             break;
         }
-        case 9: // Đăng xuất
-            LOG_INFO("Nguoi dung " + user.username + " dang xuat.");
-            g_currentUser.reset();
-            std::cout << "Da dang xuat." << std::endl;
+        case 9: // Logout
+            LOG_INFO("User '" + CUser.username + "' logged out.");
+            g_currentUser.reset(); // Clear current user
+            std::cout << "You have been logged out." << std::endl;
             pauseScreen();
-            return; // Quay lại vòng lặp chính (sẽ hiển thị main menu)
-        case 0: // Thoát ứng dụng
-            g_currentUser.reset(); // Đảm bảo đăng xuất trước khi thoát
-            // running được quản lý ở vòng lặp ngoài, nên cần cách để báo hiệu thoát
-            // Trong trường hợp này, main() sẽ thoát khi handleUserActions/handleAdminActions kết thúc và lựa chọn là 0
-            // Để thoát hẳn, main loop cần biến running=false
-            // Tạm thời:
-            std::cout << "Thoat ung dung..." << std::endl;
-            exit(0); // Thoát ngay lập tức (không lý tưởng bằng cờ running)
-            break; // Sẽ không bao giờ tới đây nếu exit(0) được gọi
+            // The main loop will detect no currentUser and show main menu
+            return; // Exit user actions and let main loop continue
+        case 0: // Exit Application
+            LOG_INFO("User '" + CUser.username + "' chose to exit application.");
+            g_currentUser.reset(); // Log out before exiting
+            // To exit the main loop in main():
+            // We need a way for this function to signal main loop to stop.
+            // For now, direct exit. A better way is to return a bool from handleUserActions.
+            std::cout << "Exiting application..." << std::endl;
+            exit(0); // Exit the entire program
+            break; 
         default:
-            std::cout << "Lua chon khong hop le." << std::endl;
+            std::cout << "Invalid choice. Please try again." << std::endl;
             pauseScreen();
             break;
     }
 }
 
-
 void displayAdminMenu(const User& admin) {
     clearScreen();
-    std::cout << "===== MENU ADMIN (" << admin.username << ") =====" << std::endl;
-    std::cout << "1. Xem thong tin ca nhan (Admin)" << std::endl;
-    std::cout << "2. Cap nhat thong tin ca nhan (Admin)" << std::endl;
-    std::cout << "3. Doi mat khau (Admin)" << std::endl;
-    std::cout << "4. Thiet lap/Xem OTP (Admin)" << std::endl;
-    std::cout << "--- Quan Ly Nguoi Dung ---" << std::endl;
-    std::cout << "11. Liet ke tat ca nguoi dung" << std::endl;
-    std::cout << "12. Tao tai khoan nguoi dung moi" << std::endl;
-    std::cout << "13. Cap nhat thong tin nguoi dung" << std::endl;
-    std::cout << "14. Kich hoat tai khoan nguoi dung" << std::endl;
-    std::cout << "15. Vo hieu hoa tai khoan nguoi dung" << std::endl;
-    std::cout << "--- Quan Ly Vi ---" << std::endl;
-    std::cout << "21. Nap diem vao vi nguoi dung" << std::endl;
-    // Thêm các chức năng admin khác nếu cần
-    std::cout << "9. Dang xuat" << std::endl;
-    std::cout << "0. Thoat ung dung" << std::endl;
-    std::cout << "===================================" << std::endl;
+    std::cout << "===== ADMIN MENU (" << admin.username << ") =====" << std::endl;
+    std::cout << "--- Self Management ---" << std::endl;
+    std::cout << "1. View My Admin Profile" << std::endl;
+    std::cout << "2. Update My Admin Profile" << std::endl;
+    std::cout << "3. Change My Admin Password" << std::endl;
+    std::cout << "4. Setup/View My Admin OTP" << std::endl;
+    std::cout << "--- User Management ---" << std::endl;
+    std::cout << "11. List All Users" << std::endl;
+    std::cout << "12. Create New User Account" << std::endl;
+    std::cout << "13. Update User Profile" << std::endl;
+    std::cout << "14. Activate User Account" << std::endl;
+    std::cout << "15. Deactivate User Account" << std::endl;
+    std::cout << "--- Wallet Management ---" << std::endl;
+    std::cout << "21. Deposit Points to User Wallet" << std::endl;
+    std::cout << "--- System ---" << std::endl;
+    std::cout << "9. Logout" << std::endl;
+    std::cout << "0. Exit Application" << std::endl;
+    std::cout << "==============================" << std::endl;
 }
 
-void handleAdminActions(AdminService& adminService, UserService& userService, AuthService& authService, WalletService& walletService) {
-    User& admin = g_currentUser.value(); // Lấy tham chiếu
-    displayAdminMenu(admin);
-    int choice = getIntInput("Lua chon cua ban: ");
-    std::string msg, otpCode;
+void handleAdminActions(AdminService& adminService, UserService& userService, AuthService& authService, WalletService& walletService, OTPService& otpService) {
+    // g_currentUser is guaranteed to be an admin here
+    User& CAdmin = g_currentUser.value();
 
-    // Các case 1-4 giống hệt user menu, có thể tách thành hàm chung
-    // hoặc gọi lại handleUserActions với một số quyền hạn đặc biệt nếu cần
+    displayAdminMenu(CAdmin);
+    int choice = getIntInput("Your choice: ");
+    std::string msg, otpInput; // For admin's own OTP if needed for an action
+
     switch (choice) {
-        case 1: case 2: case 3: case 4: { // Chức năng cá nhân của Admin
-            // Tạm thời chuyển sang menu người dùng cho các chức năng này
-            // Để đơn giản, chúng ta sẽ gọi lại handleUserActions,
-            // nhưng trong thực tế, bạn có thể muốn các hàm riêng cho admin tự quản lý mình.
-            // Hoặc tạo một hàm handleSelfCareActions(user, services...)
-            std::cout << "Chuc nang nay tuong tu nhu menu nguoi dung." << std::endl;
-            handleUserActions(userService, authService, walletService); // Gọi lại hàm của user
-            // Cần lưu ý là sau khi hàm này chạy xong, nó có thể đã thay đổi g_currentUser.
-            // Nếu g_currentUser bị reset (logout), vòng lặp chính sẽ xử lý.
-            return; // Quay lại vòng lặp chính để kiểm tra g_currentUser
-        }
-        case 11: { // Liệt kê người dùng
+        // Admin's self-management actions (can reuse parts of handleUserActions or have dedicated logic)
+        case 1: case 2: case 3: case 4:
+            LOG_DEBUG("Admin accessing self-management. Redirecting to user actions for admin's own account.");
+            // For simplicity, we treat the admin as a user for these actions.
+            // A more granular system might have separate handlers or checks.
+            handleUserActions(userService, authService, walletService, otpService);
+            // After handleUserActions, g_currentUser might have changed (e.g., logout).
+            // The main loop will re-evaluate.
+            return; // Return to main loop to re-evaluate state
+
+        // User Management
+        case 11: { // List All Users
             clearScreen();
-            std::cout << "--- Danh Sach Nguoi Dung ---" << std::endl;
+            std::cout << "--- All Users ---" << std::endl;
             std::vector<User> allUsers = adminService.listAllUsers();
-            if (allUsers.empty()){
-                std::cout << "Khong co nguoi dung nao trong he thong." << std::endl;
+            if (allUsers.empty()) {
+                std::cout << "No users in the system." << std::endl;
             } else {
                 for (const auto& u : allUsers) {
-                    std::cout << "ID: " << u.userId << ", Username: " << u.username
-                              << ", Ten: " << u.fullName << ", Email: " << u.email
-                              << ", Role: " << User::roleToString(u.role)
-                              << ", Status: " << User::statusToString(u.status) << std::endl;
+                    std::cout << "ID: " << u.userId << "\n Username: " << u.username
+                              << "\n Name: " << u.fullName << "\n Email: " << u.email
+                              << "\n Phone: " << u.phoneNumber
+                              << "\n Role: " << User::roleToString(u.role)
+                              << "\n Status: " << User::statusToString(u.status) 
+                              << "\n OTP Set: " << (u.otpSecretKey.empty() ? "No" : "Yes")
+                              << "\n--------------------------" << std::endl;
                 }
             }
             pauseScreen();
             break;
         }
-        case 12: { // Tạo tài khoản mới
+        case 12: { // Create New User Account
             clearScreen();
-            std::cout << "--- Admin Tao Tai Khoan Moi ---" << std::endl;
-            std::string username, fullName, email, phone, tempPass;
-            // Input và validate tương tự handleRegistration
-            while(true){ username = getStringInput("Ten dang nhap nguoi dung moi: "); if(InputValidator::isValidUsername(username)) break; std::cout << "Ten dang nhap khong hop le.\n"; }
-            fullName = getStringInput("Ho ten nguoi dung moi: ");
-            while(true){ email = getStringInput("Email nguoi dung moi: "); if(InputValidator::isValidEmail(email)) break; std::cout << "Email khong hop le.\n"; }
-            while(true){ phone = getStringInput("So dien thoai nguoi dung moi: "); if(InputValidator::isValidPhoneNumber(phone)) break; std::cout << "So dien thoai khong hop le.\n"; }
-            // Admin chỉ nên tạo RegularUser qua giao diện này, ví dụ
-            if(adminService.adminCreateUserAccount(username, fullName, email, phone, UserRole::RegularUser, tempPass, msg)){
-                std::cout << "Thanh cong: " << msg << std::endl;
-                std::cout << "Mat khau tam thoi cho " << username << " la: " << tempPass << std::endl;
-                // Tự động tạo ví
-                 User newUser; 
-                for(const auto& u : g_users){ if(u.username == username){ newUser = u; break;}}
-                if(!newUser.userId.empty()){
-                    std::string walletMsg;
-                    if(walletService.createWalletForUser(newUser.userId, walletMsg)){ std::cout << walletMsg << std::endl; }
-                    else { LOG_ERROR("Tao vi that bai cho user " + newUser.username + ": " + walletMsg); std::cout << "Loi tao vi: " << walletMsg << std::endl; }
-                }
+            std::cout << "--- Admin: Create New User Account ---" << std::endl;
+            std::string newUsername, newPassword, newFullName, newEmail, newPhone, tempPass;
+            UserRole newUserRole = UserRole::RegularUser; // Default to regular user
+
+            do { newUsername = getStringInput("Enter username for new user: "); } while (!InputValidator::isValidUsername(newUsername) && (std::cout << "Invalid username format.\n", true));
+            newFullName = getStringInput("Enter full name for new user: ");
+            do { newEmail = getStringInput("Enter email for new user: "); } while (!InputValidator::isValidEmail(newEmail) && (std::cout << "Invalid email format.\n", true));
+            do { newPhone = getStringInput("Enter phone for new user: "); } while (!InputValidator::isValidPhoneNumber(newPhone) && (std::cout << "Invalid phone format.\n", true));
+            
+            // Admin cannot create another admin via this simplified interface for now.
+            if (adminService.adminCreateUserAccount(newUsername, newFullName, newEmail, newPhone, newUserRole, tempPass, msg)) {
+                std::cout << "\n=== IMPORTANT: USER ACCOUNT CREATED SUCCESSFULLY ===\n" << std::endl;
+                std::cout << "Account Details:" << std::endl;
+                std::cout << "Username: " << newUsername << std::endl;
+                std::cout << "Full Name: " << newFullName << std::endl;
+                std::cout << "Email: " << newEmail << std::endl;
+                std::cout << "Phone: " << newPhone << std::endl;
+                std::cout << "\n=== TEMPORARY PASSWORD ===\n" << std::endl;
+                std::cout << "The user's temporary password is: " << tempPass << std::endl;
+                std::cout << "\nIMPORTANT: Please provide this temporary password to the user securely." << std::endl;
+                std::cout << "The user will be required to change this password upon first login." << std::endl;
+                std::cout << "\n==========================================\n" << std::endl;
             } else {
-                std::cout << "That bai: " << msg << std::endl;
+                std::cout << "Failed: " << msg << std::endl;
             }
             pauseScreen();
             break;
         }
-        case 13: { // Admin cập nhật thông tin người dùng
+        case 13: { // Update User Profile
             clearScreen();
-            std::cout << "--- Admin Cap Nhat Thong Tin Nguoi Dung ---" << std::endl;
-            std::string targetUserId = getStringInput("Nhap User ID cua nguoi dung can cap nhat: ");
+            std::cout << "--- Admin: Update User Profile ---" << std::endl;
+            std::string targetUserId = getStringInput("Enter User ID of the user to update: ");
             auto targetUserOpt = userService.getUserProfile(targetUserId);
             if (!targetUserOpt) {
-                std::cout << "Khong tim thay nguoi dung voi ID: " << targetUserId << std::endl;
+                std::cout << "User with ID '" << targetUserId << "' not found." << std::endl;
                 pauseScreen();
                 break;
             }
-            User targetUser = targetUserOpt.value();
-            std::cout << "Cap nhat cho: " << targetUser.username << " (" << targetUser.fullName << ")" << std::endl;
-            std::string newFullName = getStringInput("Ho ten moi (de trong de bo qua): ", true);
-            std::string newEmail = getStringInput("Email moi (de trong de bo qua): ", true);
-            std::string newPhone = getStringInput("So dien thoai moi (de trong de bo qua): ", true);
-            std::cout << "Trang thai hien tai: " << User::statusToString(targetUser.status) << std::endl;
-            std::cout << "Chon trang thai moi (0=NotActivated, 1=Active, 2=Inactive, de trong de bo qua): ";
-            std::string statusChoiceStr = getStringInput("", true);
+            User targetUser = targetUserOpt.value(); // Get a copy for display and checks
+            std::cout << "Updating profile for: " << targetUser.username << " (" << targetUser.fullName << ")" << std::endl;
+
+            std::string newFullName = getStringInput("New Full Name (current: " + targetUser.fullName + ", leave empty to keep): ", true);
+            std::string newEmail;
+            do { newEmail = getStringInput("New Email (current: " + targetUser.email + ", leave empty to keep): ", true);
+            } while (!newEmail.empty() && !InputValidator::isValidEmail(newEmail) && (std::cout << "Invalid email format.\n", true));
+            std::string newPhone;
+            do { newPhone = getStringInput("New Phone (current: " + targetUser.phoneNumber + ", leave empty to keep): ", true);
+            } while (!newPhone.empty() && !InputValidator::isValidPhoneNumber(newPhone) && (std::cout << "Invalid phone format.\n", true));
             
+            std::cout << "Current Status: " << User::statusToString(targetUser.status) << std::endl;
+            std::cout << "New Status (0=NotActivated, 1=Active, 2=Inactive, Enter to keep current): ";
+            std::string statusStr = getStringInput("", true);
             AccountStatus newStatus = targetUser.status;
-            if (!statusChoiceStr.empty()) {
-                int statusChoice = -1;
-                if (InputValidator::isValidInteger(statusChoiceStr, statusChoice)) {
-                    if (statusChoice == 0) newStatus = AccountStatus::NotActivated;
-                    else if (statusChoice == 1) newStatus = AccountStatus::Active;
-                    else if (statusChoice == 2) newStatus = AccountStatus::Inactive;
-                    else std::cout << "Lua chon trang thai khong hop le, trang thai se khong thay doi." << std::endl;
-                } else {
-                     std::cout << "Lua chon trang thai khong hop le, trang thai se khong thay doi." << std::endl;
-                }
+            if(!statusStr.empty()){
+                int statusInt = -1;
+                if(InputValidator::isValidInteger(statusStr, statusInt)){
+                    if(statusInt == 0) newStatus = AccountStatus::NotActivated;
+                    else if (statusInt == 1) newStatus = AccountStatus::Active;
+                    else if (statusInt == 2) newStatus = AccountStatus::Inactive;
+                    else std::cout << "Invalid status choice. Status unchanged.\n";
+                } else std::cout << "Invalid status input. Status unchanged.\n";
             }
 
             if (newFullName.empty()) newFullName = targetUser.fullName;
             if (newEmail.empty()) newEmail = targetUser.email;
             if (newPhone.empty()) newPhone = targetUser.phoneNumber;
-            
-            otpCode = "";
-            if (!targetUser.otpSecretKey.empty()) { // Nếu người dùng CÓ OTP
-                otpCode = getStringInput("Nhap ma OTP cua nguoi dung '" + targetUser.username + "' (do ho cung cap): ", true);
+
+            std::string targetUserOtp = "";
+            if (!targetUser.otpSecretKey.empty()) {
+                targetUserOtp = getStringInput("Enter TARGET USER's OTP code (if they provided it): ", true);
             }
 
-            if(adminService.adminUpdateUserProfile(admin.userId, targetUserId, newFullName, newEmail, newPhone, newStatus, otpCode, msg)){
-                std::cout << "Thanh cong: " << msg << std::endl;
+            if (adminService.adminUpdateUserProfile(CAdmin.userId, targetUserId, newFullName, newEmail, newPhone, newStatus, targetUserOtp, msg)) {
+                std::cout << "Success: " << msg << std::endl;
             } else {
-                std::cout << "That bai: " << msg << std::endl;
+                std::cout << "Failed: " << msg << std::endl;
             }
             pauseScreen();
             break;
         }
-        case 14: { // Admin kích hoạt tài khoản
+        case 14: // Activate User
             clearScreen();
-            std::string targetUserId = getStringInput("Nhap User ID cua nguoi dung can kich hoat: ");
-            if(adminService.adminActivateUser(targetUserId, msg)){
-                std::cout << "Thanh cong: " << msg << std::endl;
+            std::cout << "--- Admin: Activate User Account ---" << std::endl;
+            if(adminService.adminActivateUser(getStringInput("Enter User ID to activate: "), msg)){
+                 std::cout << "Success: " << msg << std::endl;
             } else {
-                std::cout << "That bai: " << msg << std::endl;
+                 std::cout << "Failed: " << msg << std::endl;
             }
             pauseScreen();
             break;
-        }
-        case 15: { // Admin vô hiệu hóa tài khoản
+        case 15: // Deactivate User
             clearScreen();
-            std::string targetUserId = getStringInput("Nhap User ID cua nguoi dung can vo hieu hoa: ");
-            if(adminService.adminDeactivateUser(targetUserId, msg)){
-                std::cout << "Thanh cong: " << msg << std::endl;
+            std::cout << "--- Admin: Deactivate User Account ---" << std::endl;
+            if(adminService.adminDeactivateUser(getStringInput("Enter User ID to deactivate: "), msg)){
+                std::cout << "Success: " << msg << std::endl;
             } else {
-                std::cout << "That bai: " << msg << std::endl;
+                std::cout << "Failed: " << msg << std::endl;
             }
             pauseScreen();
             break;
-        }
-         case 21: { // Admin nạp điểm
+
+        // Wallet Management
+        case 21: { // Deposit Points
             clearScreen();
-            std::cout << "--- Admin Nap Diem Vao Vi ---" << std::endl;
-            std::string targetUserId = getStringInput("Nhap User ID cua nguoi dung can nap diem: ");
-            double amount = getDoubleInput("Nhap so diem can nap: ");
-            std::string reason = getStringInput("Nhap ly do nap diem: ");
-            if (adminService.adminDepositToUserWallet(targetUserId, amount, reason, msg)) {
-                std::cout << "Thanh cong: " << msg << std::endl;
+            std::cout << "--- Admin: Deposit Points ---" << std::endl;
+            std::string targetUserId = getStringInput("Enter User ID to deposit points to: ");
+            double amount = getDoubleInput("Enter amount to deposit: ");
+            std::string reason = getStringInput("Reason for deposit: ");
+            if (adminService.adminDepositToUserWallet(CAdmin.userId, targetUserId, amount, reason, msg)) {
+                std::cout << "Success: " << msg << std::endl;
             } else {
-                std::cout << "That bai: " << msg << std::endl;
+                std::cout << "Failed: " << msg << std::endl;
             }
             pauseScreen();
             break;
         }
-        case 9: // Đăng xuất
-            LOG_INFO("Admin " + admin.username + " dang xuat.");
+
+        case 9: // Logout
+            LOG_INFO("Admin '" + CAdmin.username + "' logged out.");
             g_currentUser.reset();
-            std::cout << "Da dang xuat." << std::endl;
+            std::cout << "You have been logged out." << std::endl;
             pauseScreen();
             return; 
-        case 0: // Thoát ứng dụng
+        case 0: // Exit Application
+            LOG_INFO("Admin '" + CAdmin.username + "' chose to exit application.");
             g_currentUser.reset();
-            std::cout << "Thoat ung dung..." << std::endl;
+            std::cout << "Exiting application..." << std::endl;
             exit(0);
             break;
         default:
-            std::cout << "Lua chon khong hop le." << std::endl;
+            std::cout << "Invalid choice. Please try again." << std::endl;
             pauseScreen();
             break;
     }

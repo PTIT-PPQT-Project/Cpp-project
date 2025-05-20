@@ -1,5 +1,5 @@
 // src/models/User.cpp
-#include "include/models/User.hpp" // Điều chỉnh đường dẫn nếu cần
+#include "../../include/models/User.hpp" // Fixed include path
 #include <stdexcept> // For std::invalid_argument
 
 // Default constructor

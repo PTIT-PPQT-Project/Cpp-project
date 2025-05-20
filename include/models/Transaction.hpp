@@ -45,7 +45,7 @@ inline void from_json(const json& j, TransactionStatus& ts) {
     if (j.is_string()) {
         ts = Transaction::stringToStatus(j.get<std::string>());
     } else {
-        throw json::type_error::create(302, "TransactionStatus must be a string in JSON", j);
+        throw json::type_error::create(302, "TransactionStatus must be a string in JSON", &j);
     }
 }
 
