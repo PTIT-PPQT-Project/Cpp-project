@@ -1,0 +1,37 @@
+[
+    {
+        "balance": 0.0,
+        "creationTimestamp": 1747775631,
+        "lastUpdateTimestamp": 1747775631,
+        "userId": "4f1d2dac-c101-1fc1-88e9-cdf1716da246",
+        "walletId": "WLT-4f237edc-2e9"
+    },
+    {
+        "balance": 0.0,
+        "creationTimestamp": 1747775744,
+        "lastUpdateTimestamp": 1747775744,
+        "userId": "aa7a1a88-f592-a521-eacb-b1539bbbd73f",
+        "walletId": "WLT-aa8b8c28-a4c"
+    },
+    {
+        "balance": 0.0,
+        "creationTimestamp": 1747775927,
+        "lastUpdateTimestamp": 1747775927,
+        "userId": "2b3048e4-86c2-677a-b5e4-fa509d6f28f3",
+        "walletId": "WLT-2b4193d8-748"
+    },
+    {
+        "balance": 500000.0,
+        "creationTimestamp": 1747776102,
+        "lastUpdateTimestamp": 1747780134,
+        "userId": "d2a25108-77d8-271a-c7a7-e934d7500c6",
+        "walletId": "WLT-d2b2c524-e1f"
+    },
+    {
+        "balance": 0.0,
+        "creationTimestamp": 1747776206,
+        "lastUpdateTimestamp": 1747776206,
+        "userId": "22ecc0f4-1190-d9a4-49b4-e0e10e358bf",
+        "walletId": "WLT-23045c50-2f7"
+    }
+]
