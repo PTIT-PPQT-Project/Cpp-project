@@ -25,25 +25,22 @@ void FileHandler::ensureDirectoryExists(const std::string& filePath) {
     }
 }
 
+// Helper function to create empty JSON array file
+bool createEmptyJsonFile(const std::string& filePath) {
+    std::ofstream newFile(filePath);
+    if (newFile.is_open()) {
+        newFile << "[]";
+        newFile.close();
+        LOG_INFO("Created empty JSON file: " + filePath);
+        return true;
+    }
+    LOG_ERROR("Failed to create empty JSON file: " + filePath);
+    return false;
+}
 
 FileHandler::FileHandler(const std::string& dataDir) {
-    // Get the project root directory (two levels up from build)
-    std::filesystem::path currentPath = std::filesystem::current_path();
-    std::filesystem::path projectRoot = currentPath.parent_path().parent_path();
-    
-    // Ensure we're in the Cpp-project directory
-    if (projectRoot.filename() != "Cpp-project") {
-        // Try to find Cpp-project in the path
-        std::filesystem::path tempPath = currentPath;
-        while (!tempPath.empty() && tempPath.filename() != "Cpp-project") {
-            tempPath = tempPath.parent_path();
-        }
-        if (!tempPath.empty()) {
-            projectRoot = tempPath;
-        }
-    }
-    
-    std::string baseDir = (projectRoot / "data").string();
+    // Use the provided data directory or default to "data/"
+    std::string baseDir = dataDir;
     if (!baseDir.empty() && baseDir.back() != '/' && baseDir.back() != '\\') {
         baseDir += "/";
     }
@@ -57,9 +54,7 @@ FileHandler::FileHandler(const std::string& dataDir) {
     std::filesystem::path absWalletsPath = std::filesystem::absolute(walletsFilePath);
     std::filesystem::path absTransactionsPath = std::filesystem::absolute(transactionsFilePath);
 
-    LOG_INFO("FileHandler initialized with absolute paths:");
-    LOG_INFO("Current path: " + currentPath.string());
-    LOG_INFO("Project root: " + projectRoot.string());
+    LOG_INFO("FileHandler initialized with paths:");
     LOG_INFO("Users file: " + absUsersPath.string());
     LOG_INFO("Wallets file: " + absWalletsPath.string());
     LOG_INFO("Transactions file: " + absTransactionsPath.string());
@@ -77,10 +72,8 @@ bool FileHandler::loadUsers(std::vector<User>& users) {
     if (!file.is_open()) {
         // If file doesn't exist, create it with an empty array
         ensureDirectoryExists(usersFilePath);
-        std::ofstream newFile(usersFilePath);
-        if (newFile.is_open()) {
-            newFile << "[]";
-            newFile.close();
+        if (!createEmptyJsonFile(usersFilePath)) {
+            return false;
         }
         return true; // Not an error if file simply doesn't exist yet
     }
@@ -89,13 +82,13 @@ bool FileHandler::loadUsers(std::vector<User>& users) {
         json j;
         file >> j; 
         
-        // Assuming the top level is an array of users
         if (j.is_array()) {
-            users = j.get<std::vector<User>>(); // Uses from_json for User
-        } else if (j.is_null()) { // Handle empty file or file with just 'null'
+            users = j.get<std::vector<User>>();
+        } else if (j.is_null()) {
             // Empty file is not an error
+            LOG_INFO("Users file is empty or contains null");
         } else {
-            LOG_ERROR("Users file does not contain a valid JSON array.");
+            LOG_ERROR("Users file does not contain a valid JSON array");
             return false;
         }
     } catch (json::parse_error& e) {
@@ -138,28 +131,34 @@ bool FileHandler::loadWallets(std::vector<Wallet>& wallets) {
     wallets.clear();
     std::ifstream file(walletsFilePath);
     if (!file.is_open()) {
-        std::cerr << "[FileHandler] INFO: Wallets file (" << walletsFilePath << ") not found. Starting with empty wallet list." << std::endl;
+        // If file doesn't exist, create it with an empty array
+        ensureDirectoryExists(walletsFilePath);
+        if (!createEmptyJsonFile(walletsFilePath)) {
+            return false;
+        }
+        LOG_INFO("Created new empty wallets file");
         return true;
     }
+
     try {
         json j;
         file >> j;
         if (j.is_array()) {
             wallets = j.get<std::vector<Wallet>>();
         } else if (j.is_null()) {
-             std::cerr << "[FileHandler] INFO: Wallets file (" << walletsFilePath << ") is null or empty." << std::endl;
+            LOG_INFO("Wallets file is empty or contains null");
         } else {
-            std::cerr << "[FileHandler] ERROR: Wallets file (" << walletsFilePath << ") does not contain a valid JSON array." << std::endl;
+            LOG_ERROR("Wallets file does not contain a valid JSON array");
             return false;
         }
     } catch (json::parse_error& e) {
-        std::cerr << "[FileHandler] ERROR: JSON parse error in wallets file: " << e.what() << std::endl;
+        LOG_ERROR("JSON parse error in wallets file: " + std::string(e.what()));
         return false;
     } catch (json::type_error& e) {
-        std::cerr << "[FileHandler] ERROR: JSON type error in wallets file: " << e.what() << std::endl;
+        LOG_ERROR("JSON type error in wallets file: " + std::string(e.what()));
         return false;
     } catch (std::exception& e) {
-        std::cerr << "[FileHandler] ERROR: Generic error loading wallets: " << e.what() << std::endl;
+        LOG_ERROR("Error loading wallets: " + std::string(e.what()));
         return false;
     }
     file.close();
@@ -194,28 +193,34 @@ bool FileHandler::loadTransactions(std::vector<Transaction>& transactions) {
     transactions.clear();
     std::ifstream file(transactionsFilePath);
     if (!file.is_open()) {
-        std::cerr << "[FileHandler] INFO: Transactions file (" << transactionsFilePath << ") not found. Starting with empty transaction list." << std::endl;
+        // If file doesn't exist, create it with an empty array
+        ensureDirectoryExists(transactionsFilePath);
+        if (!createEmptyJsonFile(transactionsFilePath)) {
+            return false;
+        }
+        LOG_INFO("Created new empty transactions file");
         return true;
     }
+
     try {
         json j;
         file >> j;
         if (j.is_array()) {
             transactions = j.get<std::vector<Transaction>>();
         } else if (j.is_null()) {
-            std::cerr << "[FileHandler] INFO: Transactions file (" << transactionsFilePath << ") is null or empty." << std::endl;
+            LOG_INFO("Transactions file is empty or contains null");
         } else {
-            std::cerr << "[FileHandler] ERROR: Transactions file (" << transactionsFilePath << ") does not contain a valid JSON array." << std::endl;
+            LOG_ERROR("Transactions file does not contain a valid JSON array");
             return false;
         }
     } catch (json::parse_error& e) {
-        std::cerr << "[FileHandler] ERROR: JSON parse error in transactions file: " << e.what() << std::endl;
+        LOG_ERROR("JSON parse error in transactions file: " + std::string(e.what()));
         return false;
     } catch (json::type_error& e) {
-        std::cerr << "[FileHandler] ERROR: JSON type error in transactions file: " << e.what() << std::endl;
+        LOG_ERROR("JSON type error in transactions file: " + std::string(e.what()));
         return false;
     } catch (std::exception& e) {
-        std::cerr << "[FileHandler] ERROR: Generic error loading transactions: " << e.what() << std::endl;
+        LOG_ERROR("Error loading transactions: " + std::string(e.what()));
         return false;
     }
     file.close();

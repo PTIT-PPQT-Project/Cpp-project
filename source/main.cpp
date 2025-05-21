@@ -73,7 +73,7 @@ int main() {
 
     // 3. Khởi tạo các file dữ liệu nếu chưa tồn tại
     LOG_INFO("Kiem tra va khoi tao du lieu...");
-    if (!DataInitializer::initializeDataFiles(fileHandler)) {
+    if (!DataInitializer::initializeDataFiles()) {
         LOG_ERROR("Khong the khoi tao du lieu. Ung dung se ket thuc.");
         return 1;
     }

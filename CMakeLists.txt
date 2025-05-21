@@ -46,12 +46,9 @@ target_link_libraries(reward_system
     nlohmann_json::nlohmann_json
 )
 
-# Create data and logs directories
+# Create data and logs directories in root
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/data)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/logs)
-
-# Copy data files to build directory
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 # Set output directories
 set_target_properties(reward_system PROPERTIES

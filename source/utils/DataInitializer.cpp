@@ -1,15 +1,27 @@
-#include "utils/DataInitializer.hpp"
-#include "utils/Logger.hpp"
+#include "../../include/utils/DataInitializer.hpp"
+#include "../../include/utils/Logger.hpp"
 #include <filesystem>
 #include <fstream>
 
 namespace fs = std::filesystem;
 
-bool DataInitializer::createDataDirectory() {
+bool DataInitializer::createEmptyJsonFile(const std::string& filePath) {
+    std::ofstream file(filePath);
+    if (file.is_open()) {
+        file << "[]";
+        file.close();
+        LOG_INFO("Created empty JSON file: " + filePath);
+        return true;
+    }
+    LOG_ERROR("Failed to create empty JSON file: " + filePath);
+    return false;
+}
+
+bool DataInitializer::createDataDirectory(const std::string& dataDir) {
     try {
-        if (!fs::exists("data")) {
-            fs::create_directory("data");
-            LOG_INFO("Created data directory");
+        if (!std::filesystem::exists(dataDir)) {
+            std::filesystem::create_directories(dataDir);
+            LOG_INFO("Created data directory: " + dataDir);
         }
         return true;
     } catch (const std::exception& e) {
@@ -18,51 +30,25 @@ bool DataInitializer::createDataDirectory() {
     }
 }
 
-bool DataInitializer::initializeUsersFile(FileHandler& fileHandler) {
-    std::vector<User> users;
-    if (!fileHandler.loadUsers(users)) {
-        // Create empty users file
-        if (!fileHandler.saveUsers(users)) {
-            LOG_ERROR("Failed to initialize users.json");
-            return false;
-        }
-        LOG_INFO("Initialized empty users.json");
-    }
-    return true;
+bool DataInitializer::initializeJsonFiles(const std::string& dataDir) {
+    std::string usersFile = dataDir + "users.json";
+    std::string walletsFile = dataDir + "wallets.json";
+    std::string transactionsFile = dataDir + "transactions.json";
+
+    bool success = true;
+    success &= createEmptyJsonFile(usersFile);
+    success &= createEmptyJsonFile(walletsFile);
+    success &= createEmptyJsonFile(transactionsFile);
+
+    return success;
 }
 
-bool DataInitializer::initializeWalletsFile(FileHandler& fileHandler) {
-    std::vector<Wallet> wallets;
-    if (!fileHandler.loadWallets(wallets)) {
-        // Create empty wallets file
-        if (!fileHandler.saveWallets(wallets)) {
-            LOG_ERROR("Failed to initialize wallets.json");
-            return false;
-        }
-        LOG_INFO("Initialized empty wallets.json");
-    }
-    return true;
-}
-
-bool DataInitializer::initializeTransactionsFile(FileHandler& fileHandler) {
-    std::vector<Transaction> transactions;
-    if (!fileHandler.loadTransactions(transactions)) {
-        // Create empty transactions file
-        if (!fileHandler.saveTransactions(transactions)) {
-            LOG_ERROR("Failed to initialize transactions.json");
-            return false;
-        }
-        LOG_INFO("Initialized empty transactions.json");
-    }
-    return true;
-}
-
-bool DataInitializer::initializeDataFiles(FileHandler& fileHandler) {
-    if (!createDataDirectory()) {
+bool DataInitializer::initializeDataFiles(const std::string& dataDir) {
+    // Ensure the data directory exists
+    if (!createDataDirectory(dataDir)) {
         return false;
     }
 
-    return initializeUsersFile(fileHandler) &&
-           initializeWalletsFile(fileHandler) &&
-           initializeTransactionsFile(fileHandler);
+    // Initialize all JSON files
+    return initializeJsonFiles(dataDir);
 } 
