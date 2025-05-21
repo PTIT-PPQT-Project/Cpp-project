@@ -12,8 +12,10 @@ Hệ thống Quản lý Điểm Thưởng là một ứng dụng C++ được th
 - Phân quyền người dùng (Admin/User)
 
 ## 2. Thành Viên Dự Án
-
-[Để trống - Sẽ cập nhật sau]
+Nguyễn Đức Phương - pn17020@gmail.com - K24DTCN218
+Lê Đức Minh Quân - qu4nl3@gmail.com - K24DTCN220
+Ngô Thanh Thảo - nthao0844@gmail.com - K24DTCN
+Hồ Hữu Phước - phuoc.anonydev2k3@gmail.com - K24DTCN217
 
 ## 3. Phân Tích và Đặc Tả Chức Năng
 
