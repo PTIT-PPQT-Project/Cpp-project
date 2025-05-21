@@ -32,6 +32,7 @@ set(SOURCES
     source/utils/InputValidator.cpp
     source/utils/Logger.cpp
     source/utils/TimeUtils.cpp
+    source/utils/DataInitializer.cpp
 )
 
 # Create executable

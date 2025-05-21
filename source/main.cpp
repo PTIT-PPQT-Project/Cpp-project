@@ -18,6 +18,7 @@
 #include "../include/utils/InputValidator.hpp"
 #include "../include/utils/Logger.hpp"
 #include "../include/utils/TimeUtils.hpp"
+#include "../include/utils/DataInitializer.hpp"
 
 // Services
 #include "../include/services/OTPService.hpp"   // <<< ENSURE THESE ARE PRESENT AND CORRECT
@@ -58,9 +59,7 @@ void pauseScreen();
 
 int main() {
     // 1. Khởi tạo Logger
-    // Cấu hình logger một lần (có thể đặt tên file log khác hoặc mức log khác)
-    // Logger sẽ tự tạo thư mục "logs" nếu chưa có, dựa vào EnsureDirectoryForFileExists
-    Logger::getInstance("logs/app.log", LogLevel::INFO, LogLevel::DEBUG);
+    Logger::getInstance("logs/app.log", LogLevel::INFO, LogLevel::DEBUG, false);
     LOG_INFO("Ung dung khoi dong.");
 
     // 2. Khởi tạo các Utilities và Services
@@ -72,11 +71,17 @@ int main() {
     WalletService walletService(g_users, g_wallets, g_transactions, fileHandler, otpService, hashUtils);
     AdminService adminService(g_users, authService, userService, walletService);
 
-    // 3. Tải dữ liệu ban đầu
+    // 3. Khởi tạo các file dữ liệu nếu chưa tồn tại
+    LOG_INFO("Kiem tra va khoi tao du lieu...");
+    if (!DataInitializer::initializeDataFiles(fileHandler)) {
+        LOG_ERROR("Khong the khoi tao du lieu. Ung dung se ket thuc.");
+        return 1;
+    }
+
+    // 4. Tải dữ liệu ban đầu
     LOG_INFO("Dang tai du lieu...");
     if (!fileHandler.loadUsers(g_users)) {
         LOG_ERROR("Khong the tai du lieu nguoi dung. Co the file bi loi hoac khong ton tai.");
-        // Có thể quyết định dừng ứng dụng ở đây nếu dữ liệu người dùng là thiết yếu
     } else {
         LOG_INFO("Tai " + std::to_string(g_users.size()) + " nguoi dung thanh cong.");
     }
@@ -542,7 +547,7 @@ void handleUserActions(UserService& userService, AuthService& authService, Walle
                 pauseScreen();
                 break;
             }
-            std::string receiverUsername = getStringInput("Nhap ten dang nhap nguoi nhan (hoac 'b' de quay lai): ");
+            std::string receiverUsername = getStringInput("Nhap ten dang nhap cua nguoi nhan (hoac 'b' de quay lai): ");
             if (receiverUsername == "b") {
                 std::cout << "Quay lai menu truoc..." << std::endl;
                 pauseScreen();

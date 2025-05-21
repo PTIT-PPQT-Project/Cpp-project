@@ -70,8 +70,10 @@ CMakeFiles/**/compiler_depend.make
 logs/
 *.log
 
-# Data files (uncomment if you want to ignore data files)
-# data/*.json
+# Data files
+data/transactions.json
+data/users.json
+data/wallets.json
 
 # Dependencies
 vcpkg/
