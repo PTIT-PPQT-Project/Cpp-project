@@ -265,7 +265,7 @@ void handleRegistration(AuthService& authService, WalletService& walletService) 
     std::string username, password, fullName, email, phone;
     
     while(true){
-        username = getStringInput("Ten dang nhap (3-20 ky tu, alphanumeric, _): ");
+        username = getStringInput("Ten dang nhap (3-20 ky tu, chu cai, so, dau _): ");
         if(!InputValidator::isValidUsername(username)) {
             std::cout << "Ten dang nhap khong hop le.\n";
             continue;

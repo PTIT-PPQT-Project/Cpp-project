@@ -82,5 +82,29 @@
         "status": "Active",
         "userId": "996d5e91-1106-6744-47c5-bb011ce5c929",
         "username": "nthao"
+    },
+    {
+        "email": "pn17020@gmail.com",
+        "fullName": "Phuong Nguyen",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "rctlQhFH$khbyyAtdemo_hash$e9d26a2b",
+        "phoneNumber": "0912348284",
+        "role": "RegularUser",
+        "status": "Active",
+        "userId": "92e6bb5c-e92e-c041-fe78-174af44937e1",
+        "username": "phuong_admin4"
+    },
+    {
+        "email": "phuocho12@gmail.com",
+        "fullName": "phuoc ho",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "1nnm^wQmQgzaO^vvdemo_hash$892bd4e5",
+        "phoneNumber": "0912382843",
+        "role": "RegularUser",
+        "status": "Active",
+        "userId": "8f90d330-38c5-ed36-24e9-522b938fd36b",
+        "username": "phuoc"
     }
 ]

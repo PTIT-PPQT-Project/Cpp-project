@@ -67,6 +67,16 @@ CMAKE_BINARY_DIR = C:\Repositories\Cpp-project
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running tests..."
+	"C:\Program Files\CMake\bin\ctest.exe" $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+.PHONY : test/fast
+
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running CMake cache editor..."
@@ -86,6 +96,51 @@ rebuild_cache:
 # Special rule for the target rebuild_cache
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+.PHONY : list_install_components/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Install the project..."
+	"C:\Program Files\CMake\bin\cmake.exe" -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Install the project..."
+	"C:\Program Files\CMake\bin\cmake.exe" -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing only the local directory..."
+	"C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing only the local directory..."
+	"C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing the project stripped..."
+	"C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing the project stripped..."
+	"C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -119,24 +174,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named RewardSystemApp
+# Target rules for targets named reward_system
 
 # Build rule for target.
-RewardSystemApp: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 RewardSystemApp
-.PHONY : RewardSystemApp
+reward_system: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 reward_system
+.PHONY : reward_system
 
 # fast build rule for target.
-RewardSystemApp/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/build
-.PHONY : RewardSystemApp/fast
+reward_system/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/build
+.PHONY : reward_system/fast
 
 source/main.obj: source/main.cpp.obj
 .PHONY : source/main.obj
 
 # target to build an object file
 source/main.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/main.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/main.cpp.obj
 .PHONY : source/main.cpp.obj
 
 source/main.i: source/main.cpp.i
@@ -144,7 +199,7 @@ source/main.i: source/main.cpp.i
 
 # target to preprocess a source file
 source/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/main.cpp.i
 .PHONY : source/main.cpp.i
 
 source/main.s: source/main.cpp.s
@@ -152,7 +207,7 @@ source/main.s: source/main.cpp.s
 
 # target to generate assembly for a file
 source/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/main.cpp.s
 .PHONY : source/main.cpp.s
 
 source/models/Transaction.obj: source/models/Transaction.cpp.obj
@@ -160,7 +215,7 @@ source/models/Transaction.obj: source/models/Transaction.cpp.obj
 
 # target to build an object file
 source/models/Transaction.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/models/Transaction.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/models/Transaction.cpp.obj
 .PHONY : source/models/Transaction.cpp.obj
 
 source/models/Transaction.i: source/models/Transaction.cpp.i
@@ -168,7 +223,7 @@ source/models/Transaction.i: source/models/Transaction.cpp.i
 
 # target to preprocess a source file
 source/models/Transaction.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/models/Transaction.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/models/Transaction.cpp.i
 .PHONY : source/models/Transaction.cpp.i
 
 source/models/Transaction.s: source/models/Transaction.cpp.s
@@ -176,7 +231,7 @@ source/models/Transaction.s: source/models/Transaction.cpp.s
 
 # target to generate assembly for a file
 source/models/Transaction.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/models/Transaction.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/models/Transaction.cpp.s
 .PHONY : source/models/Transaction.cpp.s
 
 source/models/User.obj: source/models/User.cpp.obj
@@ -184,7 +239,7 @@ source/models/User.obj: source/models/User.cpp.obj
 
 # target to build an object file
 source/models/User.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/models/User.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/models/User.cpp.obj
 .PHONY : source/models/User.cpp.obj
 
 source/models/User.i: source/models/User.cpp.i
@@ -192,7 +247,7 @@ source/models/User.i: source/models/User.cpp.i
 
 # target to preprocess a source file
 source/models/User.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/models/User.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/models/User.cpp.i
 .PHONY : source/models/User.cpp.i
 
 source/models/User.s: source/models/User.cpp.s
@@ -200,7 +255,7 @@ source/models/User.s: source/models/User.cpp.s
 
 # target to generate assembly for a file
 source/models/User.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/models/User.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/models/User.cpp.s
 .PHONY : source/models/User.cpp.s
 
 source/models/Wallet.obj: source/models/Wallet.cpp.obj
@@ -208,7 +263,7 @@ source/models/Wallet.obj: source/models/Wallet.cpp.obj
 
 # target to build an object file
 source/models/Wallet.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/models/Wallet.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/models/Wallet.cpp.obj
 .PHONY : source/models/Wallet.cpp.obj
 
 source/models/Wallet.i: source/models/Wallet.cpp.i
@@ -216,7 +271,7 @@ source/models/Wallet.i: source/models/Wallet.cpp.i
 
 # target to preprocess a source file
 source/models/Wallet.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/models/Wallet.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/models/Wallet.cpp.i
 .PHONY : source/models/Wallet.cpp.i
 
 source/models/Wallet.s: source/models/Wallet.cpp.s
@@ -224,7 +279,7 @@ source/models/Wallet.s: source/models/Wallet.cpp.s
 
 # target to generate assembly for a file
 source/models/Wallet.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/models/Wallet.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/models/Wallet.cpp.s
 .PHONY : source/models/Wallet.cpp.s
 
 source/services/AdminService.obj: source/services/AdminService.cpp.obj
@@ -232,7 +287,7 @@ source/services/AdminService.obj: source/services/AdminService.cpp.obj
 
 # target to build an object file
 source/services/AdminService.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/services/AdminService.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/services/AdminService.cpp.obj
 .PHONY : source/services/AdminService.cpp.obj
 
 source/services/AdminService.i: source/services/AdminService.cpp.i
@@ -240,7 +295,7 @@ source/services/AdminService.i: source/services/AdminService.cpp.i
 
 # target to preprocess a source file
 source/services/AdminService.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/services/AdminService.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/services/AdminService.cpp.i
 .PHONY : source/services/AdminService.cpp.i
 
 source/services/AdminService.s: source/services/AdminService.cpp.s
@@ -248,7 +303,7 @@ source/services/AdminService.s: source/services/AdminService.cpp.s
 
 # target to generate assembly for a file
 source/services/AdminService.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/services/AdminService.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/services/AdminService.cpp.s
 .PHONY : source/services/AdminService.cpp.s
 
 source/services/AuthService.obj: source/services/AuthService.cpp.obj
@@ -256,7 +311,7 @@ source/services/AuthService.obj: source/services/AuthService.cpp.obj
 
 # target to build an object file
 source/services/AuthService.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/services/AuthService.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/services/AuthService.cpp.obj
 .PHONY : source/services/AuthService.cpp.obj
 
 source/services/AuthService.i: source/services/AuthService.cpp.i
@@ -264,7 +319,7 @@ source/services/AuthService.i: source/services/AuthService.cpp.i
 
 # target to preprocess a source file
 source/services/AuthService.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/services/AuthService.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/services/AuthService.cpp.i
 .PHONY : source/services/AuthService.cpp.i
 
 source/services/AuthService.s: source/services/AuthService.cpp.s
@@ -272,7 +327,7 @@ source/services/AuthService.s: source/services/AuthService.cpp.s
 
 # target to generate assembly for a file
 source/services/AuthService.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/services/AuthService.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/services/AuthService.cpp.s
 .PHONY : source/services/AuthService.cpp.s
 
 source/services/OTPService.obj: source/services/OTPService.cpp.obj
@@ -280,7 +335,7 @@ source/services/OTPService.obj: source/services/OTPService.cpp.obj
 
 # target to build an object file
 source/services/OTPService.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/services/OTPService.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/services/OTPService.cpp.obj
 .PHONY : source/services/OTPService.cpp.obj
 
 source/services/OTPService.i: source/services/OTPService.cpp.i
@@ -288,7 +343,7 @@ source/services/OTPService.i: source/services/OTPService.cpp.i
 
 # target to preprocess a source file
 source/services/OTPService.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/services/OTPService.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/services/OTPService.cpp.i
 .PHONY : source/services/OTPService.cpp.i
 
 source/services/OTPService.s: source/services/OTPService.cpp.s
@@ -296,7 +351,7 @@ source/services/OTPService.s: source/services/OTPService.cpp.s
 
 # target to generate assembly for a file
 source/services/OTPService.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/services/OTPService.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/services/OTPService.cpp.s
 .PHONY : source/services/OTPService.cpp.s
 
 source/services/UserService.obj: source/services/UserService.cpp.obj
@@ -304,7 +359,7 @@ source/services/UserService.obj: source/services/UserService.cpp.obj
 
 # target to build an object file
 source/services/UserService.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/services/UserService.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/services/UserService.cpp.obj
 .PHONY : source/services/UserService.cpp.obj
 
 source/services/UserService.i: source/services/UserService.cpp.i
@@ -312,7 +367,7 @@ source/services/UserService.i: source/services/UserService.cpp.i
 
 # target to preprocess a source file
 source/services/UserService.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/services/UserService.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/services/UserService.cpp.i
 .PHONY : source/services/UserService.cpp.i
 
 source/services/UserService.s: source/services/UserService.cpp.s
@@ -320,7 +375,7 @@ source/services/UserService.s: source/services/UserService.cpp.s
 
 # target to generate assembly for a file
 source/services/UserService.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/services/UserService.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/services/UserService.cpp.s
 .PHONY : source/services/UserService.cpp.s
 
 source/services/WalletService.obj: source/services/WalletService.cpp.obj
@@ -328,7 +383,7 @@ source/services/WalletService.obj: source/services/WalletService.cpp.obj
 
 # target to build an object file
 source/services/WalletService.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/services/WalletService.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/services/WalletService.cpp.obj
 .PHONY : source/services/WalletService.cpp.obj
 
 source/services/WalletService.i: source/services/WalletService.cpp.i
@@ -336,7 +391,7 @@ source/services/WalletService.i: source/services/WalletService.cpp.i
 
 # target to preprocess a source file
 source/services/WalletService.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/services/WalletService.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/services/WalletService.cpp.i
 .PHONY : source/services/WalletService.cpp.i
 
 source/services/WalletService.s: source/services/WalletService.cpp.s
@@ -344,7 +399,7 @@ source/services/WalletService.s: source/services/WalletService.cpp.s
 
 # target to generate assembly for a file
 source/services/WalletService.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/services/WalletService.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/services/WalletService.cpp.s
 .PHONY : source/services/WalletService.cpp.s
 
 source/utils/FileHandler.obj: source/utils/FileHandler.cpp.obj
@@ -352,7 +407,7 @@ source/utils/FileHandler.obj: source/utils/FileHandler.cpp.obj
 
 # target to build an object file
 source/utils/FileHandler.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/utils/FileHandler.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/utils/FileHandler.cpp.obj
 .PHONY : source/utils/FileHandler.cpp.obj
 
 source/utils/FileHandler.i: source/utils/FileHandler.cpp.i
@@ -360,7 +415,7 @@ source/utils/FileHandler.i: source/utils/FileHandler.cpp.i
 
 # target to preprocess a source file
 source/utils/FileHandler.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/utils/FileHandler.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/utils/FileHandler.cpp.i
 .PHONY : source/utils/FileHandler.cpp.i
 
 source/utils/FileHandler.s: source/utils/FileHandler.cpp.s
@@ -368,7 +423,7 @@ source/utils/FileHandler.s: source/utils/FileHandler.cpp.s
 
 # target to generate assembly for a file
 source/utils/FileHandler.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/utils/FileHandler.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/utils/FileHandler.cpp.s
 .PHONY : source/utils/FileHandler.cpp.s
 
 source/utils/HashUtils.obj: source/utils/HashUtils.cpp.obj
@@ -376,7 +431,7 @@ source/utils/HashUtils.obj: source/utils/HashUtils.cpp.obj
 
 # target to build an object file
 source/utils/HashUtils.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/utils/HashUtils.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/utils/HashUtils.cpp.obj
 .PHONY : source/utils/HashUtils.cpp.obj
 
 source/utils/HashUtils.i: source/utils/HashUtils.cpp.i
@@ -384,7 +439,7 @@ source/utils/HashUtils.i: source/utils/HashUtils.cpp.i
 
 # target to preprocess a source file
 source/utils/HashUtils.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/utils/HashUtils.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/utils/HashUtils.cpp.i
 .PHONY : source/utils/HashUtils.cpp.i
 
 source/utils/HashUtils.s: source/utils/HashUtils.cpp.s
@@ -392,7 +447,7 @@ source/utils/HashUtils.s: source/utils/HashUtils.cpp.s
 
 # target to generate assembly for a file
 source/utils/HashUtils.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/utils/HashUtils.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/utils/HashUtils.cpp.s
 .PHONY : source/utils/HashUtils.cpp.s
 
 source/utils/InputValidator.obj: source/utils/InputValidator.cpp.obj
@@ -400,7 +455,7 @@ source/utils/InputValidator.obj: source/utils/InputValidator.cpp.obj
 
 # target to build an object file
 source/utils/InputValidator.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/utils/InputValidator.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/utils/InputValidator.cpp.obj
 .PHONY : source/utils/InputValidator.cpp.obj
 
 source/utils/InputValidator.i: source/utils/InputValidator.cpp.i
@@ -408,7 +463,7 @@ source/utils/InputValidator.i: source/utils/InputValidator.cpp.i
 
 # target to preprocess a source file
 source/utils/InputValidator.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/utils/InputValidator.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/utils/InputValidator.cpp.i
 .PHONY : source/utils/InputValidator.cpp.i
 
 source/utils/InputValidator.s: source/utils/InputValidator.cpp.s
@@ -416,7 +471,7 @@ source/utils/InputValidator.s: source/utils/InputValidator.cpp.s
 
 # target to generate assembly for a file
 source/utils/InputValidator.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/utils/InputValidator.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/utils/InputValidator.cpp.s
 .PHONY : source/utils/InputValidator.cpp.s
 
 source/utils/Logger.obj: source/utils/Logger.cpp.obj
@@ -424,7 +479,7 @@ source/utils/Logger.obj: source/utils/Logger.cpp.obj
 
 # target to build an object file
 source/utils/Logger.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/utils/Logger.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/utils/Logger.cpp.obj
 .PHONY : source/utils/Logger.cpp.obj
 
 source/utils/Logger.i: source/utils/Logger.cpp.i
@@ -432,7 +487,7 @@ source/utils/Logger.i: source/utils/Logger.cpp.i
 
 # target to preprocess a source file
 source/utils/Logger.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/utils/Logger.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/utils/Logger.cpp.i
 .PHONY : source/utils/Logger.cpp.i
 
 source/utils/Logger.s: source/utils/Logger.cpp.s
@@ -440,7 +495,7 @@ source/utils/Logger.s: source/utils/Logger.cpp.s
 
 # target to generate assembly for a file
 source/utils/Logger.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/utils/Logger.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/utils/Logger.cpp.s
 .PHONY : source/utils/Logger.cpp.s
 
 source/utils/TimeUtils.obj: source/utils/TimeUtils.cpp.obj
@@ -448,7 +503,7 @@ source/utils/TimeUtils.obj: source/utils/TimeUtils.cpp.obj
 
 # target to build an object file
 source/utils/TimeUtils.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/utils/TimeUtils.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/utils/TimeUtils.cpp.obj
 .PHONY : source/utils/TimeUtils.cpp.obj
 
 source/utils/TimeUtils.i: source/utils/TimeUtils.cpp.i
@@ -456,7 +511,7 @@ source/utils/TimeUtils.i: source/utils/TimeUtils.cpp.i
 
 # target to preprocess a source file
 source/utils/TimeUtils.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/utils/TimeUtils.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/utils/TimeUtils.cpp.i
 .PHONY : source/utils/TimeUtils.cpp.i
 
 source/utils/TimeUtils.s: source/utils/TimeUtils.cpp.s
@@ -464,7 +519,7 @@ source/utils/TimeUtils.s: source/utils/TimeUtils.cpp.s
 
 # target to generate assembly for a file
 source/utils/TimeUtils.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\RewardSystemApp.dir\build.make CMakeFiles/RewardSystemApp.dir/source/utils/TimeUtils.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\reward_system.dir\build.make CMakeFiles/reward_system.dir/source/utils/TimeUtils.cpp.s
 .PHONY : source/utils/TimeUtils.cpp.s
 
 # Help Target
@@ -474,8 +529,13 @@ help:
 	@echo ... clean
 	@echo ... depend
 	@echo ... edit_cache
+	@echo ... install
+	@echo ... install/local
+	@echo ... install/strip
+	@echo ... list_install_components
 	@echo ... rebuild_cache
-	@echo ... RewardSystemApp
+	@echo ... test
+	@echo ... reward_system
 	@echo ... source/main.obj
 	@echo ... source/main.i
 	@echo ... source/main.s
