@@ -54,7 +54,7 @@ bool AuthService::registerUser(const std::string& username, const std::string& p
     newUser.email = email;
     newUser.phoneNumber = phoneNumber;
     newUser.role = role;
-    newUser.status = AccountStatus::NotActivated;
+    newUser.status = AccountStatus::Active;
     newUser.isTemporaryPassword = false;
 
     LOG_INFO("Creating new user '" + username + "' with role: " + User::roleToString(role));
@@ -183,7 +183,7 @@ std::string AuthService::createAccountWithTemporaryPassword(const std::string& u
     newUser.email = email;
     newUser.phoneNumber = phoneNumber;
     newUser.role = role;
-    newUser.status = AccountStatus::NotActivated;
+    newUser.status = AccountStatus::Active;
     newUser.isTemporaryPassword = true;
 
     // Add to users list
@@ -295,4 +295,8 @@ bool AuthService::activateAccount(const std::string& username, std::string& outM
         outMessage = "That bai: Loi khi luu trang thai tai khoan.";
         return false;
     }
+}
+bool AuthService::isUsernameExists(const std::string& username) const {
+    return std::find_if(users.begin(), users.end(),
+        [&username](const User& u) { return u.username == username; }) != users.end();
 }

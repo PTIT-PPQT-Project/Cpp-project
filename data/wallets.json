@@ -33,5 +33,19 @@
         "lastUpdateTimestamp": 1747776206,
         "userId": "22ecc0f4-1190-d9a4-49b4-e0e10e358bf",
         "walletId": "WLT-23045c50-2f7"
+    },
+    {
+        "balance": 100.0,
+        "creationTimestamp": 1747801748,
+        "lastUpdateTimestamp": 1747802640,
+        "userId": "f52fa3b-fde4-ca14-d6e1-839bba4ccf0f",
+        "walletId": "WLT-f531729-b049"
+    },
+    {
+        "balance": 400.0,
+        "creationTimestamp": 1747802409,
+        "lastUpdateTimestamp": 1747802640,
+        "userId": "996d5e91-1106-6744-47c5-bb011ce5c929",
+        "walletId": "WLT-996d739e-8d5"
     }
 ]

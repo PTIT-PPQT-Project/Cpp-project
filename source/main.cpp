@@ -266,8 +266,18 @@ void handleRegistration(AuthService& authService, WalletService& walletService) 
     
     while(true){
         username = getStringInput("Ten dang nhap (3-20 ky tu, alphanumeric, _): ");
-        if(InputValidator::isValidUsername(username)) break;
-        std::cout << "Ten dang nhap khong hop le.\n";
+        if(!InputValidator::isValidUsername(username)) {
+            std::cout << "Ten dang nhap khong hop le.\n";
+            continue;
+        }
+        
+        
+        if(authService.isUsernameExists(username)) {
+            std::cout << "Ten dang nhap da ton tai. Vui long chon ten khac.\n";
+            continue;
+        }
+        
+        break;
     }
     while(true){
         password = getStringInput("Mat khau (min 8 ky tu, co chu hoa, thuong, so, ky tu dac biet): ");
