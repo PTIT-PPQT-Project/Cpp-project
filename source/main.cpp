@@ -262,15 +262,20 @@ void displayMainMenu() {
 void handleRegistration(AuthService& authService, WalletService& walletService) {
     clearScreen();
     std::cout << "--- Dang Ky Tai Khoan ---" << std::endl;
+    std::cout << "Nhan 'b' de quay lai menu chinh" << std::endl;
     std::string username, password, fullName, email, phone;
     
     while(true){
         username = getStringInput("Ten dang nhap (3-20 ky tu, chu cai, so, dau _): ");
+        if(username == "b") {
+            std::cout << "Quay lai menu chinh..." << std::endl;
+            pauseScreen();
+            return;
+        }
         if(!InputValidator::isValidUsername(username)) {
             std::cout << "Ten dang nhap khong hop le.\n";
             continue;
         }
-        
         
         if(authService.isUsernameExists(username)) {
             std::cout << "Ten dang nhap da ton tai. Vui long chon ten khac.\n";
@@ -281,21 +286,40 @@ void handleRegistration(AuthService& authService, WalletService& walletService) 
     }
     while(true){
         password = getStringInput("Mat khau (min 8 ky tu, co chu hoa, thuong, so, ky tu dac biet): ");
+        if(password == "b") {
+            std::cout << "Quay lai menu chinh..." << std::endl;
+            pauseScreen();
+            return;
+        }
         if(InputValidator::isValidPassword(password)) break;
         std::cout << "Mat khau khong du manh.\n";
     }
     fullName = getStringInput("Ho ten day du: ");
-     while(true){
+    if(fullName == "b") {
+        std::cout << "Quay lai menu chinh..." << std::endl;
+        pauseScreen();
+        return;
+    }
+    while(true){
         email = getStringInput("Email: ");
+        if(email == "b") {
+            std::cout << "Quay lai menu chinh..." << std::endl;
+            pauseScreen();
+            return;
+        }
         if(InputValidator::isValidEmail(email)) break;
         std::cout << "Email khong hop le.\n";
     }
     while(true){
         phone = getStringInput("So dien thoai: ");
+        if(phone == "b") {
+            std::cout << "Quay lai menu chinh..." << std::endl;
+            pauseScreen();
+            return;
+        }
         if(InputValidator::isValidPhoneNumber(phone)) break;
         std::cout << "So dien thoai khong hop le.\n";
     }
-
 
     std::string msg;
     if (authService.registerUser(username, password, fullName, email, phone, UserRole::RegularUser, msg)) {
@@ -321,8 +345,19 @@ void handleRegistration(AuthService& authService, WalletService& walletService) 
 void handleLogin(AuthService& authService) {
     clearScreen();
     std::cout << "--- Dang Nhap ---" << std::endl;
+    std::cout << "Nhan 'b' de quay lai menu chinh" << std::endl;
     std::string username = getStringInput("Ten dang nhap: ");
+    if(username == "b") {
+        std::cout << "Quay lai menu chinh..." << std::endl;
+        pauseScreen();
+        return;
+    }
     std::string password = getStringInput("Mat khau: ");
+    if(password == "b") {
+        std::cout << "Quay lai menu chinh..." << std::endl;
+        pauseScreen();
+        return;
+    }
     std::string msg;
     std::optional<User> userOpt = authService.loginUser(username, password, msg);
     if (userOpt) {
@@ -507,12 +542,20 @@ void handleUserActions(UserService& userService, AuthService& authService, Walle
                 pauseScreen();
                 break;
             }
-            std::string receiverWalletId = getStringInput("Nhap ID vi nguoi nhan (hoac 'b' de quay lai): ");
-            if (receiverWalletId == "b") {
+            std::string receiverUsername = getStringInput("Nhap ten dang nhap nguoi nhan (hoac 'b' de quay lai): ");
+            if (receiverUsername == "b") {
                 std::cout << "Quay lai menu truoc..." << std::endl;
                 pauseScreen();
                 break;
             }
+            
+            auto receiverWalletOpt = walletService.getWalletByUsername(receiverUsername);
+            if (!receiverWalletOpt) {
+                std::cout << "Loi: Khong tim thay vi cua nguoi nhan." << std::endl;
+                pauseScreen();
+                break;
+            }
+            
             double amount = getDoubleInput("Nhap so diem muon chuyen (hoac 0 de quay lai): ");
             if (amount == 0) {
                 std::cout << "Quay lai menu truoc..." << std::endl;
@@ -530,7 +573,8 @@ void handleUserActions(UserService& userService, AuthService& authService, Walle
                  }
             }
 
-            if (walletService.transferPoints(user.userId, senderWalletOpt.value().walletId, receiverWalletId, amount, otpCode, msg)) {
+            if (walletService.transferPoints(user.userId, senderWalletOpt.value().walletId, 
+                                          receiverWalletOpt.value().walletId, amount, otpCode, msg)) {
                 std::cout << "Thanh cong: " << msg << std::endl;
             } else {
                 std::cout << "That bai: " << msg << std::endl;

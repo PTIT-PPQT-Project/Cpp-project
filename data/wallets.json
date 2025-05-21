@@ -56,9 +56,9 @@
         "walletId": "WLT-930c432c-794"
     },
     {
-        "balance": 0.0,
+        "balance": 500000.0,
         "creationTimestamp": 1747813896,
-        "lastUpdateTimestamp": 1747813896,
+        "lastUpdateTimestamp": 1747814514,
         "userId": "8f90d330-38c5-ed36-24e9-522b938fd36b",
         "walletId": "WLT-8fa06ee4-384"
     }
