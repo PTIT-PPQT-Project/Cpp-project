@@ -1,7 +1,9 @@
 # Build directories
 build/
+build/**
 out/
 cmake-build-*/
+_deps/
 
 # Executable files
 *.exe
@@ -46,6 +48,16 @@ cmake_install.cmake
 Makefile
 *.cmake
 !CMakeLists.txt
+CMakeFiles/**/*.bin
+CMakeFiles/**/*.exe
+CMakeFiles/**/compiler_depend.*
+CMakeFiles/**/*.obj.d
+CMakeFiles/**/CMakeConfigureLog.yaml
+CMakeFiles/**/CMakeDetermineCompilerABI_*.bin
+CMakeFiles/**/CompilerIdC/a.exe
+CMakeFiles/**/CompilerIdCXX/a.exe
+CMakeFiles/**/compiler_depend.internal
+CMakeFiles/**/compiler_depend.make
 
 # IDE specific files
 .vs/
