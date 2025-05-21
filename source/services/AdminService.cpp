@@ -8,9 +8,9 @@ AdminService::AdminService(std::vector<User>& u_ref, AuthService& as_ref,
                            UserService& us_ref, WalletService& ws_ref)
     : users(u_ref), authService(as_ref), userService(us_ref), walletService(ws_ref) {}
 
-const std::vector<User>& AdminService::listAllUsers() const {
+std::vector<User> AdminService::listAllUsers() const {
     LOG_INFO("Admin len danh sach tat ca nguoi dung.");
-    return users; // Return const reference instead of copying
+    return users; // Return a copy of the users vector
 }
 
 bool AdminService::adminCreateUserAccount(const std::string& username, const std::string& fullName,

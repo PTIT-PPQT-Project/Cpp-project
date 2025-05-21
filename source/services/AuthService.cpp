@@ -364,11 +364,3 @@ std::optional<User*> AuthService::findUserByUsername(const std::string& username
     
     return &(*it); // Return pointer to the user in the vector
 }
-
-const FileHandler& AuthService::getFileHandler() const {
-    return fileHandler;
-}
-
-const OTPService& AuthService::getOtpService() const {
-    return otpService;
-}

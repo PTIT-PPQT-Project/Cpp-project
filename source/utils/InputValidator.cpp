@@ -66,7 +66,8 @@ bool InputValidator::isValidPhoneNumber(const std::string& phoneNumber) {
         return false;
     }
 
-    return std::all_of(cleaned.begin() + start_index, cleaned.end(), std::isdigit);
+    return std::all_of(cleaned.begin() + start_index, cleaned.end(), 
+                      static_cast<int(*)(int)>(std::isdigit));
 }
 
 bool InputValidator::isValidPositiveAmount(double amount) {
