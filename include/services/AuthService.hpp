@@ -43,6 +43,7 @@ public:
     bool updateUser(const User& userToUpdate, std::string& outMessage);
     
     bool activateAccount(const std::string& username, std::string& outMessage);
+    bool isUsernameExists(const std::string& username) const;
 
     // Made public for AdminService to use for OTP verification if needed, or AdminService can have its own OTPService ref.
     // Alternatively, OTP verification logic could be more centralized.

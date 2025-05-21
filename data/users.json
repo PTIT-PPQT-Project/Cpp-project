@@ -58,5 +58,29 @@
         "status": "Active",
         "userId": "22ecc0f4-1190-d9a4-49b4-e0e10e358bf",
         "username": "phuong_admin2"
+    },
+    {
+        "email": "ntt@ntt.com",
+        "fullName": "ntt",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "1KzsaC4bMES5cwukdemo_hash$9803286f",
+        "phoneNumber": "0123456789",
+        "role": "RegularUser",
+        "status": "NotActivated",
+        "userId": "f52fa3b-fde4-ca14-d6e1-839bba4ccf0f",
+        "username": "ntt"
+    },
+    {
+        "email": "nthao@nthao.com",
+        "fullName": "nthao",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "ROHYJLF7343X6HPC",
+        "passwordHash": "BVIEY&o2b0zYrQM1demo_hash$a4a79507",
+        "phoneNumber": "0123456789",
+        "role": "RegularUser",
+        "status": "Active",
+        "userId": "996d5e91-1106-6744-47c5-bb011ce5c929",
+        "username": "nthao"
     }
 ]

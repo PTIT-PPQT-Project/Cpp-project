@@ -174,7 +174,7 @@ bool AdminService::adminDepositToUserWallet(const std::string& adminUserId, cons
         return false;
     }
 
-    std::string description = "Admin chuyen khoan (" + adminUserId + "): " + "voi ly do:" reason;
+    std::string description = "Admin chuyen khoan (" + adminUserId + "): " + "voi ly do:" + reason;
     // Using MASTER_WALLET_ID or a generic system source ID for deposits from admin
     return walletService.depositPoints(targetWalletOpt.value().walletId, amount, description, adminUserId, 
                                        outMessage, AppConfig::MASTER_WALLET_ID);
