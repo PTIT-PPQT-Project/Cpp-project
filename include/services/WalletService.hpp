@@ -33,6 +33,7 @@ public:
 
     std::optional<Wallet> getWalletByUserId(const std::string& userId) const;
     std::optional<Wallet> getWalletByWalletId(const std::string& walletId) const;
+    std::optional<Wallet> getWalletByUsername(const std::string& username) const;
 
     bool transferPoints(const std::string& senderUserId, // To get OTP secret and verify ownership
                         const std::string& senderWalletId,
