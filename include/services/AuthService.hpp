@@ -45,11 +45,13 @@ public:
     bool activateAccount(const std::string& username, std::string& outMessage);
     bool isUsernameExists(const std::string& username) const;
 
-    // Made public for AdminService to use for OTP verification if needed, or AdminService can have its own OTPService ref.
-    // Alternatively, OTP verification logic could be more centralized.
-    // For now, keeping it here if AdminService needs to call it for a target user.
-    // However, it's better if AdminService calls a UserService method which then internally uses OTPService.
-    // For direct access if needed by AdminService (e.g. when admin helps user and user provides OTP)
+    // Add missing function declarations
+    std::optional<User*> findUserById(const std::string& userId);
+    std::optional<User*> findUserByUsername(const std::string& username);
+
+    // Fix const qualifiers for getter methods
+    const OTPService& getOtpService() const { return otpService; }
     OTPService& getOtpService() { return otpService; }
+    const FileHandler& getFileHandler() const { return fileHandler; }
     FileHandler& getFileHandler() { return fileHandler; }
 };
