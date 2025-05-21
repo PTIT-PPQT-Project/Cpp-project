@@ -1,0 +1,66 @@
+# Build directories
+build/
+out/
+cmake-build-*/
+
+# Executable files
+*.exe
+*.out
+*.app
+
+# Object files
+*.o
+*.obj
+*.elf
+*.bin
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+*.def
+*.exp
+
+# Shared objects
+*.so
+*.so.*
+*.dylib
+
+# Windows specific
+*.dll
+*.dll.a
+*.pdb
+*.ilk
+*.exp
+*.lib
+
+# CMake generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.cmake
+!CMakeLists.txt
+
+# IDE specific files
+.vs/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Log files
+logs/
+*.log
+
+# Data files (uncomment if you want to ignore data files)
+# data/*.json
+
+# Dependencies
+vcpkg/
+packages/

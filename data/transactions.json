@@ -1,0 +1,11 @@
+[
+    {
+        "amount": 500000.0,
+        "description": "Admin deposit (22ecc0f4-1190-d9a4-49b4-e0e10e358bf): aaa (Initiated by: 22ecc0f4-1190-d9a4-49b4-e0e10e358bf)",
+        "sourceWalletId": "MASTER_WALLET_001",
+        "status": 1,
+        "targetWalletId": "WLT-d2b2c524-e1f",
+        "timestamp": 1747780134,
+        "transactionId": "DEP-a2b4f1e0-ff4"
+    }
+]

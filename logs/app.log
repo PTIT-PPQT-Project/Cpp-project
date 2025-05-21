@@ -1,0 +1,1147 @@
+2025-05-21 01:09:59 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 01:09:59 [INFO] ===================================
+2025-05-21 01:09:59 [INFO] Application Starting...
+2025-05-21 01:09:59 [INFO] Version: 1.0.0
+2025-05-21 01:09:59 [INFO] Data Directory: data/
+2025-05-21 01:09:59 [INFO] ===================================
+2025-05-21 01:09:59 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 01:09:59 [INFO] Loading data...
+2025-05-21 01:09:59 [ERROR] JSON parse error in users file (data/users.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:09:59 [ERROR] Failed to load user data. Application might behave unexpectedly.
+2025-05-21 01:09:59 [ERROR] JSON parse error in wallets file (data/wallets.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:09:59 [ERROR] Failed to load wallet data. Application might behave unexpectedly.
+2025-05-21 01:09:59 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:09:59 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 01:09:59 [INFO] Data loading complete. Users: 0, Wallets: 0, Transactions: 0
+2025-05-21 01:09:59 [INFO] No users found. Creating default Admin account...
+2025-05-21 01:09:59 [WARNING] Admin attempt to create another Admin account for 'admin' was blocked by policy.
+2025-05-21 01:09:59 [ERROR] Failed to create default Admin account: Creating Admin accounts via this interface is restricted for security.
+2025-05-21 01:11:18 [INFO] Saved 1 users to data/users.json
+2025-05-21 01:11:18 [INFO] Registration successful! Account created for phuongnd31_admin. Please wait for activation.
+2025-05-21 01:11:18 [INFO] Saved 1 wallets to data/wallets.json
+2025-05-21 01:11:18 [INFO] New wallet created successfully for user phuongnd31_admin. Wallet ID: WLT-120387e6-198
+2025-05-21 01:12:06 [WARNING] Login attempt failed for username 'phuongnd31_admin': Account is not activated yet. Please check your email or contact support.
+2025-05-21 01:12:55 [WARNING] Login attempt failed for username 'phuongnd31_admin': Account is not activated yet. Please check your email or contact support.
+2025-05-21 01:13:18 [WARNING] Login attempt failed for username 'phuongnd31_admin': Account is not activated yet. Please check your email or contact support.
+2025-05-21 01:14:04 [WARNING] Login attempt failed for username 'phuongnd31_admin': Account is not activated yet. Please check your email or contact support.
+2025-05-21 01:14:22 [WARNING] Login attempt failed for username 'phuongnd31_admin': Account is not activated yet. Please check your email or contact support.
+2025-05-21 01:14:44 [WARNING] Login attempt failed for username 'phuongnd31_admin': Account is not activated yet. Please check your email or contact support.
+2025-05-21 01:16:03 [INFO] Application shutting down gracefully.
+2025-05-21 01:16:03 [INFO] Logger shutting down.
+2025-05-21 01:16:04 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 01:16:04 [INFO] ===================================
+2025-05-21 01:16:04 [INFO] Application Starting...
+2025-05-21 01:16:04 [INFO] Version: 1.0.0
+2025-05-21 01:16:04 [INFO] Data Directory: data/
+2025-05-21 01:16:04 [INFO] ===================================
+2025-05-21 01:16:04 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 01:16:04 [INFO] Loading data...
+2025-05-21 01:16:04 [INFO] Loaded 1 users from data/users.json
+2025-05-21 01:16:04 [INFO] Loaded 1 wallets from data/wallets.json
+2025-05-21 01:16:04 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:16:04 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 01:16:04 [INFO] Data loading complete. Users: 1, Wallets: 1, Transactions: 0
+2025-05-21 01:16:14 [INFO] Saved 1 users to data/users.json
+2025-05-21 01:16:14 [INFO] User 'phuongnd31_admin' logged in successfully.
+2025-05-21 01:16:14 [INFO] User 'phuongnd31_admin' logged in.
+2025-05-21 01:16:37 [INFO] Saved 1 users to data/users.json
+2025-05-21 01:16:37 [INFO] OTP setup successful for user 'phuongnd31_admin'.
+2025-05-21 01:17:18 [WARNING] OTPService::verifyOtp - Real OTP verification logic is NOT implemented. Using placeholder logic.
+2025-05-21 01:17:18 [WARNING] Profile update failed for user 'phuongnd31_admin': Invalid OTP.
+2025-05-21 01:18:42 [INFO] Saved 1 users to data/users.json
+2025-05-21 01:18:42 [INFO] Password changed for user 'phuongnd31_admin'.
+2025-05-21 01:19:32 [INFO] User 'phuongnd31_admin' chose to exit application.
+2025-05-21 01:19:32 [INFO] Logger shutting down.
+2025-05-21 01:19:41 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 01:19:41 [INFO] ===================================
+2025-05-21 01:19:41 [INFO] Application Starting...
+2025-05-21 01:19:41 [INFO] Version: 1.0.0
+2025-05-21 01:19:41 [INFO] Data Directory: data/
+2025-05-21 01:19:41 [INFO] ===================================
+2025-05-21 01:19:42 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 01:19:42 [INFO] Loading data...
+2025-05-21 01:19:42 [INFO] Loaded 1 users from data/users.json
+2025-05-21 01:19:42 [INFO] Loaded 1 wallets from data/wallets.json
+2025-05-21 01:19:42 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:19:42 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 01:19:42 [INFO] Data loading complete. Users: 1, Wallets: 1, Transactions: 0
+2025-05-21 01:19:54 [INFO] Saved 1 users to data/users.json
+2025-05-21 01:19:54 [INFO] User 'phuongnd31_admin' logged in successfully.
+2025-05-21 01:19:54 [INFO] User 'phuongnd31_admin' logged in.
+2025-05-21 01:20:20 [WARNING] Change password attempt failed for user 'phuongnd31_admin': New password must be different from the old password.
+2025-05-21 01:21:57 [INFO] User 'phuongnd31_admin' logged out.
+2025-05-21 01:22:08 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 01:22:08 [INFO] ===================================
+2025-05-21 01:22:08 [INFO] Application Starting...
+2025-05-21 01:22:08 [INFO] Version: 1.0.0
+2025-05-21 01:22:08 [INFO] Data Directory: data/
+2025-05-21 01:22:08 [INFO] ===================================
+2025-05-21 01:22:08 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 01:22:08 [INFO] Loading data...
+2025-05-21 01:22:08 [INFO] Loaded 1 users from data/users.json
+2025-05-21 01:22:08 [INFO] Loaded 1 wallets from data/wallets.json
+2025-05-21 01:22:08 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:22:08 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 01:22:08 [INFO] Data loading complete. Users: 1, Wallets: 1, Transactions: 0
+2025-05-21 01:22:19 [INFO] Saved 1 users to data/users.json
+2025-05-21 01:22:19 [INFO] User 'phuongnd31_admin' logged in successfully.
+2025-05-21 01:22:19 [INFO] User 'phuongnd31_admin' logged in.
+2025-05-21 01:23:16 [INFO] Admin attempting to create account. Username: quanle_user, Role: RegularUser
+2025-05-21 01:23:16 [INFO] Saved 2 users to data/users.json
+2025-05-21 01:23:16 [INFO] Admin created account for 'quanle_user' with temporary password.
+2025-05-21 01:23:16 [INFO] Saved 2 wallets to data/wallets.json
+2025-05-21 01:23:16 [INFO] New wallet created successfully for user quanle_user. Wallet ID: WLT-77d32d8b-18a
+2025-05-21 01:23:16 [INFO] Wallet also created for new user 'quanle_user' by admin action: New wallet created successfully for user quanle_user.
+2025-05-21 01:23:22 [INFO] Admin listed all users. Total users: 2
+2025-05-21 01:25:39 [INFO] Admin 'phuongnd31_admin' logged out.
+2025-05-21 01:28:26 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 01:28:26 [INFO] ===================================
+2025-05-21 01:28:26 [INFO] Application Starting...
+2025-05-21 01:28:26 [INFO] Version: 1.0.0
+2025-05-21 01:28:26 [INFO] Data Directory: data/
+2025-05-21 01:28:26 [INFO] ===================================
+2025-05-21 01:28:26 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 01:28:26 [INFO] Loading data...
+2025-05-21 01:28:26 [INFO] Loaded 2 users from data/users.json
+2025-05-21 01:28:26 [INFO] Loaded 2 wallets from data/wallets.json
+2025-05-21 01:28:26 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:28:26 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 01:28:26 [INFO] Data loading complete. Users: 2, Wallets: 2, Transactions: 0
+2025-05-21 01:28:36 [INFO] Saved 2 users to data/users.json
+2025-05-21 01:28:36 [INFO] User 'quanle_user' logged in successfully.
+2025-05-21 01:28:36 [INFO] User 'quanle_user' logged in.
+2025-05-21 01:30:57 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 01:30:57 [INFO] ===================================
+2025-05-21 01:30:57 [INFO] Application Starting...
+2025-05-21 01:30:57 [INFO] Version: 1.0.0
+2025-05-21 01:30:57 [INFO] Data Directory: data/
+2025-05-21 01:30:57 [INFO] ===================================
+2025-05-21 01:30:57 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 01:30:57 [INFO] Loading data...
+2025-05-21 01:30:57 [INFO] Loaded 2 users from data/users.json
+2025-05-21 01:30:57 [INFO] Loaded 2 wallets from data/wallets.json
+2025-05-21 01:30:57 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:30:57 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 01:30:57 [INFO] Data loading complete. Users: 2, Wallets: 2, Transactions: 0
+2025-05-21 01:31:06 [INFO] Saved 2 users to data/users.json
+2025-05-21 01:31:06 [INFO] User 'quanle_user' logged in successfully.
+2025-05-21 01:31:06 [INFO] User 'quanle_user' logged in.
+2025-05-21 01:31:18 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 01:31:18 [INFO] ===================================
+2025-05-21 01:31:18 [INFO] Application Starting...
+2025-05-21 01:31:18 [INFO] Version: 1.0.0
+2025-05-21 01:31:18 [INFO] Data Directory: data/
+2025-05-21 01:31:18 [INFO] ===================================
+2025-05-21 01:31:18 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 01:31:18 [INFO] Loading data...
+2025-05-21 01:31:18 [INFO] Loaded 2 users from data/users.json
+2025-05-21 01:31:18 [INFO] Loaded 2 wallets from data/wallets.json
+2025-05-21 01:31:18 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:31:18 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 01:31:18 [INFO] Data loading complete. Users: 2, Wallets: 2, Transactions: 0
+2025-05-21 01:31:23 [INFO] Saved 2 users to data/users.json
+2025-05-21 01:31:23 [INFO] User 'quanle_user' logged in successfully.
+2025-05-21 01:31:23 [INFO] User 'quanle_user' logged in.
+2025-05-21 01:31:39 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 01:31:39 [INFO] ===================================
+2025-05-21 01:31:39 [INFO] Application Starting...
+2025-05-21 01:31:39 [INFO] Version: 1.0.0
+2025-05-21 01:31:39 [INFO] Data Directory: data/
+2025-05-21 01:31:39 [INFO] ===================================
+2025-05-21 01:31:39 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 01:31:39 [INFO] Loading data...
+2025-05-21 01:31:39 [INFO] Loaded 2 users from data/users.json
+2025-05-21 01:31:39 [INFO] Loaded 2 wallets from data/wallets.json
+2025-05-21 01:31:39 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:31:39 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 01:31:39 [INFO] Data loading complete. Users: 2, Wallets: 2, Transactions: 0
+2025-05-21 01:31:58 [INFO] Saved 2 users to data/users.json
+2025-05-21 01:31:58 [INFO] User 'quanle_user' logged in successfully.
+2025-05-21 01:31:58 [INFO] User 'quanle_user' logged in.
+2025-05-21 01:33:22 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 01:33:22 [INFO] ===================================
+2025-05-21 01:33:22 [INFO] Application Starting...
+2025-05-21 01:33:22 [INFO] Version: 1.0.0
+2025-05-21 01:33:22 [INFO] Data Directory: data/
+2025-05-21 01:33:22 [INFO] ===================================
+2025-05-21 01:33:22 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 01:33:22 [INFO] Loading data...
+2025-05-21 01:33:22 [INFO] Loaded 2 users from data/users.json
+2025-05-21 01:33:22 [INFO] Loaded 2 wallets from data/wallets.json
+2025-05-21 01:33:22 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:33:22 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 01:33:22 [INFO] Data loading complete. Users: 2, Wallets: 2, Transactions: 0
+2025-05-21 01:33:30 [INFO] Saved 2 users to data/users.json
+2025-05-21 01:33:30 [INFO] User 'phuongnd31_admin' logged in successfully.
+2025-05-21 01:33:30 [INFO] User 'phuongnd31_admin' logged in.
+2025-05-21 01:34:00 [INFO] Admin attempting to create account. Username: phuoc_user, Role: RegularUser
+2025-05-21 01:34:00 [INFO] Saved 3 users to data/users.json
+2025-05-21 01:34:00 [INFO] Admin created account for 'phuoc_user' with temporary password.
+2025-05-21 01:34:00 [INFO] Saved 3 wallets to data/wallets.json
+2025-05-21 01:34:00 [INFO] New wallet created successfully for user phuoc_user. Wallet ID: WLT-52098f8a-2cf
+2025-05-21 01:34:00 [INFO] Wallet also created for new user 'phuoc_user' by admin action: New wallet created successfully for user phuoc_user.
+2025-05-21 01:34:20 [INFO] Admin 'phuongnd31_admin' logged out.
+2025-05-21 01:34:31 [INFO] Saved 3 users to data/users.json
+2025-05-21 01:34:31 [INFO] User 'phuoc_user' logged in successfully.
+2025-05-21 01:34:31 [INFO] User 'phuoc_user' logged in.
+2025-05-21 01:37:20 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 01:37:20 [INFO] ===================================
+2025-05-21 01:37:20 [INFO] Application Starting...
+2025-05-21 01:37:20 [INFO] Version: 1.0.0
+2025-05-21 01:37:20 [INFO] Data Directory: data/
+2025-05-21 01:37:20 [INFO] ===================================
+2025-05-21 01:37:20 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 01:37:20 [INFO] Loading data...
+2025-05-21 01:37:20 [INFO] Loaded 3 users from data/users.json
+2025-05-21 01:37:20 [INFO] Loaded 3 wallets from data/wallets.json
+2025-05-21 01:37:20 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:37:20 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 01:37:20 [INFO] Data loading complete. Users: 3, Wallets: 3, Transactions: 0
+2025-05-21 01:37:30 [INFO] Saved 3 users to data/users.json
+2025-05-21 01:37:30 [INFO] User 'phuongnd31_admin' logged in successfully.
+2025-05-21 01:37:30 [INFO] User 'phuongnd31_admin' logged in.
+2025-05-21 01:37:46 [INFO] Admin attempting to create account. Username: abc_user, Role: RegularUser
+2025-05-21 01:37:46 [INFO] Saved 4 users to data/users.json
+2025-05-21 01:37:46 [INFO] Admin created account for 'abc_user' with temporary password.
+2025-05-21 01:37:46 [INFO] Saved 4 wallets to data/wallets.json
+2025-05-21 01:37:46 [INFO] New wallet created successfully for user abc_user. Wallet ID: WLT-3c7377d0-3bc
+2025-05-21 01:37:46 [INFO] Wallet also created for new user 'abc_user' by admin action: New wallet created successfully for user abc_user.
+2025-05-21 01:37:53 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 01:37:53 [INFO] ===================================
+2025-05-21 01:37:53 [INFO] Application Starting...
+2025-05-21 01:37:53 [INFO] Version: 1.0.0
+2025-05-21 01:37:53 [INFO] Data Directory: data/
+2025-05-21 01:37:53 [INFO] ===================================
+2025-05-21 01:37:53 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 01:37:53 [INFO] Loading data...
+2025-05-21 01:37:53 [INFO] Loaded 4 users from data/users.json
+2025-05-21 01:37:53 [INFO] Loaded 4 wallets from data/wallets.json
+2025-05-21 01:37:53 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:37:53 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 01:37:53 [INFO] Data loading complete. Users: 4, Wallets: 4, Transactions: 0
+2025-05-21 01:38:07 [INFO] Saved 4 users to data/users.json
+2025-05-21 01:38:07 [INFO] User 'abc_user' logged in successfully.
+2025-05-21 01:38:07 [INFO] User 'abc_user' logged in.
+2025-05-21 01:39:36 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 01:39:36 [INFO] ===================================
+2025-05-21 01:39:36 [INFO] Application Starting...
+2025-05-21 01:39:36 [INFO] Version: 1.0.0
+2025-05-21 01:39:36 [INFO] Data Directory: data/
+2025-05-21 01:39:36 [INFO] ===================================
+2025-05-21 01:39:36 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 01:39:36 [INFO] Loading data...
+2025-05-21 01:39:36 [INFO] Loaded 4 users from data/users.json
+2025-05-21 01:39:36 [INFO] Loaded 4 wallets from data/wallets.json
+2025-05-21 01:39:36 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:39:36 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 01:39:36 [INFO] Data loading complete. Users: 4, Wallets: 4, Transactions: 0
+2025-05-21 01:39:42 [INFO] Saved 4 users to data/users.json
+2025-05-21 01:39:42 [INFO] User 'abc_user' logged in successfully.
+2025-05-21 01:39:42 [INFO] User 'abc_user' logged in.
+2025-05-21 01:41:18 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 01:41:18 [INFO] ===================================
+2025-05-21 01:41:18 [INFO] Application Starting...
+2025-05-21 01:41:18 [INFO] Version: 1.0.0
+2025-05-21 01:41:18 [INFO] Data Directory: data/
+2025-05-21 01:41:18 [INFO] ===================================
+2025-05-21 01:41:18 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 01:41:18 [INFO] Loading data...
+2025-05-21 01:41:18 [INFO] Loaded 4 users from data/users.json
+2025-05-21 01:41:18 [INFO] Loaded 4 wallets from data/wallets.json
+2025-05-21 01:41:18 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:41:18 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 01:41:18 [INFO] Data loading complete. Users: 4, Wallets: 4, Transactions: 0
+2025-05-21 01:41:24 [WARNING] Login attempt failed for username 'abc_user': Incorrect temporary password. Please use the temporary password provided by your administrator.
+2025-05-21 01:41:33 [WARNING] Login attempt failed for username 'abc_user': Incorrect temporary password. Please use the temporary password provided by your administrator.
+2025-05-21 01:41:44 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 01:41:44 [INFO] ===================================
+2025-05-21 01:41:44 [INFO] Application Starting...
+2025-05-21 01:41:44 [INFO] Version: 1.0.0
+2025-05-21 01:41:44 [INFO] Data Directory: data/
+2025-05-21 01:41:44 [INFO] ===================================
+2025-05-21 01:41:44 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 01:41:44 [INFO] Loading data...
+2025-05-21 01:41:44 [INFO] Loaded 4 users from data/users.json
+2025-05-21 01:41:44 [INFO] Loaded 4 wallets from data/wallets.json
+2025-05-21 01:41:44 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:41:44 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 01:41:44 [INFO] Data loading complete. Users: 4, Wallets: 4, Transactions: 0
+2025-05-21 01:41:52 [INFO] Saved 4 users to data/users.json
+2025-05-21 01:41:52 [INFO] User 'phuongnd31_admin' logged in successfully.
+2025-05-21 01:41:52 [INFO] User 'phuongnd31_admin' logged in.
+2025-05-21 01:42:11 [INFO] Admin attempting to create account. Username: cde_user, Role: RegularUser
+2025-05-21 01:42:11 [INFO] Saved 5 users to data/users.json
+2025-05-21 01:42:11 [INFO] Admin created account for 'cde_user' with temporary password.
+2025-05-21 01:42:11 [INFO] Saved 5 wallets to data/wallets.json
+2025-05-21 01:42:11 [INFO] New wallet created successfully for user cde_user. Wallet ID: WLT-a2946512-45a
+2025-05-21 01:42:11 [INFO] Wallet also created for new user 'cde_user' by admin action: New wallet created successfully for user cde_user.
+2025-05-21 01:42:19 [INFO] Admin 'phuongnd31_admin' logged out.
+2025-05-21 01:42:35 [WARNING] Login attempt failed for username 'cde_user': Incorrect temporary password. Please use the temporary password provided by your administrator.
+2025-05-21 01:42:41 [INFO] Saved 5 users to data/users.json
+2025-05-21 01:42:41 [INFO] User 'cde_user' logged in successfully.
+2025-05-21 01:42:41 [INFO] User 'cde_user' logged in.
+2025-05-21 01:43:13 [INFO] Saved 5 users to data/users.json
+2025-05-21 01:43:13 [INFO] Temporary password changed for user 'cde_user'.
+2025-05-21 01:43:13 [INFO] User 'cde_user' changed temporary password.
+2025-05-21 01:43:25 [INFO] User 'cde_user' logged out.
+2025-05-21 01:43:31 [INFO] Saved 5 users to data/users.json
+2025-05-21 01:43:31 [INFO] User 'cde_user' logged in successfully.
+2025-05-21 01:43:31 [INFO] User 'cde_user' logged in.
+2025-05-21 01:48:00 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 01:48:00 [INFO] ===================================
+2025-05-21 01:48:00 [INFO] Application Starting...
+2025-05-21 01:48:00 [INFO] Version: 1.0.0
+2025-05-21 01:48:00 [INFO] Data Directory: data/
+2025-05-21 01:48:00 [INFO] ===================================
+2025-05-21 01:48:00 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 01:48:00 [INFO] Loading data...
+2025-05-21 01:48:00 [INFO] Loaded 5 users from data/users.json
+2025-05-21 01:48:00 [INFO] Loaded 5 wallets from data/wallets.json
+2025-05-21 01:48:00 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:48:00 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 01:48:00 [INFO] Data loading complete. Users: 5, Wallets: 5, Transactions: 0
+2025-05-21 01:48:15 [WARNING] Login attempt failed for username 'phuongnd31_admin': Incorrect password.
+2025-05-21 01:49:36 [WARNING] Login attempt failed for username 'phuongnd31_admin': Incorrect password.
+2025-05-21 01:50:17 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 01:50:17 [INFO] ===================================
+2025-05-21 01:50:17 [INFO] Application Starting...
+2025-05-21 01:50:17 [INFO] Version: 1.0.0
+2025-05-21 01:50:17 [INFO] Data Directory: data/
+2025-05-21 01:50:17 [INFO] ===================================
+2025-05-21 01:50:17 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 01:50:17 [INFO] Loading data...
+2025-05-21 01:50:17 [INFO] Loaded 5 users from data/users.json
+2025-05-21 01:50:17 [INFO] Loaded 5 wallets from data/wallets.json
+2025-05-21 01:50:17 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:50:17 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 01:50:17 [INFO] Data loading complete. Users: 5, Wallets: 5, Transactions: 0
+2025-05-21 01:50:30 [WARNING] Login attempt failed for username 'phuongnd31_admin': Incorrect password.
+2025-05-21 01:50:37 [WARNING] Login attempt failed for username 'phuongnd31_admin': Incorrect password.
+2025-05-21 01:50:38 [WARNING] Login attempt failed for username 'phuongnd31_admin': Incorrect password.
+2025-05-21 01:51:07 [WARNING] Registration failed for 'phuong_admin': Email already exists.
+2025-05-21 01:51:23 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 01:51:23 [INFO] ===================================
+2025-05-21 01:51:23 [INFO] Application Starting...
+2025-05-21 01:51:23 [INFO] Version: 1.0.0
+2025-05-21 01:51:23 [INFO] Data Directory: data/
+2025-05-21 01:51:23 [INFO] ===================================
+2025-05-21 01:51:23 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 01:51:23 [INFO] Loading data...
+2025-05-21 01:51:23 [ERROR] JSON parse error in users file (data/users.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:51:23 [ERROR] Failed to load user data. Application might behave unexpectedly.
+2025-05-21 01:51:23 [INFO] Loaded 5 wallets from data/wallets.json
+2025-05-21 01:51:23 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:51:23 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 01:51:23 [INFO] Data loading complete. Users: 0, Wallets: 5, Transactions: 0
+2025-05-21 01:51:23 [INFO] No users found. Creating default Admin account...
+2025-05-21 01:51:23 [WARNING] Admin attempt to create another Admin account for 'admin' was blocked by policy.
+2025-05-21 01:51:23 [ERROR] Failed to create default Admin account: Creating Admin accounts via this interface is restricted for security.
+2025-05-21 01:51:40 [INFO] Registration successful! Account created for phuong_admin. Please wait for activation.
+2025-05-21 01:51:40 [INFO] Saved 6 wallets to data/wallets.json
+2025-05-21 01:51:40 [INFO] New wallet created successfully for user phuong_admin. Wallet ID: WLT-86e284a7-3fe
+<<<<<<< HEAD
+2025-05-21 01:53:14 [WARNING] Login attempt failed for username 'phuong_admin': Account is not activated yet. Please check your email or contact support.
+2025-05-21 01:53:15 [WARNING] Login attempt failed for username 'phuong_admin': Account is not activated yet. Please check your email or contact support.
+2025-05-21 01:53:24 [WARNING] Login attempt failed for username 'phuong_admin': Account is not activated yet. Please check your email or contact support.
+2025-05-21 01:54:56 [WARNING] Login attempt failed for username 'phuong_admin': Account is not activated yet. Please check your email or contact support.
+2025-05-21 01:55:12 [WARNING] Login attempt failed for username 'phuong_admin': Account is not activated yet. Please check your email or contact support.
+2025-05-21 01:56:47 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 01:56:47 [INFO] ===================================
+2025-05-21 01:56:47 [INFO] Application Starting...
+2025-05-21 01:56:47 [INFO] Version: 1.0.0
+2025-05-21 01:56:47 [INFO] Data Directory: data/
+2025-05-21 01:56:47 [INFO] ===================================
+2025-05-21 01:56:47 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 01:56:47 [INFO] Loading data...
+2025-05-21 01:56:47 [ERROR] Generic error loading users from (data/users.json): Invalid status string provided for conversion: Activate
+2025-05-21 01:56:47 [ERROR] Failed to load user data. Application might behave unexpectedly.
+2025-05-21 01:56:47 [INFO] Loaded 6 wallets from data/wallets.json
+2025-05-21 01:56:47 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:56:47 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 01:56:47 [INFO] Data loading complete. Users: 0, Wallets: 6, Transactions: 0
+2025-05-21 01:56:47 [INFO] No users found. Creating default Admin account...
+2025-05-21 01:56:47 [WARNING] Admin attempt to create another Admin account for 'admin' was blocked by policy.
+2025-05-21 01:56:47 [ERROR] Failed to create default Admin account: Creating Admin accounts via this interface is restricted for security.
+2025-05-21 01:56:54 [WARNING] Login attempt failed for username 'phuong_admin': Username not found.
+2025-05-21 01:57:10 [WARNING] Login attempt failed for username 'phuong_admin': Username not found.
+2025-05-21 01:58:01 [WARNING] Login attempt failed for username 'phuong_admin': Username not found.
+2025-05-21 01:59:12 [WARNING] Login attempt failed for username 'phuong_admin': Username not found.
+2025-05-21 01:59:30 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 01:59:30 [INFO] ===================================
+2025-05-21 01:59:30 [INFO] Application Starting...
+2025-05-21 01:59:30 [INFO] Version: 1.0.0
+2025-05-21 01:59:30 [INFO] Data Directory: data/
+2025-05-21 01:59:30 [INFO] ===================================
+2025-05-21 01:59:30 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 01:59:30 [INFO] Loading data...
+2025-05-21 01:59:30 [INFO] Loaded 1 users from data/users.json
+2025-05-21 01:59:30 [INFO] Loaded 6 wallets from data/wallets.json
+2025-05-21 01:59:30 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 01:59:30 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 01:59:30 [INFO] Data loading complete. Users: 1, Wallets: 6, Transactions: 0
+2025-05-21 01:59:37 [INFO] User 'phuong_admin' logged in successfully.
+2025-05-21 01:59:37 [INFO] User 'phuong_admin' logged in.
+2025-05-21 01:59:37 [INFO] User 'phuong_admin' logged in.
+2025-05-21 02:01:12 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 02:01:12 [INFO] ===================================
+2025-05-21 02:01:12 [INFO] Application Starting...
+2025-05-21 02:01:12 [INFO] Version: 1.0.0
+2025-05-21 02:01:12 [INFO] Data Directory: data/
+2025-05-21 02:01:12 [INFO] ===================================
+2025-05-21 02:01:12 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 02:01:12 [INFO] Loading data...
+2025-05-21 02:01:12 [INFO] Loaded 1 users from data/users.json
+2025-05-21 02:01:12 [INFO] Loaded 6 wallets from data/wallets.json
+2025-05-21 02:01:12 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 02:01:12 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 02:01:12 [INFO] Data loading complete. Users: 1, Wallets: 6, Transactions: 0
+2025-05-21 02:01:21 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 02:01:21 [INFO] ===================================
+2025-05-21 02:01:21 [INFO] Application Starting...
+2025-05-21 02:01:21 [INFO] Version: 1.0.0
+2025-05-21 02:01:21 [INFO] Data Directory: data/
+2025-05-21 02:01:21 [INFO] ===================================
+2025-05-21 02:01:21 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 02:01:21 [INFO] Loading data...
+2025-05-21 02:01:21 [INFO] Loaded 1 users from data/users.json
+2025-05-21 02:01:21 [INFO] Loaded 6 wallets from data/wallets.json
+2025-05-21 02:01:21 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 02:01:21 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 02:01:21 [INFO] Data loading complete. Users: 1, Wallets: 6, Transactions: 0
+2025-05-21 02:01:28 [INFO] User 'phuong_admin' logged in successfully.
+2025-05-21 02:03:32 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 02:03:32 [INFO] ===================================
+2025-05-21 02:03:32 [INFO] Application Starting...
+2025-05-21 02:03:32 [INFO] Version: 1.0.0
+2025-05-21 02:03:32 [INFO] Data Directory: data/
+2025-05-21 02:03:32 [INFO] ===================================
+2025-05-21 02:03:32 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 02:03:32 [INFO] Loading data...
+2025-05-21 02:03:32 [INFO] Loaded 1 users from data/users.json
+2025-05-21 02:03:32 [INFO] Loaded 6 wallets from data/wallets.json
+2025-05-21 02:03:32 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 02:03:32 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 02:03:32 [INFO] Data loading complete. Users: 1, Wallets: 6, Transactions: 0
+2025-05-21 02:03:44 [INFO] User 'phuong_admin' logged in successfully.
+2025-05-21 02:05:49 [INFO] Logger initialized. Logging to file: logs/app.log
+2025-05-21 02:05:49 [INFO] ===================================
+2025-05-21 02:05:49 [INFO] Application Starting...
+2025-05-21 02:05:49 [INFO] Version: 1.0.0
+2025-05-21 02:05:49 [INFO] Data Directory: data/
+2025-05-21 02:05:49 [INFO] ===================================
+2025-05-21 02:05:49 [INFO] FileHandler initialized. Users: data/users.json, Wallets: data/wallets.json, Transactions: data/transactions.json
+2025-05-21 02:05:49 [INFO] Loading data...
+2025-05-21 02:05:49 [INFO] Loaded 1 users from data/users.json
+2025-05-21 02:05:49 [INFO] Loaded 6 wallets from data/wallets.json
+2025-05-21 02:05:49 [ERROR] JSON parse error in transactions file (data/transactions.json): [json.exception.parse_error.101] parse error at line 1, column 1: attempting to parse an empty input; check that your input string or stream contains the expected JSON
+2025-05-21 02:05:49 [ERROR] Failed to load transaction data. Application might behave unexpectedly.
+2025-05-21 02:05:49 [INFO] Data loading complete. Users: 1, Wallets: 6, Transactions: 0
+2025-05-21 02:06:03 [INFO] User 'phuong_admin' logged in successfully.
+2025-05-21 02:06:22 [INFO] Admin 'phuong_admin' logged out.
+=======
+>>>>>>> parent of 6202a1a (- add feature go back)
+2025-05-21 04:40:57 [INFO] Ung dung khoi dong.
+2025-05-21 04:40:57 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 04:40:57 [INFO] Project root: C:\Cpp-project
+2025-05-21 04:40:57 [INFO] Users file: C:\Cpp-project\data/users.json
+2025-05-21 04:40:57 [INFO] Wallets file: C:\Cpp-project\data/wallets.json
+2025-05-21 04:40:57 [INFO] Transactions file: C:\Cpp-project\data/transactions.json
+2025-05-21 04:40:57 [INFO] Created new users file with empty array at: C:\Cpp-project\data/users.json
+2025-05-21 04:40:57 [INFO] Loaded 0 users from file
+2025-05-21 04:40:57 [INFO] Dang tai du lieu...
+2025-05-21 04:40:57 [INFO] Loading users from JSON: []
+2025-05-21 04:40:57 [INFO] Successfully loaded 0 users
+2025-05-21 04:40:57 [INFO] Tai 0 nguoi dung thanh cong.
+2025-05-21 04:40:57 [INFO] Tai 0 vi thanh cong.
+2025-05-21 04:40:57 [INFO] Tai 0 giao dich thanh cong.
+2025-05-21 04:40:57 [INFO] Khong tim thay tai khoan Admin. Dang tao tai khoan Admin mac dinh...
+2025-05-21 04:40:57 [INFO] Tao tai khoan Admin thanh cong. Ten dang nhap: admin, Mat khau tam thoi: byOApI#n
+2025-05-21 04:40:57 [INFO] Vui long doi mat khau sau khi dang nhap lan dau.
+2025-05-21 04:40:57 [INFO] New wallet created successfully for user admin. Wallet ID: WLT-b8b15970-ad9
+2025-05-21 04:41:14 [INFO] Ung dung khoi dong.
+2025-05-21 04:41:14 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 04:41:14 [INFO] Project root: C:\Cpp-project
+2025-05-21 04:41:14 [INFO] Users file: C:\Cpp-project\data/users.json
+2025-05-21 04:41:14 [INFO] Wallets file: C:\Cpp-project\data/wallets.json
+2025-05-21 04:41:14 [INFO] Transactions file: C:\Cpp-project\data/transactions.json
+2025-05-21 04:41:14 [INFO] Loading users from JSON: []
+2025-05-21 04:41:14 [INFO] Successfully loaded 0 users
+2025-05-21 04:41:14 [INFO] Loaded 0 users from file
+2025-05-21 04:41:14 [INFO] Dang tai du lieu...
+2025-05-21 04:41:14 [INFO] Loading users from JSON: []
+2025-05-21 04:41:14 [INFO] Successfully loaded 0 users
+2025-05-21 04:41:14 [INFO] Tai 0 nguoi dung thanh cong.
+2025-05-21 04:41:14 [INFO] Tai 1 vi thanh cong.
+2025-05-21 04:41:14 [INFO] Tai 0 giao dich thanh cong.
+2025-05-21 04:41:14 [INFO] Khong tim thay tai khoan Admin. Dang tao tai khoan Admin mac dinh...
+2025-05-21 04:41:14 [INFO] Tao tai khoan Admin thanh cong. Ten dang nhap: admin, Mat khau tam thoi: ATLBCUYt
+2025-05-21 04:41:14 [INFO] Vui long doi mat khau sau khi dang nhap lan dau.
+2025-05-21 04:41:14 [INFO] New wallet created successfully for user admin. Wallet ID: WLT-d782f878-4ea
+2025-05-21 04:44:50 [INFO] Ung dung khoi dong.
+2025-05-21 04:44:50 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 04:44:50 [INFO] Project root: C:\Cpp-project
+2025-05-21 04:44:50 [INFO] Users file: C:\Cpp-project\data/users.json
+2025-05-21 04:44:50 [INFO] Wallets file: C:\Cpp-project\data/wallets.json
+2025-05-21 04:44:50 [INFO] Transactions file: C:\Cpp-project\data/transactions.json
+2025-05-21 04:44:50 [INFO] Loading users from JSON: []
+2025-05-21 04:44:50 [INFO] Successfully loaded 0 users
+2025-05-21 04:44:50 [INFO] Loaded 0 users from file
+2025-05-21 04:44:50 [INFO] Dang tai du lieu...
+2025-05-21 04:44:50 [INFO] Loading users from JSON: []
+2025-05-21 04:44:50 [INFO] Successfully loaded 0 users
+2025-05-21 04:44:50 [INFO] Tai 0 nguoi dung thanh cong.
+2025-05-21 04:44:50 [INFO] Tai 2 vi thanh cong.
+2025-05-21 04:44:50 [INFO] Tai 0 giao dich thanh cong.
+2025-05-21 04:44:50 [INFO] Khong tim thay tai khoan Admin. Dang tao tai khoan Admin mac dinh...
+2025-05-21 04:44:50 [INFO] Tao tai khoan Admin thanh cong. Ten dang nhap: admin, Mat khau tam thoi: G6#FJato
+2025-05-21 04:44:50 [INFO] Vui long doi mat khau sau khi dang nhap lan dau.
+2025-05-21 04:44:50 [INFO] New wallet created successfully for user admin. Wallet ID: WLT-f72ddb5c-caa
+2025-05-21 04:46:25 [INFO] Ung dung khoi dong.
+2025-05-21 04:46:25 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 04:46:25 [INFO] Project root: C:\Cpp-project
+2025-05-21 04:46:25 [INFO] Users file: C:\Cpp-project\data/users.json
+2025-05-21 04:46:25 [INFO] Wallets file: C:\Cpp-project\data/wallets.json
+2025-05-21 04:46:25 [INFO] Transactions file: C:\Cpp-project\data/transactions.json
+2025-05-21 04:46:25 [INFO] Loading users from JSON: []
+2025-05-21 04:46:25 [INFO] Successfully loaded 0 users
+2025-05-21 04:46:25 [INFO] Loaded 0 users from file
+2025-05-21 04:46:25 [INFO] Dang tai du lieu...
+2025-05-21 04:46:25 [INFO] Loading users from JSON: []
+2025-05-21 04:46:25 [INFO] Successfully loaded 0 users
+2025-05-21 04:46:25 [INFO] Tai 0 nguoi dung thanh cong.
+2025-05-21 04:46:25 [INFO] Tai 3 vi thanh cong.
+2025-05-21 04:46:25 [INFO] Tai 0 giao dich thanh cong.
+2025-05-21 04:46:25 [INFO] Khong tim thay tai khoan Admin. Dang tao tai khoan Admin mac dinh...
+2025-05-21 04:46:25 [INFO] Tao tai khoan Admin thanh cong. Ten dang nhap: admin, Mat khau tam thoi: @ObYkfd8
+2025-05-21 04:46:25 [INFO] Vui long doi mat khau sau khi dang nhap lan dau.
+2025-05-21 04:46:25 [INFO] New wallet created successfully for user admin. Wallet ID: WLT-3bfa0498-acc
+2025-05-21 04:46:35 [INFO] Attempting login for username: phuong_admin2
+2025-05-21 04:46:35 [INFO] Total users in system: 1
+2025-05-21 04:46:35 [ERROR] User not found: phuong_admin2
+2025-05-21 04:49:12 [INFO] Ung dung khoi dong.
+2025-05-21 04:49:12 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 04:49:12 [INFO] Project root: C:\Cpp-project
+2025-05-21 04:49:12 [INFO] Users file: C:\Cpp-project\data/users.json
+2025-05-21 04:49:12 [INFO] Wallets file: C:\Cpp-project\data/wallets.json
+2025-05-21 04:49:12 [INFO] Transactions file: C:\Cpp-project\data/transactions.json
+2025-05-21 04:49:12 [INFO] Loading users from JSON: []
+2025-05-21 04:49:12 [INFO] Found 0 users in JSON file
+2025-05-21 04:49:12 [INFO] Successfully loaded 0 users
+2025-05-21 04:49:12 [INFO] Loaded 0 users from file
+2025-05-21 04:49:12 [INFO] Dang tai du lieu...
+2025-05-21 04:49:12 [INFO] Loading users from JSON: []
+2025-05-21 04:49:12 [INFO] Found 0 users in JSON file
+2025-05-21 04:49:12 [INFO] Successfully loaded 0 users
+2025-05-21 04:49:12 [INFO] Tai 0 nguoi dung thanh cong.
+2025-05-21 04:49:12 [INFO] Tai 4 vi thanh cong.
+2025-05-21 04:49:12 [INFO] Tai 0 giao dich thanh cong.
+2025-05-21 04:49:12 [INFO] Khong tim thay tai khoan Admin. Dang tao tai khoan Admin mac dinh...
+2025-05-21 04:49:12 [INFO] Tao tai khoan Admin thanh cong. Ten dang nhap: admin, Mat khau tam thoi: ceOCso%S
+2025-05-21 04:49:12 [INFO] Vui long doi mat khau sau khi dang nhap lan dau.
+2025-05-21 04:49:12 [INFO] New wallet created successfully for user admin. Wallet ID: WLT-2d9c904c-f51
+2025-05-21 04:49:20 [INFO] Starting user search for username: phuong_admin2
+2025-05-21 04:49:20 [INFO] Current users in memory:
+2025-05-21 04:49:20 [INFO]   - User: admin (ID: 2d93c908-9f8f-e04a-42c8-fb6aedaa3b89, Role: AdminUser, Status: NotActivated)
+2025-05-21 04:49:20 [INFO] Comparing with user: admin
+2025-05-21 04:49:20 [INFO] Attempting login for username: phuong_admin2
+2025-05-21 04:49:20 [INFO] Total users in system: 1
+2025-05-21 04:49:20 [ERROR] User not found: phuong_admin2
+2025-05-21 04:50:57 [INFO] Ung dung khoi dong.
+2025-05-21 04:50:57 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 04:50:57 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 04:50:57 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 04:50:57 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 04:50:57 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 04:50:57 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 04:50:57 [INFO] Loading users from JSON: [
+    {
+        "email": "admin@example.com",
+        "fullName": "Administrator",
+        "isTemporaryPassword": true,
+        "otpSecretKey": "",
+        "passwordHash": "demo_hash$825939ea",
+        "phoneNumber": "0123456789",
+        "role": "AdminUser",
+        "status": "NotActivated",
+        "userId": "4f1d2dac-c101-1fc1-88e9-cdf1716da246",
+        "username": "admin"
+    },
+    {
+        "email": "HaTrinh@gmail.com",
+        "fullName": "Trinh Thi Thu Ha",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "demo_hash$95a59e39",
+        "phoneNumber": "0923881248",
+        "role": "AdminUser",
+        "status": "Active",
+        "userId": "aa7a1a88-f592-a521-eacb-b1539bbbd73f",
+        "username": "thuha_admin"
+    },
+    {
+        "email": "pn17020@gmail.com",
+        "fullName": "Phuong Nguyen",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "F@nUx1oob*OaayOWdemo_hash$1b8ab18b",
+        "phoneNumber": "0921372837",
+        "role": "RegularUser",
+        "status": "NotActivated",
+        "userId": "2b3048e4-86c2-677a-b5e4-fa509d6f28f3",
+        "username": "phuong_admin"
+    },
+    {
+        "email": "pn17@gmail.com",
+        "fullName": "Nguyen Phuong",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "THid%$7zbAhA*Bzsdemo_hash$ba4872c3",
+        "phoneNumber": "0921377824",
+        "role": "RegularUser",
+        "status": "NotActivated",
+        "userId": "d2a25108-77d8-271a-c7a7-e934d7500c6",
+        "username": "phuong_admin1"
+    },
+    {
+        "email": "pn@gmail.com",
+        "fullName": "phuong",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "hvKuA@BKrVr^J0*Hdemo_hash$5b3dd253",
+        "phoneNumber": "0924727834",
+        "role": "AdminUser",
+        "status": "Active",
+        "userId": "22ecc0f4-1190-d9a4-49b4-e0e10e358bf",
+        "username": "phuong_admin2"
+    }
+]
+2025-05-21 04:50:57 [INFO] Found 5 users in JSON file
+2025-05-21 04:50:57 [INFO] Successfully loaded 5 users
+2025-05-21 04:50:57 [INFO] Loaded user details: {
+  username: admin
+  userId: 4f1d2dac-c101-1fc1-88e9-cdf1716da246
+  role: AdminUser
+  status: NotActivated
+  email: admin@example.com
+  fullName: Administrator
+  passwordHash: demo_hash$825939ea
+}
+2025-05-21 04:50:57 [INFO] Loaded user details: {
+  username: thuha_admin
+  userId: aa7a1a88-f592-a521-eacb-b1539bbbd73f
+  role: AdminUser
+  status: Active
+  email: HaTrinh@gmail.com
+  fullName: Trinh Thi Thu Ha
+  passwordHash: demo_hash$95a59e39
+}
+2025-05-21 04:50:57 [INFO] Loaded user details: {
+  username: phuong_admin
+  userId: 2b3048e4-86c2-677a-b5e4-fa509d6f28f3
+  role: RegularUser
+  status: NotActivated
+  email: pn17020@gmail.com
+  fullName: Phuong Nguyen
+  passwordHash: F@nUx1oob*OaayOWdemo_hash$1b8ab18b
+}
+2025-05-21 04:50:57 [INFO] Loaded user details: {
+  username: phuong_admin1
+  userId: d2a25108-77d8-271a-c7a7-e934d7500c6
+  role: RegularUser
+  status: NotActivated
+  email: pn17@gmail.com
+  fullName: Nguyen Phuong
+  passwordHash: THid%$7zbAhA*Bzsdemo_hash$ba4872c3
+}
+2025-05-21 04:50:57 [INFO] Loaded user details: {
+  username: phuong_admin2
+  userId: 22ecc0f4-1190-d9a4-49b4-e0e10e358bf
+  role: AdminUser
+  status: Active
+  email: pn@gmail.com
+  fullName: phuong
+  passwordHash: hvKuA@BKrVr^J0*Hdemo_hash$5b3dd253
+}
+2025-05-21 04:50:57 [INFO] Loaded 5 users from file
+2025-05-21 04:50:57 [INFO] Dang tai du lieu...
+2025-05-21 04:50:57 [INFO] Loading users from JSON: [
+    {
+        "email": "admin@example.com",
+        "fullName": "Administrator",
+        "isTemporaryPassword": true,
+        "otpSecretKey": "",
+        "passwordHash": "demo_hash$825939ea",
+        "phoneNumber": "0123456789",
+        "role": "AdminUser",
+        "status": "NotActivated",
+        "userId": "4f1d2dac-c101-1fc1-88e9-cdf1716da246",
+        "username": "admin"
+    },
+    {
+        "email": "HaTrinh@gmail.com",
+        "fullName": "Trinh Thi Thu Ha",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "demo_hash$95a59e39",
+        "phoneNumber": "0923881248",
+        "role": "AdminUser",
+        "status": "Active",
+        "userId": "aa7a1a88-f592-a521-eacb-b1539bbbd73f",
+        "username": "thuha_admin"
+    },
+    {
+        "email": "pn17020@gmail.com",
+        "fullName": "Phuong Nguyen",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "F@nUx1oob*OaayOWdemo_hash$1b8ab18b",
+        "phoneNumber": "0921372837",
+        "role": "RegularUser",
+        "status": "NotActivated",
+        "userId": "2b3048e4-86c2-677a-b5e4-fa509d6f28f3",
+        "username": "phuong_admin"
+    },
+    {
+        "email": "pn17@gmail.com",
+        "fullName": "Nguyen Phuong",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "THid%$7zbAhA*Bzsdemo_hash$ba4872c3",
+        "phoneNumber": "0921377824",
+        "role": "RegularUser",
+        "status": "NotActivated",
+        "userId": "d2a25108-77d8-271a-c7a7-e934d7500c6",
+        "username": "phuong_admin1"
+    },
+    {
+        "email": "pn@gmail.com",
+        "fullName": "phuong",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "hvKuA@BKrVr^J0*Hdemo_hash$5b3dd253",
+        "phoneNumber": "0924727834",
+        "role": "AdminUser",
+        "status": "Active",
+        "userId": "22ecc0f4-1190-d9a4-49b4-e0e10e358bf",
+        "username": "phuong_admin2"
+    }
+]
+2025-05-21 04:50:57 [INFO] Found 5 users in JSON file
+2025-05-21 04:50:57 [INFO] Successfully loaded 5 users
+2025-05-21 04:50:57 [INFO] Loaded user details: {
+  username: admin
+  userId: 4f1d2dac-c101-1fc1-88e9-cdf1716da246
+  role: AdminUser
+  status: NotActivated
+  email: admin@example.com
+  fullName: Administrator
+  passwordHash: demo_hash$825939ea
+}
+2025-05-21 04:50:57 [INFO] Loaded user details: {
+  username: thuha_admin
+  userId: aa7a1a88-f592-a521-eacb-b1539bbbd73f
+  role: AdminUser
+  status: Active
+  email: HaTrinh@gmail.com
+  fullName: Trinh Thi Thu Ha
+  passwordHash: demo_hash$95a59e39
+}
+2025-05-21 04:50:57 [INFO] Loaded user details: {
+  username: phuong_admin
+  userId: 2b3048e4-86c2-677a-b5e4-fa509d6f28f3
+  role: RegularUser
+  status: NotActivated
+  email: pn17020@gmail.com
+  fullName: Phuong Nguyen
+  passwordHash: F@nUx1oob*OaayOWdemo_hash$1b8ab18b
+}
+2025-05-21 04:50:57 [INFO] Loaded user details: {
+  username: phuong_admin1
+  userId: d2a25108-77d8-271a-c7a7-e934d7500c6
+  role: RegularUser
+  status: NotActivated
+  email: pn17@gmail.com
+  fullName: Nguyen Phuong
+  passwordHash: THid%$7zbAhA*Bzsdemo_hash$ba4872c3
+}
+2025-05-21 04:50:57 [INFO] Loaded user details: {
+  username: phuong_admin2
+  userId: 22ecc0f4-1190-d9a4-49b4-e0e10e358bf
+  role: AdminUser
+  status: Active
+  email: pn@gmail.com
+  fullName: phuong
+  passwordHash: hvKuA@BKrVr^J0*Hdemo_hash$5b3dd253
+}
+2025-05-21 04:50:57 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 04:50:57 [INFO] Tai 5 vi thanh cong.
+2025-05-21 04:50:57 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 04:51:03 [INFO] Starting user search for username: phuong_admin2
+2025-05-21 04:51:03 [INFO] Current users in memory:
+2025-05-21 04:51:03 [INFO]   - User: admin (ID: 4f1d2dac-c101-1fc1-88e9-cdf1716da246, Role: AdminUser, Status: NotActivated)
+2025-05-21 04:51:03 [INFO]   - User: thuha_admin (ID: aa7a1a88-f592-a521-eacb-b1539bbbd73f, Role: AdminUser, Status: Active)
+2025-05-21 04:51:03 [INFO]   - User: phuong_admin (ID: 2b3048e4-86c2-677a-b5e4-fa509d6f28f3, Role: RegularUser, Status: NotActivated)
+2025-05-21 04:51:03 [INFO]   - User: phuong_admin1 (ID: d2a25108-77d8-271a-c7a7-e934d7500c6, Role: RegularUser, Status: NotActivated)
+2025-05-21 04:51:03 [INFO]   - User: phuong_admin2 (ID: 22ecc0f4-1190-d9a4-49b4-e0e10e358bf, Role: AdminUser, Status: Active)
+2025-05-21 04:51:03 [INFO] Comparing with user: admin
+2025-05-21 04:51:03 [INFO] Comparing with user: thuha_admin
+2025-05-21 04:51:03 [INFO] Comparing with user: phuong_admin
+2025-05-21 04:51:03 [INFO] Comparing with user: phuong_admin1
+2025-05-21 04:51:03 [INFO] Comparing with user: phuong_admin2
+2025-05-21 04:51:03 [INFO] Attempting login for username: phuong_admin2
+2025-05-21 04:51:03 [INFO] Total users in system: 5
+2025-05-21 04:51:03 [INFO] Found user: phuong_admin2 (ID: 22ecc0f4-1190-d9a4-49b4-e0e10e358bf, Role: AdminUser, Status: Active)
+2025-05-21 04:51:03 [INFO] Password verification:
+2025-05-21 04:51:03 [INFO]   Salt: hvKuA@BKrVr^J0*H
+2025-05-21 04:51:03 [INFO]   Stored hash: demo_hash$5b3dd253
+2025-05-21 04:51:03 [INFO]   Input hash: demo_hash$5b3dd253
+2025-05-21 04:51:03 [INFO] Login successful for user: phuong_admin2 with role: AdminUser
+2025-05-21 04:51:03 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 04:51:08 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 04:51:25 [INFO] Admin listed all users.
+2025-05-21 04:51:29 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 04:52:18 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 04:52:47 [INFO] Admin '22ecc0f4-1190-d9a4-49b4-e0e10e358bf' attempting to update profile for user ID '2b3048e4-86c2-677a-b5e4-fa509d6f28f3'.
+2025-05-21 04:52:47 [INFO] Saving users to JSON: [
+    {
+        "email": "admin@example.com",
+        "fullName": "Administrator",
+        "isTemporaryPassword": true,
+        "otpSecretKey": "",
+        "passwordHash": "demo_hash$825939ea",
+        "phoneNumber": "0123456789",
+        "role": "AdminUser",
+        "status": "NotActivated",
+        "userId": "4f1d2dac-c101-1fc1-88e9-cdf1716da246",
+        "username": "admin"
+    },
+    {
+        "email": "HaTrinh@gmail.com",
+        "fullName": "Trinh Thi Thu Ha",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "demo_hash$95a59e39",
+        "phoneNumber": "0923881248",
+        "role": "AdminUser",
+        "status": "Active",
+        "userId": "aa7a1a88-f592-a521-eacb-b1539bbbd73f",
+        "username": "thuha_admin"
+    },
+    {
+        "email": "pn17020@gmail.com",
+        "fullName": "Phuong Nguyen",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "F@nUx1oob*OaayOWdemo_hash$1b8ab18b",
+        "phoneNumber": "0921372837",
+        "role": "RegularUser",
+        "status": "Active",
+        "userId": "2b3048e4-86c2-677a-b5e4-fa509d6f28f3",
+        "username": "phuong_admin"
+    },
+    {
+        "email": "pn17@gmail.com",
+        "fullName": "Nguyen Phuong",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "THid%$7zbAhA*Bzsdemo_hash$ba4872c3",
+        "phoneNumber": "0921377824",
+        "role": "RegularUser",
+        "status": "NotActivated",
+        "userId": "d2a25108-77d8-271a-c7a7-e934d7500c6",
+        "username": "phuong_admin1"
+    },
+    {
+        "email": "pn@gmail.com",
+        "fullName": "phuong",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "hvKuA@BKrVr^J0*Hdemo_hash$5b3dd253",
+        "phoneNumber": "0924727834",
+        "role": "AdminUser",
+        "status": "Active",
+        "userId": "22ecc0f4-1190-d9a4-49b4-e0e10e358bf",
+        "username": "phuong_admin2"
+    }
+]
+2025-05-21 04:52:47 [INFO] Saving user: admin, Role: AdminUser, Status: NotActivated
+2025-05-21 04:52:47 [INFO] Saving user: thuha_admin, Role: AdminUser, Status: Active
+2025-05-21 04:52:47 [INFO] Saving user: phuong_admin, Role: RegularUser, Status: Active
+2025-05-21 04:52:47 [INFO] Saving user: phuong_admin1, Role: RegularUser, Status: NotActivated
+2025-05-21 04:52:47 [INFO] Saving user: phuong_admin2, Role: AdminUser, Status: Active
+2025-05-21 04:52:47 [INFO] Admin successfully updated user profile for phuong_admin.
+2025-05-21 04:54:36 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 04:54:40 [INFO] Admin phuong_admin2 dang xuat.
+2025-05-21 04:54:59 [INFO] Starting user search for username: phuong_admin2
+2025-05-21 04:54:59 [INFO] Current users in memory:
+2025-05-21 04:54:59 [INFO]   - User: admin (ID: 4f1d2dac-c101-1fc1-88e9-cdf1716da246, Role: AdminUser, Status: NotActivated)
+2025-05-21 04:54:59 [INFO]   - User: thuha_admin (ID: aa7a1a88-f592-a521-eacb-b1539bbbd73f, Role: AdminUser, Status: Active)
+2025-05-21 04:54:59 [INFO]   - User: phuong_admin (ID: 2b3048e4-86c2-677a-b5e4-fa509d6f28f3, Role: RegularUser, Status: Active)
+2025-05-21 04:54:59 [INFO]   - User: phuong_admin1 (ID: d2a25108-77d8-271a-c7a7-e934d7500c6, Role: RegularUser, Status: NotActivated)
+2025-05-21 04:54:59 [INFO]   - User: phuong_admin2 (ID: 22ecc0f4-1190-d9a4-49b4-e0e10e358bf, Role: AdminUser, Status: Active)
+2025-05-21 04:54:59 [INFO] Comparing with user: admin
+2025-05-21 04:54:59 [INFO] Comparing with user: thuha_admin
+2025-05-21 04:54:59 [INFO] Comparing with user: phuong_admin
+2025-05-21 04:54:59 [INFO] Comparing with user: phuong_admin1
+2025-05-21 04:54:59 [INFO] Comparing with user: phuong_admin2
+2025-05-21 04:54:59 [INFO] Attempting login for username: phuong_admin2
+2025-05-21 04:54:59 [INFO] Total users in system: 5
+2025-05-21 04:54:59 [INFO] Found user: phuong_admin2 (ID: 22ecc0f4-1190-d9a4-49b4-e0e10e358bf, Role: AdminUser, Status: Active)
+2025-05-21 04:54:59 [INFO] Password verification:
+2025-05-21 04:54:59 [INFO]   Salt: hvKuA@BKrVr^J0*H
+2025-05-21 04:54:59 [INFO]   Stored hash: demo_hash$5b3dd253
+2025-05-21 04:54:59 [INFO]   Input hash: demo_hash$5b3dd253
+2025-05-21 04:54:59 [INFO] Login successful for user: phuong_admin2 with role: AdminUser
+2025-05-21 04:54:59 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 04:56:29 [INFO] Ung dung khoi dong.
+2025-05-21 04:56:29 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 04:56:29 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 04:56:29 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 04:56:29 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 04:56:29 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 04:56:29 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 04:56:29 [INFO] Loaded 5 users from file
+2025-05-21 04:56:29 [INFO] Dang tai du lieu...
+2025-05-21 04:56:29 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 04:56:29 [INFO] Tai 5 vi thanh cong.
+2025-05-21 04:56:29 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 04:56:37 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 04:58:45 [INFO] Ung dung khoi dong.
+2025-05-21 04:58:45 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 04:58:45 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 04:58:45 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 04:58:45 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 04:58:45 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 04:58:45 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 04:58:45 [INFO] Loaded 5 users from file
+2025-05-21 04:58:45 [INFO] Dang tai du lieu...
+2025-05-21 04:58:45 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 04:58:45 [INFO] Tai 5 vi thanh cong.
+2025-05-21 04:58:45 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 04:58:51 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 04:58:57 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 04:59:12 [INFO] Admin attempting to activate user ID '2b3048e4-86c2-677a-b5e4-fa509d6f28f3'.
+2025-05-21 04:59:12 [INFO] Account activation attempted for already active user 'phuong_admin'.
+2025-05-21 05:00:51 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:00:55 [INFO] Admin attempting to activate user ID '2b3048e4-86c2-677a-b5e4-fa509d6f28f3'.
+2025-05-21 05:00:55 [INFO] Account activation attempted for already active user 'phuong_admin'.
+2025-05-21 05:01:04 [INFO] Ung dung khoi dong.
+2025-05-21 05:01:04 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:01:04 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:01:04 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:01:04 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:01:04 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:01:04 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:01:04 [INFO] Loaded 5 users from file
+2025-05-21 05:01:04 [INFO] Dang tai du lieu...
+2025-05-21 05:01:04 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:01:04 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:01:04 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 05:01:12 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 05:01:14 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:01:26 [INFO] Admin attempting to activate user ID ''.
+2025-05-21 05:01:26 [WARNING] User not found for activation. User ID: 
+2025-05-21 05:01:30 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:01:52 [INFO] Admin attempting to activate user ID '2b3048e4-86c2-677a-b5e4-fa509d6f28f3'.
+2025-05-21 05:01:52 [INFO] Account activation attempted for already active user 'phuong_admin'.
+2025-05-21 05:02:29 [INFO] Ung dung khoi dong.
+2025-05-21 05:02:29 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:02:29 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:02:29 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:02:29 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:02:29 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:02:29 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:02:29 [INFO] Loaded 5 users from file
+2025-05-21 05:02:29 [INFO] Dang tai du lieu...
+2025-05-21 05:02:29 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:02:29 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:02:29 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 05:02:34 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 05:02:35 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:02:43 [INFO] Admin attempting to activate user ID '2b3048e4-86c2-677a-b5e4-fa509d6f28f3'.
+2025-05-21 05:02:43 [INFO] Account activation attempted for already active user 'phuong_admin'.
+2025-05-21 05:05:12 [INFO] Ung dung khoi dong.
+2025-05-21 05:05:12 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:05:12 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:05:12 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:05:12 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:05:12 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:05:12 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:05:12 [INFO] Loaded 5 users from file
+2025-05-21 05:05:12 [INFO] Dang tai du lieu...
+2025-05-21 05:05:12 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:05:12 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:05:12 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 05:05:21 [INFO] Ung dung khoi dong.
+2025-05-21 05:05:21 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:05:21 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:05:21 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:05:21 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:05:21 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:05:21 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:05:21 [INFO] Loaded 5 users from file
+2025-05-21 05:05:21 [INFO] Dang tai du lieu...
+2025-05-21 05:05:21 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:05:21 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:05:21 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 05:05:29 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 05:05:32 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:05:53 [INFO] Admin attempting to activate user ID '2b3048e4-86c2-677a-b5e4-fa509d6f28f3'.
+2025-05-21 05:05:53 [INFO] Account activation attempted for already active user 'phuong_admin'.
+2025-05-21 05:06:46 [INFO] Ung dung khoi dong.
+2025-05-21 05:06:46 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:06:46 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:06:46 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:06:46 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:06:46 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:06:46 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:06:46 [INFO] Loaded 5 users from file
+2025-05-21 05:06:46 [INFO] Dang tai du lieu...
+2025-05-21 05:06:46 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:06:46 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:06:46 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 05:06:53 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 05:06:54 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:07:05 [INFO] Admin attempting to activate user ID '2b3048e4-86c2-677a-b5e4-fa509d6f28f3'.
+2025-05-21 05:07:05 [INFO] Account activation attempted for already active user 'phuong_admin'.
+2025-05-21 05:08:54 [INFO] Ung dung khoi dong.
+2025-05-21 05:08:54 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:08:54 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:08:54 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:08:54 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:08:54 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:08:54 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:08:54 [INFO] Loaded 5 users from file
+2025-05-21 05:08:54 [INFO] Dang tai du lieu...
+2025-05-21 05:08:54 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:08:54 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:08:54 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 05:09:00 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 05:09:01 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:09:10 [INFO] Admin attempting to activate user ID '2b3048e4-86c2-677a-b5e4-fa509d6f28f3'.
+2025-05-21 05:09:10 [INFO] Account activation attempted for already active user 'phuong_admin'.
+2025-05-21 05:09:13 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:09:33 [INFO] Admin attempting to activate user ID 'd2a25108-77d8-271a-c7a7-e934d7500c6'.
+2025-05-21 05:09:33 [INFO] Account activated for user 'phuong_admin1'.
+2025-05-21 05:10:52 [INFO] Ung dung khoi dong.
+2025-05-21 05:10:52 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:10:52 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:10:52 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:10:52 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:10:52 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:10:52 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:10:52 [INFO] Loaded 5 users from file
+2025-05-21 05:10:52 [INFO] Dang tai du lieu...
+2025-05-21 05:10:52 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:10:52 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:10:52 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 05:10:59 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 05:11:00 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:11:14 [INFO] Admin attempting to activate user ID 'd2a25108-77d8-271a-c7a7-e934d7500c6'.
+2025-05-21 05:11:14 [INFO] Account activation attempted for already active user 'phuong_admin1'.
+2025-05-21 05:12:32 [INFO] Ung dung khoi dong.
+2025-05-21 05:12:32 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:12:32 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:12:32 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:12:32 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:12:32 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:12:32 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:12:32 [INFO] Loaded 5 users from file
+2025-05-21 05:12:32 [INFO] Dang tai du lieu...
+2025-05-21 05:12:32 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:12:32 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:12:32 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 05:12:38 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 05:12:39 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:12:48 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:13:16 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:18:08 [INFO] Ung dung khoi dong.
+2025-05-21 05:18:08 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:18:08 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:18:08 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:18:08 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:18:08 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:18:08 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:18:08 [INFO] Loaded 5 users from file
+2025-05-21 05:18:08 [INFO] Dang tai du lieu...
+2025-05-21 05:18:08 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:18:08 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:18:08 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 05:18:17 [INFO] Ung dung khoi dong.
+2025-05-21 05:18:17 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:18:17 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:18:17 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:18:17 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:18:17 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:18:17 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:18:17 [INFO] Loaded 5 users from file
+2025-05-21 05:18:17 [INFO] Dang tai du lieu...
+2025-05-21 05:18:17 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:18:17 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:18:17 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 05:18:24 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 05:18:25 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:21:11 [INFO] Ung dung khoi dong.
+2025-05-21 05:21:11 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:21:11 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:21:11 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:21:11 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:21:11 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:21:11 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:21:11 [INFO] Loaded 5 users from file
+2025-05-21 05:21:11 [INFO] Dang tai du lieu...
+2025-05-21 05:21:11 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:21:11 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:21:11 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 05:21:17 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 05:21:18 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:21:22 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:23:28 [INFO] Ung dung khoi dong.
+2025-05-21 05:23:28 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:23:28 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:23:28 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:23:28 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:23:28 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:23:28 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:23:28 [INFO] Loaded 5 users from file
+2025-05-21 05:23:28 [INFO] Dang tai du lieu...
+2025-05-21 05:23:28 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:23:28 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:23:28 [ERROR] Khong the tai du lieu giao dich. Co the file bi loi hoac khong ton tai.
+2025-05-21 05:23:35 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 05:23:36 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:23:43 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:23:50 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:23:55 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:23:58 [INFO] Profile updated for user 'phuong_admin2'.
+2025-05-21 05:23:58 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:24:00 [INFO] Profile updated for user 'phuong_admin2'.
+2025-05-21 05:24:04 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:24:08 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:24:12 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:24:14 [INFO] Admin listed all users.
+2025-05-21 05:24:19 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:24:28 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:24:35 [INFO] Admin attempting to deactivate user ID 'd2a25108-77d8-271a-c7a7-e934d7500c6'.
+2025-05-21 05:24:35 [INFO] Account deactivated for user 'phuong_admin1'.
+2025-05-21 05:24:44 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:25:08 [INFO] Admin '22ecc0f4-1190-d9a4-49b4-e0e10e358bf' attempting to deposit 50000.000000 to user ID '2b3048e4-86c2-677a-b5e4-fa509d6f28f3' for reason: Hihihehe
+2025-05-21 05:25:12 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:25:33 [INFO] Admin '22ecc0f4-1190-d9a4-49b4-e0e10e358bf' attempting to deposit 50000.000000 to user ID '2b3048e4-86c2-677a-b5e4-fa509d6f28f3' for reason: test
+2025-05-21 05:28:36 [INFO] Ung dung khoi dong.
+2025-05-21 05:28:36 [INFO] FileHandler initialized with absolute paths:
+2025-05-21 05:28:36 [INFO] Current path: C:\Repositories\Cpp-project
+2025-05-21 05:28:36 [INFO] Project root: C:\Repositories\Cpp-project
+2025-05-21 05:28:36 [INFO] Users file: C:\Repositories\Cpp-project\data/users.json
+2025-05-21 05:28:36 [INFO] Wallets file: C:\Repositories\Cpp-project\data/wallets.json
+2025-05-21 05:28:36 [INFO] Transactions file: C:\Repositories\Cpp-project\data/transactions.json
+2025-05-21 05:28:36 [INFO] Loaded 5 users from file
+2025-05-21 05:28:36 [INFO] Dang tai du lieu...
+2025-05-21 05:28:36 [INFO] Tai 5 nguoi dung thanh cong.
+2025-05-21 05:28:36 [INFO] Tai 5 vi thanh cong.
+2025-05-21 05:28:36 [INFO] Tai 0 giao dich thanh cong.
+2025-05-21 05:28:43 [INFO] User phuong_admin2 logged in with role: AdminUser
+2025-05-21 05:28:44 [INFO] Admin user phuong_admin2 accessing admin menu
+2025-05-21 05:28:54 [INFO] Admin '22ecc0f4-1190-d9a4-49b4-e0e10e358bf' attempting to deposit 500000.000000 to user ID 'd2a25108-77d8-271a-c7a7-e934d7500c6' for reason: aaa
+2025-05-21 05:28:54 [INFO] Successfully saved 1 transactions to file
+2025-05-21 05:28:54 [INFO] Deposit successful for wallet WLT-d2b2c524-e1f. Amount: 500000.000000, New balance: 500000.000000

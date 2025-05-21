@@ -1,0 +1,62 @@
+[
+    {
+        "email": "admin@example.com",
+        "fullName": "Administrator",
+        "isTemporaryPassword": true,
+        "otpSecretKey": "",
+        "passwordHash": "demo_hash$825939ea",
+        "phoneNumber": "0123456789",
+        "role": "AdminUser",
+        "status": "Active",
+        "userId": "4f1d2dac-c101-1fc1-88e9-cdf1716da246",
+        "username": "admin"
+    },
+    {
+        "email": "HaTrinh@gmail.com",
+        "fullName": "Trinh Thi Thu Ha",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "demo_hash$95a59e39",
+        "phoneNumber": "0923881248",
+        "role": "AdminUser",
+        "status": "Active",
+        "userId": "aa7a1a88-f592-a521-eacb-b1539bbbd73f",
+        "username": "thuha_admin"
+    },
+    {
+        "email": "pn17020@gmail.com",
+        "fullName": "Phuong Nguyen",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "F@nUx1oob*OaayOWdemo_hash$1b8ab18b",
+        "phoneNumber": "0921372837",
+        "role": "RegularUser",
+        "status": "Active",
+        "userId": "2b3048e4-86c2-677a-b5e4-fa509d6f28f3",
+        "username": "phuong_admin"
+    },
+    {
+        "email": "pn17@gmail.com",
+        "fullName": "Nguyen Phuong",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "THid%$7zbAhA*Bzsdemo_hash$ba4872c3",
+        "phoneNumber": "0921377824",
+        "role": "RegularUser",
+        "status": "Inactive",
+        "userId": "d2a25108-77d8-271a-c7a7-e934d7500c6",
+        "username": "phuong_admin1"
+    },
+    {
+        "email": "pn@gmail.com",
+        "fullName": "phuong",
+        "isTemporaryPassword": false,
+        "otpSecretKey": "",
+        "passwordHash": "hvKuA@BKrVr^J0*Hdemo_hash$5b3dd253",
+        "phoneNumber": "0924727834",
+        "role": "AdminUser",
+        "status": "Active",
+        "userId": "22ecc0f4-1190-d9a4-49b4-e0e10e358bf",
+        "username": "phuong_admin2"
+    }
+]
