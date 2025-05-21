@@ -100,7 +100,7 @@ bool WalletService::transferPoints(const std::string& senderUserId, const std::s
     auto senderUserIt = std::find_if(users.cbegin(), users.cend(), 
                                      [&](const User& u) { return u.userId == senderUserId; });
     if (senderUserIt == users.cend()) {
-        outMessage = "Nguoi gui khong tim thay."; // This should ideally not happen if senderUserId is from a logged-in session
+        outMessage = "Nguoi gui khong tim thay.";
         LOG_ERROR("Chuyen tien that bai: " + outMessage + " ID nguoi gui: " + senderUserId);
         return false;
     }
@@ -176,29 +176,28 @@ bool WalletService::transferPoints(const std::string& senderUserId, const std::s
     pSenderWallet->lastUpdateTimestamp = updateTime;
     pReceiverWallet->lastUpdateTimestamp = updateTime;
 
+    // Attempt to save. Atomicity is a concern with multiple file writes.
     if (fileHandler.saveWallets(wallets)) { // Step 1: Save updated wallets
         tx.status = TransactionStatus::Completed;
         transactions.push_back(tx);
         if (fileHandler.saveTransactions(transactions)) { // Step 2: Save successful transaction
-            outMessage = "Points transferred successfully!";
-            LOG_INFO(outMessage + " TxID: " + tx.transactionId + ", Amount: " + std::to_string(amount) +
-                     " from " + senderWalletId + " to " + receiverWalletId);
+            outMessage = "Chuyen diem thanh cong!";
+            LOG_INFO("Chuyen diem thanh cong! TxID: " + tx.transactionId);
             return true;
         } else {
-            outMessage = "Transfer processed and wallet balances updated, but failed to record transaction log. Please contact support with TxID: " + tx.transactionId;
+            // Wallets saved, but transaction log failed. This is a critical inconsistency.
+            outMessage = "Chuyen diem thanh cong nhung khong the luu lai lich su giao dich. Vui long lien he ho tro.";
             LOG_ERROR("CRITICAL INCONSISTENCY: Wallets updated for TxID " + tx.transactionId +
                       " but transaction log FAILED to save. Sender new balance: " + std::to_string(pSenderWallet->balance) +
                       ", Receiver new balance: " + std::to_string(pReceiverWallet->balance));
-        
-            return true;
+            return true; // Indicate balance change happened but log failed
         }
     } else {
+        // Failed to save wallets. Rollback in-memory changes.
         pSenderWallet->balance = originalSenderBalance;
         pReceiverWallet->balance = originalReceiverBalance;
-        // pSenderWallet->lastUpdateTimestamp = originalSenderLastUpdate; // Need to store this too for perfect rollback?
-        // pReceiverWallet->lastUpdateTimestamp = originalReceiverLastUpdate;
 
-        outMessage = "Failed to save wallet updates. Transfer has been rolled back.";
+        outMessage = "Khong the luu thay doi vi. Giao dich da duoc huy.";
         tx.status = TransactionStatus::Failed;
         transactions.push_back(tx); // Log the system error that prevented the transfer
         if(!fileHandler.saveTransactions(transactions)){

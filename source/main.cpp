@@ -575,7 +575,7 @@ void handleUserActions(UserService& userService, AuthService& authService, Walle
 
             if (walletService.transferPoints(user.userId, senderWalletOpt.value().walletId, 
                                           receiverWalletOpt.value().walletId, amount, otpCode, msg)) {
-                std::cout << "Thanh cong: " << msg << std::endl;
+                std::cout << "Chuyen diem thanh cong!" << std::endl;
             } else {
                 std::cout << "That bai: " << msg << std::endl;
             }
@@ -593,10 +593,7 @@ void handleUserActions(UserService& userService, AuthService& authService, Walle
                 } else {
                     for (const auto& tx : history) {
                         std::cout << "---------------------------" << std::endl;
-                        std::cout << "ID Giao Dich: " << tx.transactionId << std::endl;
                         std::cout << "Thoi gian: " << TimeUtils::formatTimestamp(tx.timestamp) << std::endl;
-                        std::cout << "Tu Vi: " << tx.sourceWalletId << std::endl;
-                        std::cout << "Den Vi: " << tx.targetWalletId << std::endl;
                         std::cout << "So diem: " << std::fixed << std::setprecision(2) << tx.amount << std::endl;
                         std::cout << "Trang thai: " << Transaction::statusToString(tx.status) << std::endl;
                         if (!tx.description.empty()) {
@@ -966,7 +963,7 @@ void handleAdminActions(AdminService& adminService, UserService& userService, Au
             }
             std::string msg;
             if (adminService.adminDepositToUserWallet(admin.userId, targetUserOpt.value().userId, amount, reason, msg)) {
-                std::cout << "Nap tien thanh cong: " << msg << std::endl;
+                std::cout << "Nap tien thanh cong!" << std::endl;
                 // Show updated balance
                 auto walletOpt = walletService.getWalletByUserId(targetUserOpt.value().userId);
                 if (walletOpt) {
